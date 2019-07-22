@@ -253,12 +253,12 @@ def battle(player, opponent):
                 playerPoke, opponentPoke = playerTurn(playerPoke, opponentPoke)
                 input()
                 if opponentPoke.HP <= 0: #checks if a pokemon fainted
-                    playerPoke.XPGain(opponentPoke)
                     opponentPokesCopy.remove(opponentPoke)
                     opponentPoke.HP = 0
                     os.system("clear")
                     battleDisplay(playerPoke, opponentPoke)
                     print(str(opponent.name)+'\'s', opponentPoke.name, 'fainted!')
+                    playerPoke.XPGain(opponentPoke)
                     pokeChange = 1
                     input()
                     break
@@ -280,9 +280,11 @@ def battle(player, opponent):
         print('You won!')
     else:
         print('You lose!')
+    for i in range(len(player.pokeList)):
+        print(player.pokeList[i].level, player.pokeList[i].stats)
     return won
 
-print(lab()) #runs the game
+#print(lab()) #runs the game
 
 ashPidgey = copy.deepcopy(pokedex.pidgey)
 garyPidgey = copy.deepcopy(pokedex.pidgey)
@@ -294,4 +296,4 @@ garyCharmander = copy.deepcopy(pokedex.charmander)
 ash = trainer('ash', [ashSquirtle, ashPidgey, ashBulbasaur])
 gary = trainer('gary', [garyBulbasaur, garyCharmander, garyPidgey])
 
-#print(battle(ash, gary))
+print(battle(ash, gary))

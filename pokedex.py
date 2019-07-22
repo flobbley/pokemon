@@ -73,7 +73,6 @@ class pokemon:
             newXP = self.needXP*1.3
             self.needXP = newXP
             self.levelUp()
-        input()
 
     def levelUp(self):
         self.maxHP += 2
