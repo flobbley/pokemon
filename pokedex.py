@@ -46,7 +46,7 @@ class pokemon:
         if damage == 0:
             self.HP = self.HP
         else:
-            self.HP = self.HP + (self.tempStats['defense'])//15 - damage
+            self.HP -= damage
 
     def useMove(self, index, opponent): #uses the indicated move
         x = self.moves[index][0]
@@ -87,12 +87,21 @@ class pokemon:
 
     def statRestore(self):
         self.tempStats = copy.deepcopy(self.stats)
+
+    def heal(self, amount):
+        self.HP += amount
+        if self.HP > self.maxHP:
+            self.HP = self.maxHP
         
 class pokedex: #fills the global pokedex
     def __init__(self):
-        self.squirtle = pokemon('Squirtle', 5, ['water','water'], 50, {'attack':50,'defense':40, 'speed':40}, {1:[tackle, 'tackle'],2:[tailWhip, 'tail whip']}, 100, 100, 1.0)
-        self.charmander = pokemon('Charmander', 5, ['fire','fire'], 40, {'attack':70, 'defense':30, 'speed':60}, {1:[scratch,'scratch'], 2:[leer,'leer']}, 100, 100, 1.0)
-        self.bulbasaur = pokemon('Bulbasaur',5, ['grass','poison'], 60, {'attack':30, 'defense':30, 'speed':30}, {1:[tackle, 'tackle'], 2:[leer, 'leer']}, 100, 100, 1.0)
-        self.pidgey = pokemon('Pidgey', 5, ['normal','flying'], 30, {'attack':70, 'defense':50, 'speed':50}, {1:[wingAttack, 'wing attack'], 2:[gust, 'gust']}, 50, 60, 1.0)
+        self.squirtle = pokemon('Squirtle', 5, ['water','water'], 50, {'attack':50,'defense':40, 'speed':40},\
+                                {1:[tackle, 'tackle'],2:[tailWhip, 'tail whip'],3:[bubble,'bubble']}, 100, 100, 1.0)
+        self.charmander = pokemon('Charmander', 5, ['fire','fire'], 40, {'attack':70, 'defense':30, 'speed':60},\
+                                  {1:[scratch,'scratch'], 2:[leer,'leer'], 3:[ember,'ember']}, 100, 100, 1.0)
+        self.bulbasaur = pokemon('Bulbasaur',5, ['grass','poison'], 60, {'attack':30, 'defense':30, 'speed':30},\
+                                 {1:[tackle, 'tackle'], 2:[leer, 'leer'],3:[leechSeed, 'leech seed']}, 100, 100, 1.0)
+        self.pidgey = pokemon('Pidgey', 5, ['normal','flying'], 30, {'attack':70, 'defense':50, 'speed':50},\
+                              {1:[wingAttack, 'wing attack'], 2:[gust, 'gust']}, 50, 60, 1.0)
 
 pokedex = pokedex() #actually creates the pokedex

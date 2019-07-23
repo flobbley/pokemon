@@ -1,5 +1,6 @@
 #to do: Add move pool/move learning/dynamic stats to pokemon
 #to do: Add pallet town
+#to do: Add battle options
 
 from random import *
 import os
@@ -194,8 +195,8 @@ def battleDisplay(playerPoke, opponentPoke):
     """
     Will display sprites and HP bars
     """
-    print(str(opponentPoke.name), 'HP:'+opponentPoke.HPBar())
-    print(str(playerPoke.name),'HP:'+playerPoke.HPBar())
+    print(str(opponentPoke.name), 'HP:'+opponentPoke.HPBar(),str(opponentPoke.HP)+'/'+str(opponentPoke.maxHP))
+    print(str(playerPoke.name),'HP:'+playerPoke.HPBar(),str(playerPoke.HP)+'/'+str(playerPoke.maxHP))
 
 def battleRestore(player):
     for poke in player.pokeList:
@@ -285,4 +286,4 @@ garyCharmander = copy.deepcopy(pokedex.charmander)
 ash = trainer('ash', [ashSquirtle, ashPidgey, ashBulbasaur])
 gary = trainer('gary', [garyBulbasaur, garyCharmander, garyPidgey])
 
-#print(battle(ash, gary))
+print(battle(ash, gary))
