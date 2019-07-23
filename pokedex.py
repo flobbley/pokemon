@@ -1,4 +1,5 @@
 from moves import *
+import copy
 
 class pokemon:
     """
@@ -26,6 +27,7 @@ class pokemon:
         self.needXP = needXP
         self.XPmod = XPmod
         self.gainedXP = 0
+        self.tempStats = copy.deepcopy(stats)
 
     def getName(self): #gives the name of the pokemon
         print(self.name)
@@ -44,23 +46,23 @@ class pokemon:
         if damage == 0:
             self.HP = self.HP
         else:
-            self.HP = self.HP + (self.stats['defense'])//15 - damage
+            self.HP = self.HP + (self.tempStats['defense'])//15 - damage
 
-    def useMove(self, index): #uses the indicated move
+    def useMove(self, index, opponent): #uses the indicated move
         x = self.moves[index][0]
-        return x(self.stats['attack'])
+        x(self, opponent)
 
     def statDam(self, damage, stat): #reduces the appropriate stat when stat damage is taken
         if damage == 0:
             print('but it missed!')
-        elif self.stats[str(stat)] <10:
+        elif self.tempStats[str(stat)] <10:
             print(str(self.name)+'\'s', stat,'can\'t be reduced anymore!')
         else:
             print(str(self.name)+'\'s',str(stat),'fell!')
-            oldStat = self.stats[str(stat)]
-            self.stats[str(stat)] = self.stats[str(stat)] + (self.stats['defense'])//30 - damage
-            if self.stats[str(stat)]>oldStat:
-                self.stats[str(stat)] = oldStat
+            oldStat = self.tempStats[str(stat)]
+            self.tempStats[str(stat)] = self.tempStats[str(stat)] + (self.tempStats['defense'])//30 - damage
+            if self.tempStats[str(stat)]>oldStat:
+                self.tempStats[str(stat)] = oldStat
 
     def XPGain(self, opponent):
         gain = opponent.baseXP
@@ -79,6 +81,12 @@ class pokemon:
         self.stats['attack'] += 2
         self.stats['defense'] +=2
         self.stats['speed'] += 2
+        self.tempStats['attack'] += 2
+        self.tempStats['defense'] += 2
+        self.tempStats['speed'] += 2
+
+    def statRestore(self):
+        self.tempStats = copy.deepcopy(self.stats)
         
 class pokedex: #fills the global pokedex
     def __init__(self):
@@ -88,49 +96,3 @@ class pokedex: #fills the global pokedex
         self.pidgey = pokemon('Pidgey', 5, ['normal','flying'], 30, {'attack':70, 'defense':50, 'speed':50}, {1:[wingAttack, 'wing attack'], 2:[gust, 'gust']}, 50, 60, 1.0)
 
 pokedex = pokedex() #actually creates the pokedex
-
-def typeChart(defendType, attackType):
-    base = 1
-    noEffect = 0
-    notVeryEffective = 0.5
-    superEffective = 2
-    types = {'normal':{'fighting':superEffective, 'ghost':noEffect},\
-             'fighting':{'flying':superEffective,'rock':notVeryEffective,'bug':notVeryEffective,'psychic':superEffective},\
-             'flying':{'fighting':notVeryEffective,'ground':noEffect,'rock':superEffective,'bug':notVeryEffective,'grass':notVeryEffective, 'electric':superEffective, 'ice':superEffective},\
-             'poison':{'fighting':notVeryEffective, 'poison':notVeryEffective, 'ground':superEffective,'bug':superEffective,'grass':notVeryEffective, 'psychic':superEffective},\
-             'ground':{'poison':notVeryEffective, 'rock':notVeryEffective, 'water':superEffective, 'grass':superEffective, 'electric':noEffect, 'ice':superEffective},\
-             'rock':{'normal':notVeryEffective, 'fighting':superEffective, 'flying':notVeryEffective, 'poison':notVeryEffective, 'ground':superEffective, 'fire':notVeryEffective, 'water':superEffective, 'grass':superEffective},\
-             'bug':{'fighting':notVeryEffective, 'flying':superEffective, 'poison':superEffective, 'ground':notVeryEffective, 'rock':superEffective, 'fire':superEffective, 'grass':notVeryEffective},\
-             'ghost':{'normal':noEffect, 'fighting':noEffect, 'poison':notVeryEffective, 'bug':notVeryEffective, 'ghost':superEffective},\
-             'fire':{'ground':superEffective, 'rock':superEffective, 'bug':notVeryEffective, 'fire':notVeryEffective, 'water':superEffective, 'grass':notVeryEffective},\
-             'water':{'fire':notVeryEffective, 'water':notVeryEffective, 'grass':superEffective, 'electric':superEffective, 'ice':notVeryEffective},\
-             'grass':{'flying':superEffective, 'poison':superEffective, 'ground':notVeryEffective, 'bug':superEffective, 'fire':superEffective, 'water':notVeryEffective, 'grass':notVeryEffective, 'electric':notVeryEffective, 'ice':superEffective},\
-             'electric':{'flying':notVeryEffective, 'ground':superEffective, 'electric':notVeryEffective},\
-             'psychic':{'fighting':notVeryEffective, 'bug':superEffective, 'ghost':noEffect, 'psychic':notVeryEffective},\
-             'ice':{'fighting':superEffective, 'rock':superEffective, 'fire':superEffective, 'ice':notVeryEffective},\
-             'dragon':{'fire':notVeryEffective, 'water':notVeryEffective, 'grass':notVeryEffective, 'electric':notVeryEffective, 'ice':superEffective, 'dragon':superEffective}}
-    if attackType in types[defendType]:
-        return types[defendType][attackType]
-    else:
-        return base
-    
-def printChart():
-    types = ['normal','fighting','flying','poison','ground','rock','bug','ghost','fire','water','grass','electric','psychic','ice','dragon']
-    print('      ', end = ' ')
-    for poke in types:
-        spacing = 8 - len(poke)
-        if poke == 'dragon':
-            print(poke)
-        else:
-            print(poke+' '*spacing, end = " ")
-    for poke in types:
-        spacing = 8 - len(poke)
-        print(poke+' '*spacing, end = "")
-        for poke1 in types:
-            x = typeChart(poke1, poke)
-            digSpace = 4 - len(str(x))
-            if poke1 == 'dragon':
-                print('   ',x,' '*digSpace)
-            else:
-                print('   ',x,' '*digSpace, end ="")
-        

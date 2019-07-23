@@ -1,8 +1,5 @@
-#to do: Add experience/levels/move pool/dynamic stats to pokemon
-#to do: Add universality to moves
+#to do: Add move pool/move learning/dynamic stats to pokemon
 #to do: Add pallet town
-#to do: restore stats after battle
-#to do: add type resistance/effective chart
 
 from random import *
 import os
@@ -182,12 +179,7 @@ def playerTurn(playerPoke, opponentPoke):
         if move <= noMoves:
             break
     print(playerPoke.name, 'used', playerPoke.moves[move][1])
-    damage, damType = playerPoke.useMove(move)
-    if damType != 'HP':
-        opponentPoke.statDam(damage, damType)
-    else:
-        opponentPoke.damageTaken(damage)
-    return playerPoke, opponentPoke
+    playerPoke.useMove(move, opponentPoke)
 
 def computerTurn(playerPoke, opponentPoke, opponentName):
     """
@@ -196,12 +188,7 @@ def computerTurn(playerPoke, opponentPoke, opponentName):
     noMoves = len(opponentPoke.moves)
     move = randint(1,noMoves)
     print(opponentName+'\'s',opponentPoke.name, 'used',opponentPoke.moves[move][1])        
-    damage, damType = opponentPoke.useMove(move)
-    if damType != 'HP':
-        playerPoke.statDam(damage, damType)
-    else:
-        playerPoke.damageTaken(damage)
-    return playerPoke, opponentPoke
+    opponentPoke.useMove(move, playerPoke)
 
 def battleDisplay(playerPoke, opponentPoke):
     """
@@ -209,7 +196,10 @@ def battleDisplay(playerPoke, opponentPoke):
     """
     print(str(opponentPoke.name), 'HP:'+opponentPoke.HPBar())
     print(str(playerPoke.name),'HP:'+playerPoke.HPBar())
-    
+
+def battleRestore(player):
+    for poke in player.pokeList:
+        poke.statRestore()
 
 def battle(player, opponent):
     """
@@ -250,7 +240,7 @@ def battle(player, opponent):
             os.system("clear")
             if turn == 0: #when turn is 0 it is the player's turn
                 battleDisplay(playerPoke, opponentPoke)
-                playerPoke, opponentPoke = playerTurn(playerPoke, opponentPoke)
+                playerTurn(playerPoke, opponentPoke)
                 input()
                 if opponentPoke.HP <= 0: #checks if a pokemon fainted
                     opponentPokesCopy.remove(opponentPoke)
@@ -264,7 +254,7 @@ def battle(player, opponent):
                     break
             else: #when turn is not 0 it is the computer's turn
                 battleDisplay(playerPoke, opponentPoke)
-                playerPoke, opponentPoke = computerTurn(playerPoke, opponentPoke, str(opponent.name))
+                computerTurn(playerPoke, opponentPoke, str(opponent.name))
                 input()
                 if playerPoke.HP<=0: #checks if a pokemon fainted
                     playerPokesCopy.remove(playerPoke)
@@ -280,8 +270,7 @@ def battle(player, opponent):
         print('You won!')
     else:
         print('You lose!')
-    for i in range(len(player.pokeList)):
-        print(player.pokeList[i].level, player.pokeList[i].stats)
+    battleRestore(player)
     return won
 
 #print(lab()) #runs the game
@@ -296,4 +285,4 @@ garyCharmander = copy.deepcopy(pokedex.charmander)
 ash = trainer('ash', [ashSquirtle, ashPidgey, ashBulbasaur])
 gary = trainer('gary', [garyBulbasaur, garyCharmander, garyPidgey])
 
-print(battle(ash, gary))
+#print(battle(ash, gary))
