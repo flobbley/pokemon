@@ -1,4 +1,5 @@
 from moves import *
+from random import *
 import copy
 
 class pokemon:
@@ -28,6 +29,7 @@ class pokemon:
         self.XPmod = XPmod
         self.gainedXP = 0
         self.tempStats = copy.deepcopy(stats)
+        self.status = []
 
     def getName(self): #gives the name of the pokemon
         print(self.name)
@@ -52,17 +54,23 @@ class pokemon:
         x = self.moves[index][0]
         x(self, opponent)
 
-    def statDam(self, damage, stat): #reduces the appropriate stat when stat damage is taken
-        if damage == 0:
-            print('but it missed!')
-        elif self.tempStats[str(stat)] <10:
+    def statChange(self, stat, boost): #reduces the appropriate stat when stat damage is taken
+        minstat = .131
+        maxstat = 4
+        ratio = self.tempStats[str(stat)]/self.stats[str(stat)]
+        margin = 0.02
+        if abs(ratio - minstat)<margin:
             print(str(self.name)+'\'s', stat,'can\'t be reduced anymore!')
+        elif abs(ratio-maxstat)<margin:
+            print(str(self.name)+'\'s',stat,'can\'t be increased anymore!')
         else:
-            print(str(self.name)+'\'s',str(stat),'fell!')
-            oldStat = self.tempStats[str(stat)]
-            self.tempStats[str(stat)] = self.tempStats[str(stat)] + (self.tempStats['defense'])//30 - damage
-            if self.tempStats[str(stat)]>oldStat:
-                self.tempStats[str(stat)] = oldStat
+            if boost:
+                change = 'increased!'
+                self.tempStats[str(stat)] *= 1.33
+            else:
+                change = 'decreased!'
+                self.tempStats[str(stat)]*= 0.66
+            print(self.name+'\'s',stat,change)
 
     def XPGain(self, opponent):
         gain = opponent.baseXP
@@ -92,7 +100,53 @@ class pokemon:
         self.HP += amount
         if self.HP > self.maxHP:
             self.HP = self.maxHP
+    
+
+    def statusAction(self, opponent, position):
+        """
+        Performs the relevant status effects
+        position is the place in the battle sequence it happens
+        'before' = before the turn
+        'during' = during the turn
+        'after' = after the turn
+        """
+        act = []
+
+        #non-exclusive statuses
+        if 'leech' in self.status:
+            if position == 'after':
+                damage = self.maxHP//16
+                self.damageTaken(damage)
+                opponent.heal(damage)
+                print(opponent.name,'absorbed health from',self.name)
+
         
+        #exclusive statuses
+        elif 'paralyzed' in self.status:
+            if position == 'before':
+                print(self.name,'is paralyzed, it may not attack')
+            elif position == 'during':    
+                chance = [True,True,False]
+                paralyze = choice(chance)
+                if paralyze == False:
+                    print(self.name, 'is fully paralyzed!')
+                act.append(paralyze)
+        
+        elif 'sleep' in self.status:
+            if position == 'before':
+                print(self.name,'is asleep!')
+            elif position == 'during':
+                chance = [True,False,False]
+                sleep = choice(chance)
+                if sleep == True:
+                    print(self.name,'woke up!')
+                    act.append(True)
+                else:
+                    print(self.name,'is fast asleep')
+                    act.append(False)
+              
+        return False not in act
+    
 class pokedex: #fills the global pokedex
     def __init__(self):
         self.squirtle = pokemon('Squirtle', 5, ['water','water'], 50, {'attack':50,'defense':40, 'speed':40},\

@@ -108,12 +108,9 @@ def tailWhip(attacker, defender):
     main defense damaging attack, right now all the other stat damage attacks are clones of this
     """
     if hit(95)==True:
-        defDam = (attacker.stats['attack'])//5
-        defender.statDam(defDam, 'defense')
-        return attacker, defender
+        defender.statChange('defense', False)
     else:
         print('but it missed!')
-        return attacker, defender
 
 def tackle(attacker, defender):
     damageType = 'normal'
@@ -128,10 +125,9 @@ def tackle(attacker, defender):
 
 def leer(attacker, defender):
     if hit(95)==True:
-        defDam = (attacker.stats['attack'])//5
-        defender.statDam(defDam, 'defense')
+        defender.statChange('defense', False)
     else:
-        print('but it failed!')
+        print('but it missed!')
 
 def wingAttack(attacker, defender):
     damageType = 'normal'
@@ -179,17 +175,9 @@ def ember(attacker, defender):
 
 def leechSeed(attacker, defender):
     damageType = 'grass'
-    power = 25
-    if hit(95) == True:
-        damageMod = typeMod(damageType, attacker.typ, defender.typ)
-        damageDone = damage(attacker, defender, power)
-        damageDone *= damageMod
-        before = attacker.HP
-        defender.damageTaken(round(damageDone))
-        attacker.heal(damageDone//2)
-        after = attacker.HP
-        battleDisplay(attacker, defender)
-        print(attacker.name,'healed itself', after-before, 'HP!')
+    if 'grass' in defender.typ:
+        print(defender.name,'was not affected')
     else:
-        print('but it missed!')
+        print(defender.name,'was seeded')
+        defender.status.append('leech')
                         
