@@ -16,8 +16,10 @@ class pokemon:
     needXP is amount of XP needed to gain a level; integer
     XPmod is how much the gained XP is adjusted; two digit, single decimel place; 1.6 or 0.8 
     """
-    def __init__(self,name,level,typ,maxHP,stats, moves, baseXP,needXP, XPmod):
+    def __init__(self,name, pokeNum, entry, level,typ,maxHP,stats, moves, baseXP,needXP, XPmod):
         self.name = name
+        self.pokeNum = pokeNum
+        self.entry = entry
         self.level = level
         self.typ = typ
         self.maxHP = maxHP
@@ -119,6 +121,14 @@ class pokemon:
                 self.damageTaken(damage)
                 opponent.heal(damage)
                 print(opponent.name,'absorbed health from',self.name)
+                input()
+        if 'burn' in self.status:
+            if position == 'before':
+                self.tempStats['attack'] = self.stats['attack']/2
+            elif position == 'after':
+                damage = self.maxHP//8
+                self.damageTaken(damage)
+                print(self.name, 'was hurt by the burn')
 
         
         #exclusive statuses
@@ -149,13 +159,13 @@ class pokemon:
     
 class pokedex: #fills the global pokedex
     def __init__(self):
-        self.squirtle = pokemon('Squirtle', 5, ['water','water'], 50, {'attack':50,'defense':40, 'speed':40},\
-                                {1:[tackle, 'tackle'],2:[tailWhip, 'tail whip'],3:[bubble,'bubble']}, 100, 100, 1.0)
-        self.charmander = pokemon('Charmander', 5, ['fire','fire'], 40, {'attack':70, 'defense':30, 'speed':60},\
-                                  {1:[scratch,'scratch'], 2:[leer,'leer'], 3:[ember,'ember']}, 100, 100, 1.0)
-        self.bulbasaur = pokemon('Bulbasaur',5, ['grass','poison'], 60, {'attack':30, 'defense':30, 'speed':30},\
-                                 {1:[tackle, 'tackle'], 2:[leer, 'leer'],3:[leechSeed, 'leech seed']}, 100, 100, 1.0)
-        self.pidgey = pokemon('Pidgey', 5, ['normal','flying'], 30, {'attack':70, 'defense':50, 'speed':50},\
+        self.squirtle = pokemon('Squirtle', 2, 'This pokemon likes to squirt water at people that get too close', 5, ['water','water'], 21, {'attack':14,'defense':15, 'speed':12},\
+                                {1:[tackle, 'tackle'],2:[tailWhip, 'tail whip']}, 100, 100, 1.0)
+        self.charmander = pokemon('Charmander', 3, 'This pokemon has a firey tail!', 5, ['fire','fire'], 19, {'attack':16, 'defense':12, 'speed':14},\
+                                  {1:[scratch,'scratch'], 2:[leer,'leer']}, 100, 100, 1.0)
+        self.bulbasaur = pokemon('Bulbasaur', 1, 'This pokemon has a large plant bulb on it\'s back', 5, ['grass','poison'], 24, {'attack':10, 'defense':16, 'speed':10},\
+                                 {1:[tackle, 'tackle'], 2:[leer, 'leer']}, 100, 100, 1.0)
+        self.pidgey = pokemon('Pidgey',4,'This pokemon is very common in large cities where people feed them', 5, ['normal','flying'], 16, {'attack':13, 'defense':13, 'speed':13},\
                               {1:[wingAttack, 'wing attack'], 2:[gust, 'gust']}, 50, 60, 1.0)
 
 pokedex = pokedex() #actually creates the pokedex

@@ -155,6 +155,8 @@ def bubble(attacker, defender):
     damageType = 'water'
     power = 40
     if hit(95) == True:
+        if randint(1,10) == 5:
+            defender.statChange('speed', False)
         damageMod = typeMod(damageType, attacker.typ, defender.typ)
         damageDone = damage(attacker, defender, power)
         damageDone *= damageMod
@@ -166,6 +168,8 @@ def ember(attacker, defender):
     damageType = 'fire'
     power = 40
     if hit(95) == True:
+        if randint(1,10) == 5:
+            defender.status.append('burn')
         damageMod = typeMod(damageType, attacker.typ, defender.typ)
         damageDone = damage(attacker, defender, power)
         damageDone *= damageMod
