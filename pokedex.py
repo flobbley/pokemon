@@ -2,6 +2,18 @@ from moves import *
 from random import *
 import copy
 
+def menuValid(number, maxNum):
+    noGood = 'invalid input'
+    try:
+        number = int(number)
+        if number <= maxNum and number >0:
+            return True
+        else:
+            print(noGood)
+            return False
+    except ValueError:
+        print(noGood)
+        
 class pokemon:
     """
     creates a pokemon
@@ -46,6 +58,38 @@ class pokemon:
         for i in range(1,len(self.moves)+1):
             print(str(i)+'.', self.moves[i][1])
 
+    def learnMove(self, move):
+        moveNo = len(self.moves)+1
+        if moveNo<=4:
+            self.moves[moveNo] = move
+            print(self.name, 'learned', move[1]+'!')
+            input()
+        else:
+            while True:
+                print(self.name, 'is trying to learn', move[1],'but',self.name,'already knows four moves')
+                print('Would you like to replace one of these moves?')
+                self.getMoves()
+                print('5. No, do not learn move')
+                action = input()                
+                if menuValid(action, 5):
+                    action = int(action)
+                    if action == 5:
+                        print(self.name, 'did not learn', move[1])
+                        break
+                    else:
+                        print(self.moves[action][1],'will be replaced with',move[1])
+                        while True:
+                            print('Are you sure? y/n')
+                            sure = input()
+                            if sure ==  'y' or sure == 'n':
+                                break
+                        if sure == 'y':
+                            self.moves[action] = move
+                            print(self.name, 'learned', self.moves[action][1]+'!')
+                            break
+            input()
+                        
+
     def damageTaken(self, damage): #reduces the HP when damage is taken
         if damage == 0:
             self.HP = self.HP
@@ -79,14 +123,14 @@ class pokemon:
         self.gainedXP += gain
         print(self.name,'gained',gain,'experience!')
         if self.gainedXP >= self.needXP:
-            self.level += 1
-            print(self.name, 'grew to level', str(self.level)+'!')
-            self.gainedXP = 0
-            newXP = self.needXP*1.3
-            self.needXP = newXP
             self.levelUp()
 
     def levelUp(self):
+        self.level += 1
+        print(self.name, 'grew to level', str(self.level)+'!')
+        self.gainedXP = 0
+        newXP = self.needXP*1.3
+        self.needXP = newXP
         self.maxHP += 2
         self.stats['attack'] += 2
         self.stats['defense'] +=2
@@ -94,6 +138,8 @@ class pokemon:
         self.tempStats['attack'] += 2
         self.tempStats['defense'] += 2
         self.tempStats['speed'] += 2
+        if self.level in moveTree[self.name]:
+            self.learnMove(moveTree[self.name][self.level])
 
     def statRestore(self):
         self.tempStats = copy.deepcopy(self.stats)
@@ -167,5 +213,12 @@ class pokedex: #fills the global pokedex
                                  {1:[tackle, 'tackle'], 2:[leer, 'leer']}, 100, 100, 1.0)
         self.pidgey = pokemon('Pidgey',4,'This pokemon is very common in large cities where people feed them', 5, ['normal','flying'], 16, {'attack':13, 'defense':13, 'speed':13},\
                               {1:[wingAttack, 'wing attack'], 2:[gust, 'gust']}, 50, 60, 1.0)
-
+        self.ratata = pokemon('Ratata',5,'This pokemon has strong teeth, it has been known to chew through metal!', 5, ['normal','normal'],17,{'attack':14, 'defense':12, 'speed':13},\
+                              {1:[tackle, 'tackle'],2:[tailWhip, 'tail whip']}, 50, 50, 1.0)
 pokedex = pokedex() #actually creates the pokedex
+
+moveTree = {'Squirtle':{6:[bubble, 'bubble']},\
+            'Charmander':{6:[ember,'ember']},\
+            'Bulbasaur':{6:[leechSeed, 'leech seed']},\
+            'Pidgey':{},\
+            'Ratata':{}}
