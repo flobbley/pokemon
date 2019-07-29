@@ -1,4 +1,11 @@
 import os
+global clearVar
+syst = os.name
+if syst == 'nt':
+    clearVar = "cls"
+else:
+    clearVar = "clear"
+    
 def menuValid(number, maxNum):
     noGood = 'invalid input'
     try:
@@ -11,20 +18,22 @@ def menuValid(number, maxNum):
     except ValueError:
         print(noGood)
 
-def potion(pokemon):
+def potion(player, pokemon):
     if pokemon.HP == pokemon.maxHP:
         print('It won\'t have any effect!')
     else:
         print('used a potion on',pokemon.name+'!')
         pokemon.heal(20)
+        player.itemList[2][1]-=1
 
 def pokeball(player, opponentPoke):
+    player.itemList[1][1]-=1
     print('Threw a pokeball!')
     player.catchPoke(opponentPoke)
-
+    
 def itemShop(player):
     while True:
-        os.system("clear")
+        os.system(clearVar)
         print('Welcome to the Pokemart!')
         print('You have',player.money,'credits')
         items = {1:['Pokeball',100],2:['Potion',50]}

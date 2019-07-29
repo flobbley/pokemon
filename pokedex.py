@@ -132,6 +132,7 @@ class pokemon:
         newXP = self.needXP*1.3
         self.needXP = newXP
         self.maxHP += 2
+        self.HP += 2
         self.stats['attack'] += 2
         self.stats['defense'] +=2
         self.stats['speed'] += 2
@@ -207,7 +208,7 @@ class pokedex: #fills the global pokedex
     def __init__(self):
         self.squirtle = pokemon('Squirtle', 2, 'This pokemon likes to squirt water at people that get too close', 5, ['water','water'], 21, {'attack':14,'defense':15, 'speed':12},\
                                 {1:[tackle, 'tackle'],2:[tailWhip, 'tail whip']}, 100, 100, 1.0)
-        self.charmander = pokemon('Charmander', 3, 'This pokemon has a firey tail!', 5, ['fire','fire'], 19, {'attack':16, 'defense':12, 'speed':14},\
+        self.charmander = pokemon('Charmander', 3, 'This pokemon has a firey tail!', 5, ['fire','fire'], 19, {'attack':18, 'defense':12, 'speed':14},\
                                   {1:[scratch,'scratch'], 2:[leer,'leer']}, 100, 100, 1.0)
         self.bulbasaur = pokemon('Bulbasaur', 1, 'This pokemon has a large plant bulb on it\'s back', 5, ['grass','poison'], 24, {'attack':10, 'defense':16, 'speed':10},\
                                  {1:[tackle, 'tackle'], 2:[leer, 'leer']}, 100, 100, 1.0)
