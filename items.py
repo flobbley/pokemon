@@ -29,7 +29,8 @@ def potion(player, pokemon):
 def pokeball(player, opponentPoke):
     player.itemList[1][1]-=1
     print('Threw a pokeball!')
-    player.catchPoke(opponentPoke)
+    catch = player.catchPoke(opponentPoke)
+    return catch
     
 def itemShop(player):
     while True:

@@ -2,7 +2,6 @@
 #to do: Need to change item selection so that it works with dictionary numbers
 #to do: Need to make unique pokemon identifiers for wild pokemon added to party
 #to do: Need to fix pidgey
-#to do: Need to fix so that pokeballs are removed from inventory when used
 
 from random import *
 import os
@@ -16,6 +15,8 @@ if syst == 'nt':
     clearVar = "cls"
 else:
     clearVar = "clear"
+global lastPokecenter
+lastPokecenter = 'palletTown'
     
 class trainer:
     """
@@ -186,7 +187,7 @@ class trainer:
             poke.heal(1000)
         
 def main():
-    modules = {'bedroom':bedroom, 'momsHouse':momsHouse, 'lab':lab, 'garysHouse':garysHouse, 'route29north':route29north, 'palletTown':palletTown, 'viridian city':viridianCity,\
+    modules = {'bedroom':bedroom, 'momsHouse':momsHouse, 'lab':lab, 'garysHouse':garysHouse, 'route29north':route29north, 'palletTown':palletTown, 'viridianCity':viridianCity,\
                'route29south':route29south}
     playerName = input('Welcome to the world of Pokemon! First, What is your name?\n') #setup
     player = trainer(playerName, [], {}, 500)
@@ -235,7 +236,17 @@ def menu(player):
                     print()                       
             else:
                 break
-            
+
+def menuSelect(ask, options):
+    while True:
+        i = 1
+        for option in options:
+            print(str(i)+'.',option)
+        action = input()
+        if menuValid(action, len(options)):
+            action = int(action)
+            return action
+
 def pokeCenter(player):
     os.system(clearVar)
     while True: 
@@ -294,6 +305,10 @@ def momsHouse(player):
                     else:
                         print('Mom: "I can\'t believe my child is all grown up and going on their own pokemon adventure!"')
                         print('"Why don\'t you take a rest for a bit?" (pokemon are healed)')
+                        global lastPokecenter
+                        lastPokecenter = 'palletTown'
+                        print(lastPokecenter)
+                        input()
                         player.partyHeal()
                         input()
                 elif action == 2:
@@ -357,30 +372,23 @@ def route29(player):
     patch1 = choice(chance)
     patch2 = choice(chance)
     patch3 = choice(chance)
-    if patch1:
-        print('You hear a rustle in the first patch, a wild pokemon appears!')
-        wildPoke = choice(encounters)
-        wild.pokeList.append(wildPoke)
-        battle(player, wild)
-        wild.pokeList.remove(wildPoke)
-        encounters.remove(wildPoke)
-        input()
-    if patch2:
-        print('You hear a rustle in the second patch, a wild pokemon appears!')
-        wildPoke = choice(encounters)
-        wild.pokeList.append(wildPoke)
-        battle(player, wild)
-        wild.pokeList.remove(wildPoke)
-        encounters.remove(wildPoke)
-        input()
-    if patch3:
-        print('You hear a rustle in the third patch, a wild pokemon appears!')
-        wildPoke = choice(encounters)
-        wild.pokeList.append(wildPoke)
-        battle(player, wild)
-        wild.pokeList.remove(wildPoke)
-        encounters.remove(wildPoke)
-        input() 
+    patches = [patch1, patch2, patch3]
+    i = 1
+    for patch in patches:
+        if patch:
+            print ('You hear a rustle in patch',i,'a wild pokemon appears!')
+            i+=1
+            input()
+            wildPoke = choice(encounters)
+            wild.pokeList.append(wildPoke)
+            os.system(clearVar)
+            won = battle(player, wild)
+            if won == False:
+                return False
+            wild.pokeList.remove(wildPoke)
+            encounters.remove(wildPoke)
+            input()
+    return True
     
 def route29north(player):
     os.system(clearVar)
@@ -397,14 +405,20 @@ def route29north(player):
     else:
         print('you head out on Route 29 toward Viridian City, there are three patches of tall grass you have to pass through on your way there. You may encounter wild pokemon...')
         input()
-        route29(player)           
-        return 'viridian city'
+        passed = route29(player)
+        if passed:
+            return 'viridianCity'
+        else:
+            return lastPokecenter
 
 def route29south(player):
     os.system(clearVar)
     print('You head south on Route 29 toward Pallet Town, there are three patches of tall grass you have to pass through on your way there. You may encounter wild pokemon...')
-    route29(player)
-    return 'palletTown'
+    passed = route29(player)
+    if passed:
+        return 'palletTown'
+    else:
+        return lastPokecenter
 
 def viridianCity(player):
     while True:
@@ -417,11 +431,14 @@ def viridianCity(player):
         if menuValid(action, 6):
             action = int(action)
             if action == 1:
+                global lastPokecenter
+                lastPokecenter = 'viridianCity'
                 pokeCenter(player)
             elif action == 2:
                 itemShop(player)
             elif action == 3:
                 print('test gym')
+                input()
             elif action == 4:
                 if 'rock' not in player.badges:
                     print('At the gatehouse to the Viridian Forest you find a park ranger')
@@ -431,7 +448,7 @@ def viridianCity(player):
                     print('"If you have a rock badge from the local gym we\'ll let you go through"')
                     input()
                 else:
-                    return 'ViridianForest'
+                    return 'viridianForest'
             elif action == 5:
                 return 'route29south'
             else:
@@ -464,9 +481,6 @@ def palletTown(player):
             
 def lab(player, pokeGot = True):
     os.system(clearVar)
-    """
-    Main game loop
-    """
     if pokeGot == False:
         print('As you walk into the lab you see Professor Oak\'s grandson, Gary, waiting')
         input()
@@ -615,12 +629,16 @@ def playerTurn(playerPoke, opponentPoke):
         while True:
             playerPoke.getMoves()
             move = input()
-            noMoves = len(playerPoke.moves)
+            noMoves = len(playerPoke.moves)+1
             if menuValid(move, noMoves):
                 move = int(move)
                 break
-        print(playerPoke.name, 'used', playerPoke.moves[move][1])
-        playerPoke.useMove(move, opponentPoke)
+        if move == noMoves:
+            return False
+        else:
+            print(playerPoke.name, 'used', playerPoke.moves[move][1])
+            playerPoke.useMove(move, opponentPoke)
+            return True
         
     
 def computerTurn(playerPoke, opponentPoke, opponentName):
@@ -638,8 +656,8 @@ def battleDisplay(playerPoke, opponentPoke):
     """
     Will display sprites and HP bars
     """
-    print(str(opponentPoke.name), 'HP:'+opponentPoke.HPBar(),str(opponentPoke.HP)+'/'+str(opponentPoke.maxHP))
-    print(str(playerPoke.name),'HP:'+playerPoke.HPBar(),str(playerPoke.HP)+'/'+str(playerPoke.maxHP))
+    print(str(opponentPoke.name),str(opponentPoke.level), 'HP:'+opponentPoke.HPBar(),str(opponentPoke.HP)+'/'+str(opponentPoke.maxHP))
+    print(str(playerPoke.name),str(playerPoke.level), 'HP:'+playerPoke.HPBar(),str(playerPoke.HP)+'/'+str(playerPoke.maxHP))
 
 def battleRestore(player):
     for poke in player.pokeList:
@@ -695,9 +713,9 @@ def battle(player, opponent, wild= True):
                 while True: #continues player menu until valid action is taken
                     action = battleMenu()
                     if action == 1:
-                        playerTurn(playerPoke, opponentPoke)
-                        input()
-                        break
+                        if playerTurn(playerPoke, opponentPoke):
+                            input()
+                            break
                     elif action == 2:
                         print('Who do you want to send out?')
                         oldPlayerPoke = playerPoke
@@ -709,13 +727,12 @@ def battle(player, opponent, wild= True):
                     elif action == 3:
                         item = player.useItem()
                         if item == 'Potion':
-                            print('Who do you want to use it on?')
-                            poke = player.choosePoke(player.pokeList)
-                            potion(player, poke)
+                            print(player.name,'used a potion on',playerPoke.name+'!')
+                            potion(player, playerPoke)
                             break
                         elif item == 'Pokeball':
                             if wild == True:
-                                catch = player.catchPoke(opponentPoke)
+                                catch = pokeball(player, opponentPoke)
                                 if catch == True:
                                     opponentPokesCopy = []
                                 break
@@ -733,8 +750,7 @@ def battle(player, opponent, wild= True):
                                 break
                             else:
                                 print('You couldn\'t get away!')
-                            
-                    input()
+                                break
                     
                 if len(opponentPokesCopy)== 0:
                     won = True
@@ -754,6 +770,7 @@ def battle(player, opponent, wild= True):
                     else:
                         opponentPoke = choice(opponentPokesCopy)
                         print(str(opponent.name),'sent out',str(opponentPoke.name))
+                        input()
                         turn = 1-whoGoesFirst(playerPoke, opponentPoke)
                         
                 notUsed = playerPoke.statusAction(opponentPoke, 'after')
@@ -808,14 +825,19 @@ def battle(player, opponent, wild= True):
                     else:
                         opponentPoke = choice(opponentPokesCopy)
                         print(str(opponent.name),'sent out',str(opponentPoke.name))
+                        input()
                         turn = 1-whoGoesFirst(playerPoke, opponentPoke)
                         
             turn = 1-turn
             
     if won == True:
-        print('You won!')
+        if wild == False:
+            print('You won!')
     else:
-        print('You lose!')
+        print(player.name,'is out of usable pokemon')
+        print(player.name,'blacked out!')
+        player.partyHeal()
+        input()
     battleRestore(player)
     return won
 
@@ -831,5 +853,6 @@ garySquirtle = copy.deepcopy(pokedex.squirtle)
 ashCharmander = copy.deepcopy(pokedex.charmander)
 
 ash = trainer('ash', [ashPidgey, ashBulbasaur], {1:['Pokeball',5],2:['Potion',5]}, 500)
-gary = trainer('gary', [], {}, 10)
+gary = trainer('gary', [garyPidgey, garyCharmander], {}, 10)
 
+#print(battle(ash, gary, False))

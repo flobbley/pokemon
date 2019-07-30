@@ -57,6 +57,7 @@ class pokemon:
     def getMoves(self): #returns the list of available moves
         for i in range(1,len(self.moves)+1):
             print(str(i)+'.', self.moves[i][1])
+        print(str(i+1)+'. cancel')
 
     def learnMove(self, move):
         moveNo = len(self.moves)+1
@@ -164,7 +165,7 @@ class pokemon:
         #non-exclusive statuses
         if 'leech' in self.status:
             if position == 'after':
-                damage = self.maxHP//16
+                damage = self.maxHP//16+1
                 self.damageTaken(damage)
                 opponent.heal(damage)
                 print(opponent.name,'absorbed health from',self.name)
