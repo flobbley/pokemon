@@ -779,6 +779,9 @@ def lab(player, pokeGot = True):
         print('Professor Oak: "Now now Gary, you\'ll get your turn, now which pokemon would you like',player.name+'?"')
         
         gary = trainer('Gary',[],{},10)
+        squirtle = pokemonGenerator(pokedex.squirtle, 5, [[tackle,'tackle'],[tailWhip,'tail whip']])
+        charmander = pokemonGenerator(pokedex.charmander, 5, [[scratch,'scratch'],[tailWhip, 'tail whip']])
+        bulbasaur = pokemonGenerator(pokedex.bulbasaur,5,[[tackle, 'tackle'],[leer,'leer']])
         while True: #first Pokemon selection
             poke = input('\n1.Squirtle\n2.Charmander\n3.Bulbasaur\n')
             if menuValid(poke, 3):
@@ -787,26 +790,20 @@ def lab(player, pokeGot = True):
         if poke == 1:
             print('Great choice! Squirtle is a great defensive pokemon, cute too!')
             input()
-            ashSquirtle = copy.deepcopy(pokedex.squirtle)
-            player.addPoke(ashSquirtle)
-            garyBulbasaur = copy.deepcopy(pokedex.bulbasaur)
-            gary.pokeList = [garyBulbasaur]
+            player.addPoke(squirtle)
+            gary.pokeList = [bulbasaur]
             
         elif poke == 2:
             print('Great choice! Charmander is a fiery attacker! loves to play fetch too!')
             input()
-            ashCharmander = copy.deepcopy(pokedex.charmander)
-            player.addPoke(ashCharmander)
-            garySquirtle = copy.deepcopy(pokedex.squirtle)
-            gary.pokeList = [garySquirtle]
+            player.addPoke(charmander)
+            gary.pokeList = [squirtle]
             
         else:
             print('Great choice! Bulbasaur is a sturdy blocker! loves to bask in the sun!')
             input()
-            ashBulbasaur = copy.deepcopy(pokedex.bulbasaur)
-            player.addPoke(ashBulbasaur)
-            garyCharmander = copy.deepcopy(pokedex.charmander)
-            gary.pokeList = [garyCharmander]
+            player.addPoke(bulbasaur)
+            gary.pokeList = [charmander]
                 
         os.system(clearVar)
         print('Gary: Fine, then I\'ll take',str(gary.pokeList[0].name)+'!')
@@ -893,7 +890,7 @@ def viridianArea1(player):
     
 
 
-#print(main()) #runs the game
+print(main()) #runs the game
 
 ashPidgey = copy.deepcopy(pokedex.pidgey)
 garyPidgey = copy.deepcopy(pokedex.pidgey)

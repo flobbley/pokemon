@@ -28,21 +28,22 @@ class pokemon:
     needXP is amount of XP needed to gain a level; integer
     XPmod is how much the gained XP is adjusted; two digit, single decimel place; 1.6 or 0.8 
     """
-    def __init__(self,name, pokeNum, entry, level,typ,maxHP,stats, moves, baseXP,needXP, XPmod):
+    def __init__(self,name, pokeNum, entry, level,typ,statMods, moves, baseXP,needXP,XPmod):
         self.name = name
         self.pokeNum = pokeNum
         self.entry = entry
         self.level = level
         self.typ = typ
-        self.maxHP = maxHP
-        self.stats = stats
+        self.maxHP = 10
+        self.statMods = statMods
         self.moves = moves
-        self.HP = maxHP #sets current HP equal to max HP at creation
+        self.HP = self.maxHP #sets current HP equal to max HP at creation
         self.baseXP = baseXP
         self.needXP = needXP
         self.XPmod = XPmod
         self.gainedXP = 0
-        self.tempStats = copy.deepcopy(stats)
+        self.stats = {'attack':5, 'defense':5, 'sp.attack':5, 'sp.defense':5, 'speed':5}
+        self.tempStats = copy.deepcopy(self.stats)
         self.status = []
 
     def getName(self): #gives the name of the pokemon
@@ -127,33 +128,24 @@ class pokemon:
             self.levelUp()
 
     def levelUp(self):
-        self.level += 1
-        print(self.name, 'grew to level', str(self.level)+'!')
+        print(self.name, 'grew to level', str(self.level+1)+'!')
         self.gainedXP = 0
-        newXP = self.needXP*1.3
+        newXP = self.needXP*self.XPmod
         self.needXP = newXP
-        self.maxHP += 2
-        self.HP += 2
-        self.stats['attack'] += 2
-        self.stats['defense'] +=2
-        self.stats['speed'] += 2
-        self.tempStats['attack'] += 2
-        self.tempStats['defense'] += 2
-        self.tempStats['speed'] += 2
+        self.addLevel(2)
         if self.level in moveTree[self.name]:
             self.learnMove(moveTree[self.name][self.level])
 
     def addLevel(self, endLevel):
         levelsAdded = endLevel - 1
-        for i in range(levelsAdded):
-            self.maxHP += 2
-            self.HP += 2
-            self.stats['attack'] += 2
-            self.stats['defense'] +=2
-            self.stats['speed'] += 2
-            self.tempStats['attack'] += 2
-            self.tempStats['defense'] += 2
-            self.tempStats['speed'] += 2
+        self.level+=levelsAdded
+        self.maxHP += round(levelsAdded*self.statMods[0])
+        self.HP += round(levelsAdded*self.statMods[0])
+        i = 1
+        for stat in self.stats:
+            self.stats[stat]+= round(levelsAdded*self.statMods[i])
+            i+=1
+        self.baseXP = round(self.baseXP*levelsAdded*self.XPmod)
 
     def statRestore(self):
         self.tempStats = copy.deepcopy(self.stats)
@@ -216,19 +208,28 @@ class pokemon:
                     act.append(False)
               
         return False not in act
-    
+
+def pokemonGenerator(pokemon, level, givenMoves):
+    newPoke = copy.deepcopy(pokemon)
+    newPoke.addLevel(level)
+    i = 1
+    for move in givenMoves:
+        newPoke.moves[i] = move
+        i += 1
+    return newPoke
+
 class pokedex: #fills the global pokedex
     def __init__(self):
-        self.squirtle = pokemon('Squirtle', 2, 'This pokemon likes to squirt water at people that get too close', 5, ['water','water'], 21, {'attack':14,'defense':15, 'speed':12},\
-                                {1:[tackle, 'tackle'],2:[tailWhip, 'tail whip']}, 100, 100, 1.0)
-        self.charmander = pokemon('Charmander', 3, 'This pokemon has a firey tail!', 5, ['fire','fire'], 19, {'attack':18, 'defense':12, 'speed':14},\
-                                  {1:[scratch,'scratch'], 2:[leer,'leer']}, 100, 100, 1.0)
-        self.bulbasaur = pokemon('Bulbasaur', 1, 'This pokemon has a large plant bulb on it\'s back', 5, ['grass','poison'], 24, {'attack':10, 'defense':16, 'speed':10},\
-                                 {1:[tackle, 'tackle'], 2:[leer, 'leer']}, 100, 100, 1.0)
-        self.pidgey = pokemon('Pidgey',4,'This pokemon is very common in large cities where people feed them', 5, ['normal','flying'], 16, {'attack':13, 'defense':13, 'speed':13},\
-                              {1:[wingAttack, 'wing attack'], 2:[gust, 'gust']}, 50, 60, 1.0)
-        self.ratata = pokemon('Ratata',5,'This pokemon has strong teeth, it has been known to chew through metal!', 5, ['normal','normal'],17,{'attack':14, 'defense':12, 'speed':13},\
-                              {1:[tackle, 'tackle'],2:[tailWhip, 'tail whip']}, 50, 50, 1.0)
+        self.squirtle = pokemon('Squirtle', 2, 'This pokemon likes to squirt water at people that get too close', 1, ['water','water'],[1.98,0.96,1.3,1,1.28,0.86],\
+                                {}, 20, 20, 1.3)
+        self.charmander = pokemon('Charmander', 3, 'This pokemon has a firey tail!', 1, ['fire','fire'],[1.8,1.04,0.86,1.2,1,1.3],\
+                                  {}, 20, 20, 1.3)
+        self.bulbasaur = pokemon('Bulbasaur', 1, 'This pokemon has a large plant bulb on it\'s back', 1, ['grass','poison'],[2,0.98,0.98,1.3,1.3,0.9],\
+                                 {}, 20, 20, 1.3)
+        self.pidgey = pokemon('Pidgey',4,'This pokemon is very common in large cities where people feed them', 1, ['normal','flying'],[1.9,0.9,0.8,0.7,0.7,1.12],\
+                              {}, 20, 20, 1.3)
+        self.ratata = pokemon('Ratata',5,'This pokemon has strong teeth, it has been known to chew through metal!', 1, ['normal','normal'],[1.7,1.12,0.7,0.5,0.7,1.44],\
+                              {}, 20, 20, 1.3)
 pokedex = pokedex() #actually creates the pokedex
 
 moveTree = {'Squirtle':{6:[bubble, 'bubble']},\
