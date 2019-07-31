@@ -143,6 +143,18 @@ class pokemon:
         if self.level in moveTree[self.name]:
             self.learnMove(moveTree[self.name][self.level])
 
+    def addLevel(self, endLevel):
+        levelsAdded = endLevel - 1
+        for i in range(levelsAdded):
+            self.maxHP += 2
+            self.HP += 2
+            self.stats['attack'] += 2
+            self.stats['defense'] +=2
+            self.stats['speed'] += 2
+            self.tempStats['attack'] += 2
+            self.tempStats['defense'] += 2
+            self.tempStats['speed'] += 2
+
     def statRestore(self):
         self.tempStats = copy.deepcopy(self.stats)
 
