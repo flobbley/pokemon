@@ -708,37 +708,33 @@ def viridianCity(player):
         os.system(clearVar)
         print('you find yourself in Viridian City. There is a Pokecenter here, as well as a Pokemart.')
         print('To the north there is a road that leads in to the Viridian Forest. Then off to the side of town you see the local Pokemon Gym!')#LEFT OFF HERE
-        print('Where would you like to go?')
-        print('1. Pokecenter\n2. Pokemart\n3. Pokemon Gym\n4. Into the Virdian Forest\n5. Head back on Route 29 toward Pallet Town\n6. Menu')
-        action = input()
-        if menuValid(action, 6):
-            action = int(action)
-            if action == 1:
-                global lastPokecenter
-                lastPokecenter = 'viridianCity'
-                pokeCenter(player)
-            elif action == 2:
-                itemShop(player)
-            elif action == 3:
-                print('As you approach the gym you notice that something feels off, the building looks like it hasn\'t been maintained in quite sometime')
+        action = menuSelect('Where would your like to go?',['Pokecenter','Pokemart','Into the Viridian Forest','Head back on Route 29 toward Pallet Town','Menu'])
+        if action == 1:
+            global lastPokecenter
+            lastPokecenter = 'viridianCity'
+            pokeCenter(player)
+        elif action == 2:
+            itemShop(player)
+        elif action == 3:
+            print('As you approach the gym you notice that something feels off, the building looks like it hasn\'t been maintained in quite sometime')
+            input()
+            print('Old Man: "Looking at the old Pokemon Gym eh? Nobody has been there in quite some time,')
+            print("the old gym leader left years ago, just an abandoned old building now")
+            input()
+        elif action == 4:
+            if 'rock' not in player.badges:
+                print('At the gatehouse to the Viridian Forest you find a park ranger')
                 input()
-                print('Old Man: "Looking at the old Pokemon Gym eh? Nobody has been there in quite some time,')
-                print("the old gym leader left years ago, just an abandoned old building now")
+                print('Ranger: "Are you looking to head into the Viridian Forest? There are some dangerous pokemon in there,')
+                print('you\'ll need to prove you can handle it before I can let you through"')
+                print('"If you have a rock badge from the local gym we\'ll let you go through"')
                 input()
-            elif action == 4:
-                if 'rock' not in player.badges:
-                    print('At the gatehouse to the Viridian Forest you find a park ranger')
-                    input()
-                    print('Ranger: "Are you looking to head into the Viridian Forest? There are some dangerous pokemon in there,')
-                    print('you\'ll need to prove you can handle it before I can let you through"')
-                    print('"If you have a rock badge from the local gym we\'ll let you go through"')
-                    input()
-                else:
-                    return 'viridianForest'
-            elif action == 5:
-                return 'route29south'
             else:
-                menu(player)
+                return 'viridianForest'
+        elif action == 5:
+            return 'route29south'
+        else:
+            menu(player)
         
 def palletTown(player):
     while True:

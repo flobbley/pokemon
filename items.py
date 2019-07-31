@@ -29,16 +29,27 @@ def menuSelect(ask, options):
             action = int(action)
             return action
 
+def itemCheck(itemWant, player):
+    i=0
+    for item in player.itemList:
+        if item[0] == itemWant:
+            break
+        else:
+            i+=1
+    return i
+
 def potion(player, pokemon):
     if pokemon.HP == pokemon.maxHP:
         print('It won\'t have any effect!')
     else:
+        i = itemCheck('Potion', player)
+        player.itemList[i][1]-=1
         print('used a potion on',pokemon.name+'!')
         pokemon.heal(20)
-        player.itemList[2][1]-=1
 
 def pokeball(player, opponentPoke): #fix this and potions
-    player.itemList[1][1]-=1
+    i = itemCheck('Pokeball', player)
+    player.itemList[i][1]-=1
     print('Threw a pokeball!')
     catch = player.catchPoke(opponentPoke)
     return catch
