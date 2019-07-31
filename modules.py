@@ -3,7 +3,7 @@ def moduleName(player):
     while True:
         os.system(clearVar)
         print('example') #Enter descriptor info here, hashtags indicate comments, they are ignored by the code
-        action = menuSelect('Question',['list','of','possible','answers'])#enter question here, along with the list of possible answers
+        action = menuSelect('Question',['list','of','possible','answers','menu'])#enter question here, along with the list of possible answers
         if action == 1: #the number of actions will equal the number of possible answers in the last line
             print('enter dialogue here, or if pokecenter/item shop, copy pokecenter/item code')
             input()
@@ -13,6 +13,10 @@ def moduleName(player):
             input()
             #return 'newModule'
         elif action == 3:
+            print('enter dialogue here, etc')
+            input()
+            #return 'newModule
+        elif action == 4:
             print('enter dialogue here, etc')
             input()
             #return 'newModule
