@@ -146,6 +146,7 @@ class pokemon:
             self.stats[stat]+= round(levelsAdded*self.statMods[i])
             i+=1
         self.baseXP = round(self.baseXP*levelsAdded*self.XPmod)
+        self.needXP = round(self.needXP*levelsAdded*self.XPmod)
 
     def statRestore(self):
         self.tempStats = copy.deepcopy(self.stats)

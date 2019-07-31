@@ -1,7 +1,4 @@
-#to do: Add move pool/dynamic stats to pokemon
-#to do: Need to change item selection so that it works with dictionary numbers
-#to do: Need to make unique pokemon identifiers for wild pokemon added to party
-#to do: Need to fix pidgey
+#to do: Add move pool/evolution
 
 from random import *
 import os
@@ -193,16 +190,20 @@ class trainer:
             print('Accessed the pokemon PC!')
             action = menuSelect('What would you like to do?', ['Deposit pokemon','Withdraw pokemon','Cancel'])
             if action == 1:
-                pokes = []
-                for poke in self.pokeList:
-                    pokes.append(poke.name+' '+str(poke.level))
-                pokes.append('Cancel')
-                deposit = menuSelect('Which pokemon would you like to deposit?', pokes)
-                if deposit !=  len(pokes):
-                    print(self.pokeList[deposit-1].name, 'was deposited!')
+                if len(self.pokeList)==1:
+                    print('Can\'t deposit your last pokemon!')
                     input()
-                    self.boxList.append(self.pokeList[deposit-1])
-                    self.pokeList.remove(self.pokeList[deposit-1])
+                else:
+                    pokes = []
+                    for poke in self.pokeList:
+                        pokes.append(poke.name+' '+str(poke.level))
+                    pokes.append('Cancel')
+                    deposit = menuSelect('Which pokemon would you like to deposit?', pokes)
+                    if deposit !=  len(pokes):
+                        print(self.pokeList[deposit-1].name, 'was deposited!')
+                        input()
+                        self.boxList.append(self.pokeList[deposit-1])
+                        self.pokeList.remove(self.pokeList[deposit-1])
             elif action == 2:
                 if len(self.pokeList) == 6:
                     print('Can\'t withdraw more than 6 pokemon, deposit pokemon first')
@@ -222,10 +223,11 @@ class trainer:
                 break
         
 def main():
+    os.system(clearVar)
     modules = {'bedroom':bedroom, 'momsHouse':momsHouse, 'lab':lab, 'garysHouse':garysHouse, 'route29north':route29north, 'palletTown':palletTown, 'viridianCity':viridianCity,\
                'route29south':route29south}
     playerName = input('Welcome to the world of Pokemon! First, What is your name?\n') #setup
-    player = trainer(playerName, [], {}, 500)
+    player = trainer(playerName, [], [], 500)
     print('Welcome', player.name+'! your pokemon adventure begins today!')
     input()
     module = bedroom(player)
@@ -636,29 +638,19 @@ def garysHouse(player):
 
 def route29(player):
     wild = trainer('Wild', [], {}, 10)
-    pidgey1 = pokemon('Pidgey',4,'This pokemon is very common in large cities where people feed them', 5, ['normal','flying'], 16, {'attack':13, 'defense':13, 'speed':13},\
-                  {1:[wingAttack, 'wing attack'], 2:[gust, 'gust']}, 50, 60, 1.0)
-    pidgey2 = pokemon('Pidgey',4,'This pokemon is very common in large cities where people feed them', 3, ['normal','flying'], 12, {'attack':10, 'defense':11, 'speed':10},\
-                          {1:[wingAttack, 'wing attack'], 2:[gust, 'gust']}, 50, 60, 1.0)
-    pidgey3 = pokemon('Pidgey',4,'This pokemon is very common in large cities where people feed them', 4, ['normal','flying'], 14, {'attack':11, 'defense':11, 'speed':11},\
-                          {1:[wingAttack, 'wing attack'], 2:[gust, 'gust']}, 50, 60, 1.0)
-    pidgey4 = pokemon('Pidgey',4,'This pokemon is very common in large cities where people feed them', 2, ['normal','flying'], 10, {'attack':9, 'defense':8, 'speed':9},\
-                          {1:[wingAttack, 'wing attack'], 2:[gust, 'gust']}, 50, 60, 1.0)
-    ratata1 = pokemon('Ratata',5,'This pokemon has strong teeth, it has been known to chew through metal!', 5, ['normal','normal'],17,{'attack':14, 'defense':12, 'speed':13},\
-                          {1:[tackle, 'tackle'],2:[tailWhip, 'tail whip']}, 50, 50, 1.0)
-    ratata2 = pokemon('Ratata',5,'This pokemon has strong teeth, it has been known to chew through metal!', 3, ['normal','normal'],13,{'attack':10, 'defense':8, 'speed':9},\
-                          {1:[tackle, 'tackle'],2:[tailWhip, 'tail whip']}, 50, 50, 1.0)
-    ratata3 = pokemon('Ratata',5,'This pokemon has strong teeth, it has been known to chew through metal!', 2, ['normal','normal'],11,{'attack':8, 'defense':6, 'speed':7},\
-                          {1:[tackle, 'tackle'],2:[tailWhip, 'tail whip']}, 50, 50, 1.0)
+    pidgey1 = pokemonGenerator(pokedex.pidgey,5,[[tackle,'tackle'],[gust,'gust']])
+    pidgey2 = pokemonGenerator(pokedex.pidgey,3,[[tackle,'tackle'],[gust,'gust']])
+    pidgey3 = pokemonGenerator(pokedex.pidgey,2,[[tackle,'tackle'],[gust,'gust']])
+    pidgey4 = pokemonGenerator(pokedex.pidgey,3,[[tackle,'tackle'],[gust,'gust']])
+    ratata1 = pokemonGenerator(pokedex.ratata,4,[[tackle,'tackle'],[tailWhip,'tail whip']])
+    ratata2 = pokemonGenerator(pokedex.ratata,3,[[tackle,'tackle'],[tailWhip,'tail whip']])
+    ratata3 = pokemonGenerator(pokedex.ratata,2,[[tackle,'tackle'],[tailWhip,'tail whip']])
     encounters = [pidgey1, pidgey2, pidgey3, pidgey4, ratata1, ratata2, ratata3]
     chance = [True, False]
-    patch1 = choice(chance)
-    patch2 = choice(chance)
-    patch3 = choice(chance)
-    patches = [patch1, patch2, patch3]
+    patches = 3
     i = 1
-    for patch in patches:
-        if patch:
+    for patch in range(1,patches+1):
+        if choice(chance):
             print ('You hear a rustle in patch',i,'a wild pokemon appears!')
             i+=1
             input()
@@ -708,7 +700,7 @@ def viridianCity(player):
         os.system(clearVar)
         print('you find yourself in Viridian City. There is a Pokecenter here, as well as a Pokemart.')
         print('To the north there is a road that leads in to the Viridian Forest. Then off to the side of town you see the local Pokemon Gym!')#LEFT OFF HERE
-        action = menuSelect('Where would your like to go?',['Pokecenter','Pokemart','Into the Viridian Forest','Head back on Route 29 toward Pallet Town','Menu'])
+        action = menuSelect('Where would your like to go?',['Pokecenter','Pokemart','Into the Viridian Forest','Pokemon Gym','Head back on Route 29 toward Pallet Town','Menu'])
         if action == 1:
             global lastPokecenter
             lastPokecenter = 'viridianCity'
