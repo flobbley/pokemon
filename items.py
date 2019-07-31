@@ -68,17 +68,18 @@ def itemShop(player):
             break
         elif player.money >= items[action-1][1]:
             player.money -= items[action-1][1]
+            inInvent = False
+            i = 0
             for item in player.itemList: #Have to make it so that it checks if item is in inventory already
                 if items[action-1][0] == item[0]:
                     inInvent = True
-                    player.itemList[action-1][1] += 1
+                    player.itemList[i][1] += 1
                     break
-                else:
-                    inInvent = False
+                i+=1
             if inInvent == False:
                 player.itemList.append([items[action-1][0],1])
             print('one',items[action-1][0],'has been added to your inventory!')
-            print('You now have',player.itemList[action-1][1],player.itemList[action-1][0]+'s')
+            print('You now have',player.itemList[i][1],player.itemList[i][0]+'s')
             input()
         else:
             print('You don\'t have enough money!')
