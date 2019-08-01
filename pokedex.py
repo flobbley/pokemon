@@ -227,16 +227,46 @@ def pokemonGenerator(pokemon, level, givenMoves):
 
 class pokedex: #fills the global pokedex
     def __init__(self):
-        self.squirtle = pokemon('Squirtle', 2, 'This pokemon likes to squirt water at people that get too close', 1, ['water','water'],[1.98,0.96,1.3,1,1.28,0.86],\
-                                {}, 20, 20, 1.3)
-        self.charmander = pokemon('Charmander', 3, 'This pokemon has a firey tail!', 1, ['fire','fire'],[1.8,1.04,0.86,1.2,1,1.3],\
-                                  {}, 20, 20, 1.3)
-        self.bulbasaur = pokemon('Bulbasaur', 1, 'This pokemon has a large plant bulb on it\'s back', 1, ['grass','poison'],[2,0.98,0.98,1.3,1.3,0.9],\
-                                 {}, 20, 20, 1.3)
-        self.pidgey = pokemon('Pidgey',4,'This pokemon is very common in large cities where people feed them', 1, ['normal','flying'],[1.9,0.9,0.8,0.7,0.7,1.12],\
-                              {}, 20, 20, 1.3)
-        self.ratata = pokemon('Ratata',5,'This pokemon has strong teeth, it has been known to chew through metal!', 1, ['normal','normal'],[1.7,1.12,0.7,0.5,0.7,1.44],\
-                              {}, 20, 20, 1.3)
+        self.bulbasaur = pokemon('Bulbasaur', 1, 'This pokemon has a large plant bulb on it\'s back', 1, ['grass','poison'],\
+                                 [2,0.98,0.98,1.3,1.3,0.9],{}, 20, 20, 1.3)
+        self.ivysaur = pokemon('Ivysaur', 2, 'This pokemon has a small flower on it\'s back',1,['grass','poison'],\
+                               [2.3,1.24,1.26,1.6,1.6,1.2],{},30,30,1.3)
+        self.venusaur = pokemon('Venusaur',3, 'This pokemon has a large flower on it\'s back which it uses to photosynthesize',1,['grass','poison'],\
+                                [2.7,1.64,1.66,2.0,2.0,1.6],{},40,40,1.3)
+        self.charmander = pokemon('Charmander', 4, 'This pokemon has a firey tail!', 1, ['fire','fire'],\
+                                  [1.8,1.04,0.86,1.2,1,1.3],{}, 20, 20, 1.3)
+        self.charmeleon = pokemon('Charmeleon',5,'This pokemon is very aggressive!',1,['fire','fire'],\
+                                  [2.26,1.28,1.16,1.6,1.3,1.6],{},30,30,1.3)
+        self.charizard = pokemon('Charizard',6,'This pokemon flies over forests looking for small animals to scoop up',1,['fire','flying'],\
+                                 [2.66,1.68,1.56,2.18,1.7,2.0],{},40,40,1.3)
+        self.squirtle = pokemon('Squirtle', 7, 'This pokemon likes to squirt water at people that get too close', 1, ['water','water'],\
+                                [1.98,0.96,1.3,1,1.28,0.86],{}, 20, 20, 1.3)
+        self.wartortle = pokemon('Wartortle',8, 'This pokemon likes to withdraw into it\'s shell to avoid being hit',1,['water','water'],\
+                                 [2.28,1.26,1.6,1.3,1.6,1.16],{},30,30,1.3)
+        self.blastoise = pokemon('Blastoise',9, 'This pokemon can blast out water from the two cannons on it\'s back',1,['water','water'],\
+                                 [2.68,1.66,2.0,1.7,2.1,1.56],{},40,40,1.3)
+        self.caterpie = pokemon('Caterpie',10,'This pokemon eats leaves until it\'s ready to enter a cocoon',1,['bug','bug'],\
+                                [2.0,0.6,0.7,0.4,0.4,0.9],{},15,15,1.3)
+        self.metapod = pokemon('Metapod',11,'The outer shell of this pokemon is able to harden on command',1,['bug','bug'],\
+                               [2.1,0.4,1.1,0.5,0.5,0.6],{},20,20,1.3)
+        self.butterfree = pokemon('Butterfree',12,'This pokemon can put other pokemon to sleep with the spores from it\'s wings',1,['bug','flying'],\
+                                  [2.3,0.9,1.0,1.8,1.6,1.4],{},30,30,1.3)
+        self.weedle = pokemon('Weedle',13,'This pokemon gives a painful sting from the stinger on it\'s head',1,['bug','poison'],\
+                              [1.9,0.7,0.6,0.4,0.4,1.0],{},15,15,1.3)
+        self.kakuna = pokemon('Kakuna',14, 'This pokemon it starting to form it\'s future powerful arm stingers',1,['bug','poison'],\
+                              [2.0,0.5,1.0,0.5,0.5,0.7],{},20,20,1.3)
+        self.beedrill = pokemon('Beedrill',15,'This pokemon hunts small insects and even some mammals with it\'s powerful sting',1,['bug','poison'],\
+                                [2.4,1.8,0.8,0.9,1.6,1.5],{},30,30,1.3)
+        self.pidgey = pokemon('Pidgey',16,'This pokemon is very common in large cities where people feed them', 1, ['normal','flying'],\
+                              [1.9,0.9,0.8,0.7,0.7,1.12], {}, 20, 20, 1.3)
+        self.pidgeotto = pokemon('Pidgeotto',17,'This pokemon can produce powerful gusts to blow away it\'s opponents',1,['normal','flying'],\
+                                 [2.36,1.2,1.1,1,1,1.42],{},27,27,1.3)
+        self.pidgeot = pokemon('Pidgeot',18,'This pokemon has a long feather on it\'s head which it uses to attract a mate',1,['normal','flying'],\
+                               [2.76,1.6,1.5,1.4,1.4,2.02],{},35,35,1.3)
+        self.ratata = pokemon('Ratata',19,'This pokemon has strong teeth, it has been known to chew through metal!', 1, ['normal','normal'],\
+                              [1.7,1.12,0.7,0.5,0.7,1.44],{}, 20, 20, 1.3)
+        self.raticate = pokemon('Raticate',19, 'This pokemon digs deep burrows which can sometimes cause damage to buildings',1,['normal','normal'],\
+                                [2.2,1.62,1.2,1,1.4,1.94],{},25,25,1.3)
 pokedex = pokedex() #actually creates the pokedex
 
 moveTree = {'Squirtle':{6:bubble},\
