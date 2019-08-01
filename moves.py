@@ -83,13 +83,13 @@ def hit(percent):
     else:
         return False
 
-def damage(attacker, defender, power):
+def damage(attacker, defender, power, attackStat, defenseStat):
     a = (2*attacker.level)/5+2
-    b = power*attacker.tempStats['attack']/defender.tempStats['defense']
+    b = power*attacker.tempStats[attackStat]/defender.tempStats[defenseStat]
     c = a*b/50+2
     return c
     
-def scratch(attacker, defender):
+def scratchAttack(attacker, defender):
     """
     Main damage attack, right now all the other physical attacks are clones of this
     """
@@ -97,13 +97,13 @@ def scratch(attacker, defender):
     power = 40
     if hit(95) == True: #95% hit rate
         damageMod = typeMod(damageType, attacker.typ, defender.typ)
-        damageDone = damage(attacker, defender, power)
+        damageDone = damage(attacker, defender, power, 'attack', 'defense')
         damageDone *= damageMod
         defender.damageTaken(round(damageDone))
     else:
         print('but it missed!')
 
-def tailWhip(attacker, defender):
+def tailWhipAttack(attacker, defender):
     """
     main defense damaging attack, right now all the other stat damage attacks are clones of this
     """
@@ -112,76 +112,109 @@ def tailWhip(attacker, defender):
     else:
         print('but it missed!')
 
-def tackle(attacker, defender):
+def tackleAttack(attacker, defender):
     damageType = 'normal'
     power = 40
     if hit(95) == True: #95% hit rate
         damageMod = typeMod(damageType, attacker.typ, defender.typ)
-        damageDone = damage(attacker, defender, power)
+        damageDone = damage(attacker, defender, power, 'attack', 'defense')
         damageDone *= damageMod
         defender.damageTaken(round(damageDone))
     else:
         print('but it missed!')
 
-def leer(attacker, defender):
+def leerAttack(attacker, defender):
     if hit(95)==True:
         defender.statChange('defense', False)
     else:
         print('but it missed!')
 
-def wingAttack(attacker, defender):
+def wingAttackAttack(attacker, defender):
     damageType = 'normal'
     power = 40
     if hit(95) == True: #95% hit rate
         damageMod = typeMod(damageType, attacker.typ, defender.typ)
-        damageDone = damage(attacker, defender, power)
+        damageDone = damage(attacker, defender, power, 'attack', 'defense')
         damageDone *= damageMod
         defender.damageTaken(round(damageDone))
     else:
         print('but it missed!')
 
-def gust(attacker, defender):
+def gustAttack(attacker, defender):
     power = 40
     damageType = 'flying'
     if hit(95)==True: #95% hit rate
         damageMod = typeMod(damageType, attacker.typ, defender.typ)
-        damageDone = damage(attacker, defender, power)
+        damageDone = damage(attacker, defender, power,'attack','defense')
         damageDone *= damageMod
         defender.damageTaken(round(damageDone))
     else:
         print('but it missed!')
 
-def bubble(attacker, defender):
+def bubbleAttack(attacker, defender):
     damageType = 'water'
     power = 40
     if hit(95) == True:
         if randint(1,10) == 5:
             defender.statChange('speed', False)
         damageMod = typeMod(damageType, attacker.typ, defender.typ)
-        damageDone = damage(attacker, defender, power)
+        damageDone = damage(attacker, defender, power,'sp.attack','sp.defense')
         damageDone *= damageMod
         defender.damageTaken(round(damageDone))
     else:
         print('but it missed!')
         
-def ember(attacker, defender):
+def emberAttack(attacker, defender):
     damageType = 'fire'
     power = 40
     if hit(95) == True:
         if randint(1,10) == 5:
             defender.status.append('burn')
         damageMod = typeMod(damageType, attacker.typ, defender.typ)
-        damageDone = damage(attacker, defender, power)
+        damageDone = damage(attacker, defender, power, 'sp.attack','sp.defense')
         damageDone *= damageMod
         defender.damageTaken(round(damageDone))
     else:
         print('but it missed!')
 
-def leechSeed(attacker, defender):
+def leechSeedAttack(attacker, defender):
     damageType = 'grass'
     if 'grass' in defender.typ:
         print(defender.name,'was not affected')
     else:
         print(defender.name,'was seeded')
         defender.status.append('leech')
-                        
+
+def quickAttackAttack(attacker, defender):
+    damageType = 'normal'
+    power = 40
+    if hit(95) == True:
+        damageMod = typeMod(damageType, attacker.typ, defender.typ)
+        damageDone = damage(attacker, defender, power, 'attack','defense')
+        damageDone *= damageMod
+        defender.damageTaken(round(damageDone))
+    else:
+        print('but it missed!')                 
+class move:
+    def __init__(self, name, priority, duration, technique):
+        self.name = name
+        self.priority = priority
+        self.technique = technique
+        self.duration = duration
+        
+    def useMove(self, attacker, defender):
+        print(attacker.name,'used',self.name+'!')
+        input()
+        return self.technique(attacker, defender)
+
+
+scratch = move('scratch',0,0,scratchAttack)
+tackle = move('tackle',0,0,tackleAttack)
+leer = move('leer',0,0,leerAttack)
+tailWhip = move('tail whip',0,0,tailWhipAttack)
+wingAttack = move('wing attack',0,0,wingAttackAttack)
+gust = move('gust',0,0,gustAttack)
+bubble = move('bubble',0,0,bubbleAttack)
+ember = move('ember',0,0,emberAttack)
+leechSeed = move('leech seed',0,0,leechSeedAttack)
+quickAttack = move('quick attack',1,0,quickAttackAttack)

@@ -57,18 +57,18 @@ class pokemon:
 
     def getMoves(self): #returns the list of available moves
         for i in range(1,len(self.moves)+1):
-            print(str(i)+'.', self.moves[i][1])
+            print(str(i)+'.', self.moves[i].name)
         print(str(i+1)+'. cancel')
 
     def learnMove(self, move):
         moveNo = len(self.moves)+1
         if moveNo<=4:
             self.moves[moveNo] = move
-            print(self.name, 'learned', move[1]+'!')
+            print(self.name, 'learned', move.name+'!')
             input()
         else:
             while True:
-                print(self.name, 'is trying to learn', move[1],'but',self.name,'already knows four moves')
+                print(self.name, 'is trying to learn', move.name,'but',self.name,'already knows four moves')
                 print('Would you like to replace one of these moves?')
                 self.getMoves()
                 print('5. No, do not learn move')
@@ -76,10 +76,10 @@ class pokemon:
                 if menuValid(action, 5):
                     action = int(action)
                     if action == 5:
-                        print(self.name, 'did not learn', move[1])
+                        print(self.name, 'did not learn', move.name)
                         break
                     else:
-                        print(self.moves[action][1],'will be replaced with',move[1])
+                        print(self.moves[action].name,'will be replaced with',move.name)
                         while True:
                             print('Are you sure? y/n')
                             sure = input()
@@ -87,7 +87,7 @@ class pokemon:
                                 break
                         if sure == 'y':
                             self.moves[action] = move
-                            print(self.name, 'learned', self.moves[action][1]+'!')
+                            print(self.name, 'learned', self.moves[action].name+'!')
                             break
             input()
                         
@@ -141,10 +141,16 @@ class pokemon:
         self.level+=levelsAdded
         self.maxHP += round(levelsAdded*self.statMods[0])
         self.HP += round(levelsAdded*self.statMods[0])
-        i = 1
-        for stat in self.stats:
-            self.stats[stat]+= round(levelsAdded*self.statMods[i])
-            i+=1
+        self.stats['attack'] = round(self.stats['attack']+levelsAdded*self.statMods[1])
+        self.stats['defense'] = round(self.stats['defense']+levelsAdded*self.statMods[2])
+        self.stats['sp.attack'] = round(self.stats['sp.attack']+levelsAdded*self.statMods[3])
+        self.stats['sp.defense'] = round(self.stats['sp.defense']+levelsAdded*self.statMods[4])
+        self.stats['speed'] = round(self.stats['speed']+levelsAdded*self.statMods[5])
+        self.tempStats['attack']= round(self.tempStats['attack']+levelsAdded*self.statMods[1])
+        self.tempStats['defense']= round(self.tempStats['defense']+levelsAdded*self.statMods[2])
+        self.tempStats['sp.attack']= round(self.tempStats['sp.attack']+levelsAdded*self.statMods[3])
+        self.tempStats['sp.defense']= round(self.tempStats['sp.defense']+levelsAdded*self.statMods[4])
+        self.tempStats['speed']= round(self.tempStats['speed']+levelsAdded*self.statMods[5])
         self.baseXP = round(self.baseXP*levelsAdded*self.XPmod)
         self.needXP = round(self.needXP*levelsAdded*self.XPmod)
 
@@ -233,8 +239,8 @@ class pokedex: #fills the global pokedex
                               {}, 20, 20, 1.3)
 pokedex = pokedex() #actually creates the pokedex
 
-moveTree = {'Squirtle':{6:[bubble, 'bubble']},\
-            'Charmander':{6:[ember,'ember']},\
-            'Bulbasaur':{6:[leechSeed, 'leech seed']},\
+moveTree = {'Squirtle':{6:bubble},\
+            'Charmander':{6:ember},\
+            'Bulbasaur':{6:leechSeed},\
             'Pidgey':{},\
             'Ratata':{}}
