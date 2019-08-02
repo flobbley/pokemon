@@ -315,6 +315,44 @@ def menuValid(number, maxNum):
     except ValueError:
         print(noGood)
 
+def whoGoesFirst(playerPoke, opponentPoke):
+    if playerPoke.stats['speed']>=opponentPoke.stats['speed']:
+        return 0
+    else:
+        return 1
+
+def playerTurn(playerPoke, opponentPoke):
+    """
+    defines the players turn
+    """
+    act = playerPoke.statusAction(opponentPoke, 'during')
+    if act:
+        while True:
+            playerPoke.getMoves()
+            move = input()
+            noMoves = len(playerPoke.moves)+1
+            if menuValid(move, noMoves):
+                move = int(move)
+                break
+        if move == noMoves:
+            return False
+        else:
+            print(playerPoke.name, 'used', playerPoke.moves[move][1])
+            playerPoke.useMove(move, opponentPoke)
+            return True
+        
+    
+def computerTurn(playerPoke, opponentPoke, opponentName):
+    """
+    defines the computers turn
+    """
+    act = opponentPoke.statusAction(playerPoke, 'during')
+    if act:
+        noMoves = len(opponentPoke.moves)
+        move = randint(1,noMoves)
+        print(opponentName+'\'s',opponentPoke.name, 'used',opponentPoke.moves[move][1])        
+        opponentPoke.useMove(move, playerPoke)
+
 def battleDisplay(playerPoke, opponentPoke):
     """
     Will display sprites and HP bars
@@ -336,36 +374,7 @@ def battleMenu():
             action = int(action)
             return action
         
-def playerTurn(playerPoke, opponentPoke):
-    """
-    defines the players turn
-    """
-    act = playerPoke.statusAction(opponentPoke, 'during')
-    if act:
-        while True:
-            playerPoke.getMoves()
-            move = input()
-            noMoves = len(playerPoke.moves)+1
-            if menuValid(move, noMoves):
-                move = int(move)
-                break
-        if move == noMoves:
-            return False
-        else:
-            return playerPoke.moves[move]
-        
-    
-def computerTurn(playerPoke, opponentPoke, opponentName):
-    """
-    defines the computers turn
-    """
-    act = opponentPoke.statusAction(playerPoke, 'during')
-    if act:
-        noMoves = len(opponentPoke.moves)
-        move = randint(1,noMoves)
-        return opponentPoke.moves[move]        
-
-def battle(player, opponent, wild= True): #NEED TO EDIT BATTLE DISPLAY POSITIONS
+def battle(player, opponent, wild= True):
     """
     Main pokemon battle loop
     """
@@ -393,31 +402,31 @@ def battle(player, opponent, wild= True): #NEED TO EDIT BATTLE DISPLAY POSITIONS
             start = 1
             battleDisplay(playerPoke, opponentPoke)
             input()
-            while True: #Current match up          
-                os.system(clearVar)
+            os.system(clearVar)
+            turn = whoGoesFirst(playerPoke, opponentPoke)
+        else:
+            turn = whoGoesFirst(playerPoke, opponentPoke)
+        while True: #Current match up          
+            os.system(clearVar)
+            if turn == 0: #when turn is 0 it is the player's turn
                 battleDisplay(playerPoke, opponentPoke)
                 notUsed = playerPoke.statusAction(opponentPoke, 'before')
-                while True:
-                    """
-                    player selects their action for the turn
-                    """
+                while True: #continues player menu until valid action is taken
                     action = battleMenu()
                     if action == 1:
-                        playerMove = playerTurn(playerPoke, opponentPoke)
-                        if playerMove != False:
+                        if playerTurn(playerPoke, opponentPoke):
+                            input()
                             break
                     elif action == 2:
                         print('Who do you want to send out?')
                         oldPlayerPoke = playerPoke
                         playerPoke = player.choosePoke(playerPokesCopy)
-                        playerMove = False
                         if oldPlayerPoke == playerPoke:
                             print(playerPoke.name,'is already out!')
                         else:
                             break
                     elif action == 3:
                         item = player.useItem()
-                        playerMove = False
                         if item == 'Potion':
                             print(player.name,'used a potion on',playerPoke.name+'!')
                             potion(player, playerPoke)
@@ -427,7 +436,6 @@ def battle(player, opponent, wild= True): #NEED TO EDIT BATTLE DISPLAY POSITIONS
                                 catch = pokeball(player, opponentPoke)
                                 if catch == True:
                                     opponentPokesCopy = []
-                                    won = True
                                 break
                             else:
                                 print('You can\'t try to catch an opposing trainer\'s pokemon!')
@@ -440,195 +448,88 @@ def battle(player, opponent, wild= True): #NEED TO EDIT BATTLE DISPLAY POSITIONS
                             if succeed == 0:
                                 print('You got away safely!')
                                 opponentPokesCopy = []
-                                won = True
                                 break
                             else:
                                 print('You couldn\'t get away!')
-                                playerMove = False
                                 break
-                if won == True:
-                    break
                     
-                """
-                Computer selects their action for the turn
-                """
-                notUsed = opponentPoke.statusAction(playerPoke, 'before')
-                computerMove = computerTurn(playerPoke, opponentPoke, str(opponent.name))
-
-                """
-                resolve turn order
-                """
-                compskip = False
-                playerskip = False
-                turn = 0
-                if playerMove != False:
-                    turn = playerMove.priority - computerMove.priority
-                else:
-                    playerskip = True
-                if turn == 0:
-                    turn = playerPoke.tempStats['speed'] - opponentPoke.tempStats['speed']
-                if turn >= 0:
-                    """
-                    player goes first
-                    """
-                    if playerskip == False:
-                        playerMove.useMove(playerPoke, opponentPoke)
-                        os.system(clearVar)
-                        battleDisplay(playerPoke, opponentPoke)
-                    if opponentPoke.HP <= 0: #checks if a pokemon fainted
-                        opponentPokesCopy.remove(opponentPoke)
-                        opponentPoke.HP = 0
-                        os.system(clearVar)
-                        battleDisplay(playerPoke, opponentPoke)
-                        print(str(opponent.name)+'\'s', opponentPoke.name, 'fainted!')
-                        playerPoke.XPGain(opponentPoke)
-                        input()
-                        if len(opponentPokesCopy) == 0:
-                            won = True
-                            break
-                        else:
-                            opponentPoke = choice(opponentPokesCopy)
-                            print(str(opponent.name),'sent out',str(opponentPoke.name))
-                            compskip = True
-                            input()
-
-                        
-                    notUsed = playerPoke.statusAction(opponentPoke, 'after')
-                    if playerPoke.HP<=0: #checks if a pokemon fainted
-                        playerPokesCopy.remove(playerPoke)
-                        playerPoke.HP = 0
-                        os.system(clearVar)
-                        battleDisplay(playerPoke, opponentPoke)
-                        print('your', playerPoke.name, 'fainted!')
-                        input()
-                        if len(playerPokesCopy)==0:
-                            won = False
-                            break
-                        else:
-                            print('Who do you want to send out?')
-                            playerPoke = player.choosePoke(playerPokesCopy)
-                            print(str(player.name),'sent out',str(playerPoke.name))
-                            input()
-
-                    if compskip != True:    
-                        computerMove.useMove(opponentPoke, playerPoke)
-                        os.system(clearVar)
-                        battleDisplay(playerPoke, opponentPoke)
-                    if playerPoke.HP<=0: #checks if a pokemon fainted
-                        playerPokesCopy.remove(playerPoke)
-                        playerPoke.HP = 0
-                        os.system(clearVar)
-                        battleDisplay(playerPoke, opponentPoke)
-                        print('your', playerPoke.name, 'fainted!')
-                        input()
-                        if len(playerPokesCopy)==0:
-                            won = False
-                            break
-                        else:
-                            print('Who do you want to send out?')
-                            playerPoke = player.choosePoke(playerPokesCopy)
-                            print(str(player.name),'sent out',str(playerPoke.name))
-                            input()
-
-                    notUsed = opponentPoke.statusAction(playerPoke, 'after')
-                    if opponentPoke.HP <= 0: #checks if a pokemon fainted
-                        opponentPokesCopy.remove(opponentPoke)
-                        opponentPoke.HP = 0
-                        os.system(clearVar)
-                        battleDisplay(playerPoke, opponentPoke)
-                        print(str(opponent.name)+'\'s', opponentPoke.name, 'fainted!')
-                        playerPoke.XPGain(opponentPoke)
-                        input()
-                        if len(opponentPokesCopy) == 0:
-                            won = True
-                            break
-                        else:
-                            opponentPoke = choice(opponentPokesCopy)
-                            print(str(opponent.name),'sent out',str(opponentPoke.name))
-                            input()
-                            
-                else:
-                    """
-                    computer goes first
-                    """
-                    computerMove.useMove(opponentPoke, playerPoke)
+                if len(opponentPokesCopy)== 0:
+                    won = True
+                    break
+                
+                if opponentPoke.HP <= 0: #checks if a pokemon fainted
+                    opponentPokesCopy.remove(opponentPoke)
+                    opponentPoke.HP = 0
                     os.system(clearVar)
                     battleDisplay(playerPoke, opponentPoke)
-                    if playerPoke.HP<=0: #checks if a pokemon fainted
-                        playerPokesCopy.remove(playerPoke)
-                        playerPoke.HP = 0
-                        os.system(clearVar)
-                        battleDisplay(playerPoke, opponentPoke)
-                        print('your', playerPoke.name, 'fainted!')
+                    print(str(opponent.name)+'\'s', opponentPoke.name, 'fainted!')
+                    playerPoke.XPGain(opponentPoke)
+                    input()
+                    if len(opponentPokesCopy) == 0:
+                        won = True
+                        break
+                    else:
+                        opponentPoke = choice(opponentPokesCopy)
+                        print(str(opponent.name),'sent out',str(opponentPoke.name))
                         input()
-                        if len(playerPokesCopy)==0:
-                            won = False
-                            break
-                        else:
-                            print('Who do you want to send out?')
-                            playerPoke = player.choosePoke(playerPokesCopy)
-                            print(str(player.name),'sent out',str(playerPoke.name))
-                            input()
-                            playerskip = True
-                            
-                    notUsed = opponentPoke.statusAction(playerPoke, 'after')
-                    if opponentPoke.HP <= 0: #checks if a pokemon fainted
-                        opponentPokesCopy.remove(opponentPoke)
-                        opponentPoke.HP = 0
-                        os.system(clearVar)
-                        battleDisplay(playerPoke, opponentPoke)
-                        print(str(opponent.name)+'\'s', opponentPoke.name, 'fainted!')
-                        playerPoke.XPGain(opponentPoke)
-                        input()
-                        if len(opponentPokesCopy) == 0:
-                            won = True
-                            break
-                        else:
-                            opponentPoke = choice(opponentPokesCopy)
-                            print(str(opponent.name),'sent out',str(opponentPoke.name))
-                            input()
-                            
-                    if playerskip != True:    
-                        playerMove.useMove(playerPoke, opponentPoke)
-                        os.system(clearVar)
-                        battleDisplay(playerPoke, opponentPoke)
-                    if opponentPoke.HP <= 0: #checks if a pokemon fainted
-                        opponentPokesCopy.remove(opponentPoke)
-                        opponentPoke.HP = 0
-                        os.system(clearVar)
-                        battleDisplay(playerPoke, opponentPoke)
-                        print(str(opponent.name)+'\'s', opponentPoke.name, 'fainted!')
-                        playerPoke.XPGain(opponentPoke)
-                        input()
-                        if len(opponentPokesCopy) == 0:
-                            won = True
-                            break
-                        else:
-                            opponentPoke = choice(opponentPokesCopy)
-                            print(str(opponent.name),'sent out',str(opponentPoke.name))
-                            input()
-                            
+                        turn = 1-whoGoesFirst(playerPoke, opponentPoke)
                         
-                    notUsed = playerPoke.statusAction(opponentPoke, 'after')
-                    if playerPoke.HP<=0: #checks if a pokemon fainted
-                        playerPokesCopy.remove(playerPoke)
-                        playerPoke.HP = 0
-                        os.system(clearVar)
-                        battleDisplay(playerPoke, opponentPoke)
-                        print('your', playerPoke.name, 'fainted!')
-                        input()
-                        if len(playerPokesCopy)==0:
-                            won = False
-                            break
-                        else:
-                            print('Who do you want to send out?')
-                            playerPoke = player.choosePoke(playerPokesCopy)
-                            print(str(player.name),'sent out',str(playerPoke.name))
-                            input()
-                                
-                            
+                notUsed = playerPoke.statusAction(opponentPoke, 'after')
+                if playerPoke.HP<=0: #checks if a pokemon fainted
+                    playerPokesCopy.remove(playerPoke)
+                    playerPoke.HP = 0
+                    os.system(clearVar)
+                    battleDisplay(playerPoke, opponentPoke)
+                    print('your', playerPoke.name, 'fainted!')
+                    input()
+                    if len(playerPokesCopy)==0:
+                        won = False
+                        break
+                    else:
+                        playerPoke = player.choosePoke(playerPokesCopy)
+                        print(str(player.name),'sent out',str(playerPoke.name))
+                        turn = 1-whoGoesFirst(playerPoke, opponentPoke)
                         
-
+                
+            else: #when turn is not 0 it is the computer's turn
+                battleDisplay(playerPoke, opponentPoke)
+                notUsed = opponentPoke.statusAction(playerPoke, 'before')
+                computerTurn(playerPoke, opponentPoke, str(opponent.name))
+                input()
+                if playerPoke.HP<=0: #checks if a pokemon fainted
+                    playerPokesCopy.remove(playerPoke)
+                    playerPoke.HP = 0
+                    os.system(clearVar)
+                    battleDisplay(playerPoke, opponentPoke)
+                    print('your', playerPoke.name, 'fainted!')
+                    input()
+                    if len(playerPokesCopy)==0:
+                        won = False
+                        break
+                    else:
+                        playerPoke = player.choosePoke(playerPokesCopy)
+                        print(str(player.name),'sent out',str(playerPoke.name))
+                        turn = 1-whoGoesFirst(playerPoke, opponentPoke)
+                        
+                notUsed = opponentPoke.statusAction(playerPoke, 'after')
+                if opponentPoke.HP <= 0: #checks if a pokemon fainted
+                    opponentPokesCopy.remove(opponentPoke)
+                    opponentPoke.HP = 0
+                    os.system(clearVar)
+                    battleDisplay(playerPoke, opponentPoke)
+                    print(str(opponent.name)+'\'s', opponentPoke.name, 'fainted!')
+                    playerPoke.XPGain(opponentPoke)
+                    input()
+                    if len(opponentPokesCopy) == 0:
+                        won = True
+                        break
+                    else:
+                        opponentPoke = choice(opponentPokesCopy)
+                        print(str(opponent.name),'sent out',str(opponentPoke.name))
+                        input()
+                        turn = 1-whoGoesFirst(playerPoke, opponentPoke)
+                        
+            turn = 1-turn
             
     if won == True:
         if wild == False:
@@ -736,14 +637,14 @@ def garysHouse(player):
                     menu(player)
 
 def route29(player):
-    wild = trainer('Wild', [], {}, 10)
-    pidgey1 = pokemonGenerator(pokedex.pidgey,5,[tackle,gust])
-    pidgey2 = pokemonGenerator(pokedex.pidgey,3,[tackle,gust,])
-    pidgey3 = pokemonGenerator(pokedex.pidgey,2,[tackle,gust])
-    pidgey4 = pokemonGenerator(pokedex.pidgey,3,[tackle,gust])
-    ratata1 = pokemonGenerator(pokedex.ratata,4,[tackle,tailWhip])
-    ratata2 = pokemonGenerator(pokedex.ratata,3,[tackle,tailWhip])
-    ratata3 = pokemonGenerator(pokedex.ratata,2,[tackle,tailWhip])
+    wild = trainer('Wild', [], [], 10)
+    pidgey1 = pokemonGenerator(pokedex.pidgey,5,[[tackle,'tackle'],[gust,'gust']])
+    pidgey2 = pokemonGenerator(pokedex.pidgey,3,[[tackle,'tackle'],[gust,'gust']])
+    pidgey3 = pokemonGenerator(pokedex.pidgey,2,[[tackle,'tackle'],[gust,'gust']])
+    pidgey4 = pokemonGenerator(pokedex.pidgey,3,[[tackle,'tackle'],[gust,'gust']])
+    ratata1 = pokemonGenerator(pokedex.ratata,4,[[tackle,'tackle'],[tailWhip,'tail whip']])
+    ratata2 = pokemonGenerator(pokedex.ratata,3,[[tackle,'tackle'],[tailWhip,'tail whip']])
+    ratata3 = pokemonGenerator(pokedex.ratata,2,[[tackle,'tackle'],[tailWhip,'tail whip']])
     encounters = [pidgey1, pidgey2, pidgey3, pidgey4, ratata1, ratata2, ratata3]
     chance = [True, False]
     patches = 3
@@ -870,9 +771,9 @@ def lab(player, pokeGot = True):
         print('Professor Oak: "Now now Gary, you\'ll get your turn, now which pokemon would you like',player.name+'?"')
         
         gary = trainer('Gary',[],{},10)
-        squirtle = pokemonGenerator(pokedex.squirtle, 5, [tackle,tailWhip])
-        charmander = pokemonGenerator(pokedex.charmander, 5, [scratch,tailWhip])
-        bulbasaur = pokemonGenerator(pokedex.bulbasaur,5,[tackle,leer])
+        squirtle = pokemonGenerator(pokedex.squirtle, 5, [[tackle,'tackle'],[tailWhip,'tail whip']])
+        charmander = pokemonGenerator(pokedex.charmander, 5, [[scratch,'scratch'],[tailWhip, 'tail whip']])
+        bulbasaur = pokemonGenerator(pokedex.bulbasaur,5,[[tackle, 'tackle'],[leer,'leer']])
         while True: #first Pokemon selection
             poke = input('\n1.Squirtle\n2.Charmander\n3.Bulbasaur\n')
             if menuValid(poke, 3):
@@ -983,20 +884,17 @@ def viridianArea1(player):
 
 #print(main()) #runs the game
 
-ashPidgey = pokemonGenerator(pokedex.pidgey, 4, [tackle, gust])
-garyPidgey = pokemonGenerator(pokedex.pidgey,4,[tackle, gust])
-ashBulbasaur = pokemonGenerator(pokedex.bulbasaur,5,[tackle,leer])
-garyBulbasaur = pokemonGenerator(pokedex.bulbasaur, 5, [tackle, leer])
-ashSquirtle = pokemonGenerator(pokedex.squirtle, 5, [tackle, tailWhip])
-garyCharmander = pokemonGenerator(pokedex.charmander, 5, [scratch, tailWhip])
-garySquirtle = pokemonGenerator(pokedex.squirtle, 5, [tackle, tailWhip])
-ashCharmander = pokemonGenerator(pokedex.charmander, 5, [scratch, tailWhip])
-ashRatata = pokemonGenerator(pokedex.ratata,2,[tackle,quickAttack])
+ashPidgey = copy.deepcopy(pokedex.pidgey)
+garyPidgey = copy.deepcopy(pokedex.pidgey)
+ashBulbasaur = copy.deepcopy(pokedex.bulbasaur)
+garyBulbasaur = copy.deepcopy(pokedex.bulbasaur)
+ashSquirtle = copy.deepcopy(pokedex.squirtle)
+garyCharmander = copy.deepcopy(pokedex.charmander)
+garySquirtle = copy.deepcopy(pokedex.squirtle)
+ashCharmander = copy.deepcopy(pokedex.charmander)
 
-ash = trainer('ash', [ashRatata, ashPidgey, ashBulbasaur], [['Pokeball',5],['Potion',5]], 500)
-gary = trainer('gary', [garyBulbasaur, garySquirtle, garyCharmander], [], 10)
-
-print(battle(ash, gary, False))
+ash = trainer('ash', [ashPidgey, ashBulbasaur], [['Pokeball',5],['Potion',5]], 500)
+gary = trainer('gary', [garyPidgey, garyCharmander], {}, 10)
 ##class viridianTrainer:
 ##    def __init__(self):
 ##        self.bugTrainer = trainer('doug')

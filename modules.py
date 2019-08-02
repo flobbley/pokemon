@@ -2,7 +2,7 @@ from pokemon import *
 def moduleName(player):
     while True:
         os.system(clearVar)
-        print('example') #Enter descriptor info here, hashtags indicate comments, they are ignored by the code
+        print('You wake up in your bedroom to the sound of your Mom\'s voice','"'+player.name,'It\'s time to get up or you\'ll be late for school!"') #Enter descriptor info here, hashtags indicate comments, they are ignored by the code
         action = menuSelect('Question',['list','of','possible','answers','menu'])#enter question here, along with the list of possible answers
         if action == 1: #the number of actions will equal the number of possible answers in the last line
             print('enter dialogue here, or if pokecenter/item shop, copy pokecenter/item code')
@@ -22,7 +22,7 @@ def moduleName(player):
             #return 'newModule
         else:
             menu(player) #the last option is usually menu, but doesn't have to be 
-
+print(moduleName(ash))
 ##global lastPokecenter
 ##lastPokecenter = 'moduleName'
 ##pokeCenter(player)
