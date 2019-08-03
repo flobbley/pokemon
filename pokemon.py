@@ -948,7 +948,7 @@ def lab(player, pokeGot = True):
                 if menuValid(action, 3):
                     action = int(action)
                     if action == 1:
-                        print('Scientist: "Well hello there young man! Looking for Professor Oak? We haven\'t seen him all morning."')
+                        print('Scientist: "Well hello there',player.name+'!','Looking for Professor Oak? We haven\'t seen him all morning."')
                         input()
                     elif action == 2:
                         return 'palletTown'
