@@ -170,6 +170,7 @@ def emberAttack(attacker, defender):
     if hit(95) == True:
         if randint(1,10) == 5:
             defender.status.append('burn')
+            print(defender.name,'was burned!')
         damageMod = typeMod(damageType, attacker.typ, defender.typ)
         damageDone = damage(attacker, defender, power, 'sp.attack','sp.defense')
         damageDone *= damageMod
@@ -202,6 +203,7 @@ def poisonStingAttack(attacker, defender):
     if hit(95) == True:
         if randint(1,10) == 5:
             defender.status.append('poison')
+            print(defender.name,'was poisoned!')
         damageMod = typeMod(damageType, attacker.typ, defender.typ)
         damageDone = damage(attacker, defender, power, 'attack', 'defense')
         defender.damageTaken(round(damageDone))

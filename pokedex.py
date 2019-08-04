@@ -149,7 +149,7 @@ class pokemon:
         self.statMods = newPoke.statMods
         self.entry = newPoke.entry
         self.evo = newPoke.evo
-        self.baseXP = newPoke.baseXP*level*self.XPmod
+        self.needXP = newPoke.needXP
         self.maxHP = round(10+self.level*self.statMods[0])
         self.stats['attack'] = round(5+self.level*self.statMods[1])
         self.stats['defense'] = round(5+self.level*self.statMods[2])
