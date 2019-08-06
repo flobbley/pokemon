@@ -7,219 +7,7 @@ import pickle
 from moves import *
 from pokedex import *
 from items import *
-global clearVar
-syst = os.name
-if syst == 'nt':
-    clearVar = "cls"
-else:
-    clearVar = "clear"
-    
-class trainer:
-    """
-    creates a pokemon trainer
-    """
-    def __init__(self,name,pokeList, itemList, money): #gives the trainer a name and a list of pokemon
-        self.name = name
-        self.pokeList = pokeList
-        self.itemList = itemList
-        self.money = money
-        self.playerDex = {}
-        self.badges = []
-        self.boxList = []
-
-    def getName(self): #gets the name of the trainer
-        print(self.name)
-
-    def getFirstPoke(self): #returns the pokemon at the front of the lineup
-        for poke in self.pokeList:
-            if poke.HP > 0:
-                return poke
-                break
-
-    def addPoke(self, pokemon): #adds a new pokemon to the roster
-        if len(self.pokeList) <6:
-            self.pokeList.append(pokemon)
-        else:
-            print('No room left in the party,',pokemon.name,'was sent to the PC!')
-            self.boxList.append(pokemon)
-        if pokemon.pokeNum not in self.playerDex:
-            print(pokemon.name+'\'s information was added to your pokedex!')
-            self.playerDex[pokemon.pokeNum] = [pokemon.name, pokemon.entry]
-            print(pokemon.entry)
-            input()
-            
-
-    def showPoke(self, currentList): #prints all the pokemon in the roster
-        if currentList == 0:
-            currentList = self.pokeList
-        i = 1
-        for poke in currentList:
-            print(str(i)+'.'+str(poke.name))
-            i+=1
-
-    def removePoke(self): #removes a pokemon from the roster
-        if len(self.pokeList) == 1:
-            print('You can\'t release your last pokemon!')
-        else:
-            options = len(self.pokeList)+1
-            while True:
-                print('Which pokemon would you like to remove?')
-                self.showPoke(self.pokeList)
-                print(str(options)+'.Cancel')
-                index = input()
-                if menuValid(index, options):
-                    index = int(index)
-                    break
-            if index == options:
-                print('canceled')
-            else:
-                removed = self.pokeList[index-1]
-                print(str(removed.name), 'will be removed from your party')
-                while True:
-                    print('Are you sure? y/n')
-                    confirm = input()
-                    if confirm == 'y':
-                        print(str(removed.name), 'was released, bye',str(removed.name)+'!')
-                        removed = self.pokeList[index-1]
-                        self.pokeList.remove(removed)
-                        break
-                    elif confirm == 'n':
-                        print('canceled')
-                        break
-                    else:
-                        print('Please enter \'y\' or \'n\'')
-    
-                    
-    def changeOrder(self): #changes which pokemon goes first
-        pokeCopy = self.pokeList[:]
-        options = len(self.pokeList)
-        while True:
-            print('Who would you like to go first?')
-            self.showPoke(self.pokeList)
-            index = int(input())
-            if index <= options:
-                break
-        if index != 1:
-            oldFirstCopy = self.pokeList[0]
-            newFirstCopy = self.pokeList[index-1]
-            self.pokeList.remove(oldFirstCopy)
-            self.pokeList.remove(newFirstCopy)
-            self.pokeList.insert(0, newFirstCopy)
-            self.pokeList.append(oldFirstCopy)
-            self.showPoke(self.pokeList)
-        else:
-            print('No changes made')
-
-    def choosePoke(self, currentList):
-        options = len(currentList)
-        while True:
-            self.showPoke(currentList)
-            index = input()
-            if menuValid(index, options):
-                index = int(index)
-                break
-        poke = currentList[index-1]
-        return poke
-
-    def checkDex(self):
-        while True:
-            while True:
-                os.system(clearVar)
-                print('Which entry would you like to check?')
-                for pokeNum in self.playerDex:  
-                    print(str(pokeNum)+'.', self.playerDex[pokeNum][0])
-                print('0. cancel')
-                poke = input()
-                try:
-                    poke = int(poke)
-                    if poke != 0 and poke in self.playerDex:
-                        print(self.playerDex[poke][1])
-                        input()
-                        break
-                    else:
-                        break
-                except ValueError:
-                    print('Invalid entry')
-            if poke == 0:
-                break
-            
-    def getItem(self, item, number):
-        if item in itemList:
-            itemList[item] += number
-        else:
-            itemList[item] = number
-
-    def catchPoke(self, opponentPoke):
-        catchRate = (opponentPoke.maxHP/opponentPoke.HP)*18
-        didCatch = randint(1,100)
-        if didCatch <= catchRate:
-            print(opponentPoke.name,'was caught!')
-            self.addPoke(opponentPoke)
-            return True
-        else:
-            print('it broke free!')
-            input()
-            return False
-
-    def useItem(self):
-        if len(self.itemList)==0:
-            print('You don\'t have any items!')
-            input()
-        else:
-            items = []
-            for item in self.itemList:
-                items.append(item[0]+' '+str(item[1]))
-            items.append('cancel')
-            while True:
-                action = menuSelect('Which item would you like to use?', items)
-                if action == len(items):
-                    print('Canceled')
-                    input()
-                    return None
-                else:
-                    return self.itemList[action-1][0]
-
-    def partyHeal(self):
-        for poke in self.pokeList:
-            poke.heal(1000)
-            
-    def usePC(self):
-        while True:
-            os.system(clearVar)
-            print('Accessed the pokemon PC!')
-            action = menuSelect('What would you like to do?', ['Deposit pokemon','Withdraw pokemon','Cancel'])
-            if action == 1:
-                if len(self.pokeList)==1:
-                    print('Can\'t deposit your last pokemon!')
-                    input()
-                else:
-                    pokes = []
-                    for poke in self.pokeList:
-                        pokes.append(poke.name+' '+str(poke.level))
-                    pokes.append('Cancel')
-                    deposit = menuSelect('Which pokemon would you like to deposit?', pokes)
-                    if deposit !=  len(pokes):
-                        print(self.pokeList[deposit-1].name, 'was deposited!')
-                        input()
-                        self.boxList.append(self.pokeList[deposit-1])
-                        self.pokeList.remove(self.pokeList[deposit-1])
-            elif action == 2:
-                if len(self.pokeList) == 6:
-                    print('Can\'t withdraw more than 6 pokemon, deposit pokemon first')
-                    input()
-                else:
-                    pokes = []
-                    for poke in self.boxList:
-                        pokes.append(poke.name)
-                    pokes.append('Cancel')
-                    withdraw = menuSelect('Which pokemon would you like to withdraw?', pokes)
-                    if withdraw != len(pokes):
-                        print(self.boxList[withdraw-1].name,'was withdrawn!')
-                        input()
-                        self.pokeList.append(self.boxList[withdraw-1])
-                        self.boxList.remove(self.boxList[withdraw-1])
-            else:
-                break
+from trainers import *
 
 class summary:
     """
@@ -279,6 +67,8 @@ def main(startModule, modules):
     os.system(clearVar)
     action = menuSelect('Pokemon!',['New Game','Load'])
     if action == 1: #Start new game
+        gameState.trainers = allTrainers
+        gameState.lastPokecenter = 'palletTown'
         os.system(clearVar)
         playerName = input('Welcome to the world of Pokemon! First, What is your name?\n')
         player = trainer(playerName, [], [], 500) #creates player
@@ -359,6 +149,18 @@ def menuSelect(ask, options):
             action = int(action)
             return action
 
+def menuValid(number, maxNum):
+    noGood = 'invalid input'
+    try:
+        number = int(number)
+        if number <= maxNum and number >0:
+            return True
+        else:
+            print(noGood)
+            return False
+    except ValueError:
+        print(noGood)
+
 def pokeCenter(player):
     os.system(clearVar)
     while True: 
@@ -375,19 +177,6 @@ def pokeCenter(player):
         else:
             print('Have a great day!')
             break
-
-
-def menuValid(number, maxNum):
-    noGood = 'invalid input'
-    try:
-        number = int(number)
-        if number <= maxNum and number >0:
-            return True
-        else:
-            print(noGood)
-            return False
-    except ValueError:
-        print(noGood)
 
 def battleDisplay(playerPoke, opponentPoke):
     """
@@ -722,3 +511,15 @@ def battle(player, opponent, wild= True):
         input()
     battleRestore(player)
     return won
+
+def trainerEncounter(player, trainer, phrase1, phrase2):
+    if len(trainer.pokeList)>0:
+        print(trainer.name+':',phrase1)
+        input()
+        won = battle(player, trainer, False)
+        if won == True:
+            trainer.pokeList = []
+        return won
+    else:
+        print(trainer.name+':',phrase2)
+        input()
