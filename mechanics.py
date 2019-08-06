@@ -235,35 +235,35 @@ def main(startModule, modules):
     """
     runs the game
     """
-    os.system(clearVar)
-    action = menuSelect('Pokemon!',['New Game','Load'])
-    if action == 1: #Start new game
-        playerName = input('Welcome to the world of Pokemon! First, What is your name?\n')
-        player = trainer(playerName, [], [], 500) #creates player
-        gameState.playerSave = player #adds player to save/load game state
-        print('Welcome', player.name+'! your pokemon adventure begins today!')
-        input()
-        module = startModule(player) #starts the game
-    else:
-        oldGameState = saveLoad('load','')
-        gameState.playerSave = oldGameState.playerSave
-        gameState.lastPokecenter = oldGameState.lastPokecenter
-        player = gameState.playerSave #loads player save into the game player
-        module = modules[gameState.lastPokecenter] #finds the saved in game location
-        module = module(player) #runs the in game location
+    loaded = False
+    while not loaded:
+        os.system(clearVar)
+        action = menuSelect('Pokemon!',['New Game','Load'])
+        if action == 1: #Start new game
+            loaded = True
+            os.system(clearVar)
+            playerName = input('Welcome to the world of Pokemon! First, What is your name?\n')
+            player = trainer(playerName, [], [], 500) #creates player
+            gameState.playerSave = player #adds player to save/load game state
+            print('Welcome', player.name+'! your pokemon adventure begins today!')
+            input()
+            module = startModule(player) #starts the game
+        else:
+            try:
+                oldGameState = saveLoad('load','')
+                loaded = True
+                os.system(clearVar)
+                gameState.playerSave = oldGameState.playerSave
+                gameState.lastPokecenter = oldGameState.lastPokecenter
+                player = gameState.playerSave #loads player save into the game player
+                module = modules[gameState.lastPokecenter] #finds the saved in game location
+                module = module(player) #runs the in game location
+            except FileNotFoundError:
+                print('There is no save file!')
+                input()
     while True:
         module = modules[module] #finds the next module to run
         module = module(player) #runs the next module
-        
-def test():
-    action = int(input('enter action\n'))
-    if action == 1:
-        print(gameState.playerSave)
-    elif action == 2:
-        print(gameState.lastPokecenter)
-    else:
-        gameState.playerSave = 'ash'
-        gameState.lastPokecenter = 'palletTown'
 
 def saveLoad(which, summary):
     if which == 'save':

@@ -29,7 +29,7 @@ class pokemon:
     needXP is amount of XP needed to gain a level; integer
     XPmod is how much the gained XP is adjusted; two digit, single decimel place; 1.6 or 0.8 
     """
-    def __init__(self,name, pokeNum, entry, level,typ,statMods, moves, needXP,XPmod, evo):
+    def __init__(self,name, pokeNum, entry, level,typ,statMods, moves, needXP,XPmod,evo, trainer=1):
         self.name = name
         self.pokeNum = pokeNum
         self.entry = entry
@@ -46,6 +46,7 @@ class pokemon:
         self.tempStats = copy.deepcopy(self.stats)
         self.status = []
         self.evo = evo
+        self.trainer = trainer
 
     def getName(self): #gives the name of the pokemon
         print(self.name)
@@ -121,7 +122,7 @@ class pokemon:
             print(self.name+'\'s',stat,change)
 
     def XPGain(self, opponent):
-        gain = round(opponent.needXP/2)
+        gain = round(opponent.needXP/2)*opponent.trainer
         self.gainedXP += gain
         print(self.name,'gained',gain,'experience!')
         if self.gainedXP >= self.needXP:
@@ -250,8 +251,9 @@ class pokemon:
               
         return False not in act
 
-def pokemonGenerator(pokemon, level, givenMoves):
+def pokemonGenerator(pokemon, level, givenMoves, trainer = 1):
     newPoke = copy.deepcopy(pokemon)
+    newPoke.trainer = trainer
     newPoke.addLevel(level)
     i = 1
     for move in givenMoves:

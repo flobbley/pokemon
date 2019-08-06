@@ -217,9 +217,9 @@ def lab(player, pokeGot = True):
         print('Professor Oak: "Now now Gary, you\'ll get your turn, now which pokemon would you like',player.name+'?"')
         
         gary = trainer('Gary',[],{},10)
-        squirtle = pokemonGenerator(pokedex.squirtle, 5, [tackle,tailWhip])
-        charmander = pokemonGenerator(pokedex.charmander, 5, [scratch,tailWhip])
-        bulbasaur = pokemonGenerator(pokedex.bulbasaur,5,[tackle,leer])
+        squirtle = pokemonGenerator(pokedex.squirtle, 5, [tackle,tailWhip], 1.5)
+        charmander = pokemonGenerator(pokedex.charmander, 5, [scratch,tailWhip], 1.5)
+        bulbasaur = pokemonGenerator(pokedex.bulbasaur,5,[tackle,leer], 1.5)
         while True: #first Pokemon selection
             poke = input('\n1.Squirtle\n2.Charmander\n3.Bulbasaur\n')
             if menuValid(poke, 3):
@@ -391,9 +391,9 @@ ashSquirtle = pokemonGenerator(pokedex.squirtle, 5, [tackle, tailWhip])
 garyCharmander = pokemonGenerator(pokedex.charmander, 5, [scratch, tailWhip])
 garySquirtle = pokemonGenerator(pokedex.squirtle, 5, [tackle, tailWhip])
 ashCharmander = pokemonGenerator(pokedex.charmander, 5, [scratch, tailWhip])
-ashRatata = pokemonGenerator(pokedex.ratata,2,[tackle,quickAttack])
-caterpie = pokemonGenerator(pokedex.caterpie,3,[tackle,stringShot])
-weedle = pokemonGenerator(pokedex.weedle,3,[poisonSting, stringShot])
+ashRatata = pokemonGenerator(pokedex.ratata,2,[tackle,quickAttack],1.5)
+caterpie = pokemonGenerator(pokedex.caterpie,3,[tackle,stringShot],1.5)
+weedle = pokemonGenerator(pokedex.weedle,3,[poisonSting, stringShot],1.5)
 kakuna = pokemonGenerator(pokedex.kakuna,5,[harden])
 
 ash = trainer('ash', [ashRatata, ashPidgey, ashBulbasaur], [['Pokeball',5],['Potion',5]], 500)

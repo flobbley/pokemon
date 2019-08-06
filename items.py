@@ -60,7 +60,7 @@ def itemShop(player):
         print('Welcome to the Pokemart!')
         print('You have',player.money,'credits')
         items = [['Pokeball',100],['Potion',50]]
-        options = ['Pokeball','Potion','Cancel']
+        options = ['Pokeball 100','Potion 50','Cancel']
         action = menuSelect('What would you like to buy?', options)
         if action == len(options):
             print('Come back and see us again!')
