@@ -168,7 +168,7 @@ class trainer:
         else:
             items = []
             for item in self.itemList:
-                items.append(item[0])
+                items.append(item[0]+' '+str(item[1]))
             items.append('cancel')
             while True:
                 action = menuSelect('Which item would you like to use?', items)
@@ -228,6 +228,47 @@ class summary:
     def __init__(self):
         self.playerSave = 0
         self.lastPokecenter = 0
+        self.trainers = 0
+
+    def saveLoad(self, save):
+        if save == 'save':
+            while True:
+                os.system(clearVar)
+                action = menuSelect('Which Slot?',['Slot1','Slot2','Slot3'])
+                slot = 'Slot'+str(action)
+                try:
+                    with open(slot,'rb') as f:
+                        oldGameState = pickle.load(f)
+                        
+                    print(slot,'contains',oldGameState.playerSave.name,'Are you sure? y/n')
+                    willSave = input()
+                    if willSave == 'y':
+                        with open(slot,'wb') as f:
+                            pickle.dump(self,f,protocol = 2)
+                        break
+                except FileNotFoundError:
+                    with open(slot,'wb') as f:
+                        pickle.dump(self,f,protocol = 2)
+                    break
+        else:
+            while True:
+                os.system(clearVar)
+                action = menuSelect('Which Slot?',['Slot1','Slot2','Slot3'])
+                slot = 'Slot'+str(action)
+                try:
+                    with open(slot,'rb') as f:
+                        oldGameState = pickle.load(f)
+                    print(oldGameState.playerSave.name,'is this correct? y/n')
+                    load = input()
+                    if load == 'y':
+                        self.playerSave = oldGameState.playerSave
+                        self.lastPokecenter = oldGameState.lastPokecenter
+                        self.trainers = oldGameState.trainers
+                        break
+                except FileNotFoundError:
+                    print('No game data!')
+                    input()
+        
 
 gameState = summary() #creates the save/load info
         
@@ -235,44 +276,25 @@ def main(startModule, modules):
     """
     runs the game
     """
-    loaded = False
-    while not loaded:
+    os.system(clearVar)
+    action = menuSelect('Pokemon!',['New Game','Load'])
+    if action == 1: #Start new game
         os.system(clearVar)
-        action = menuSelect('Pokemon!',['New Game','Load'])
-        if action == 1: #Start new game
-            loaded = True
-            os.system(clearVar)
-            playerName = input('Welcome to the world of Pokemon! First, What is your name?\n')
-            player = trainer(playerName, [], [], 500) #creates player
-            gameState.playerSave = player #adds player to save/load game state
-            print('Welcome', player.name+'! your pokemon adventure begins today!')
-            input()
-            module = startModule(player) #starts the game
-        else:
-            try:
-                oldGameState = saveLoad('load','')
-                loaded = True
-                os.system(clearVar)
-                gameState.playerSave = oldGameState.playerSave
-                gameState.lastPokecenter = oldGameState.lastPokecenter
-                player = gameState.playerSave #loads player save into the game player
-                module = modules[gameState.lastPokecenter] #finds the saved in game location
-                module = module(player) #runs the in game location
-            except FileNotFoundError:
-                print('There is no save file!')
-                input()
+        playerName = input('Welcome to the world of Pokemon! First, What is your name?\n')
+        player = trainer(playerName, [], [], 500) #creates player
+        gameState.playerSave = player #adds player to save/load game state
+        print('Welcome', player.name+'! your pokemon adventure begins today!')
+        input()
+        module = startModule(player) #starts the game
+    else:
+        gameState.saveLoad('load')
+        os.system(clearVar)
+        player = gameState.playerSave #loads player save into the game player
+        module = modules[gameState.lastPokecenter] #finds the saved in game location
+        module = module(player) #runs the in game location
     while True:
         module = modules[module] #finds the next module to run
         module = module(player) #runs the next module
-
-def saveLoad(which, summary):
-    if which == 'save':
-        with open('savefile','wb') as f:
-            pickle.dump(summary,f,protocol = 2)
-    else:
-        with open('savefile','rb') as f:
-            summary = pickle.load(f)
-            return summary
     
 def menu(player):
     while True:
@@ -319,7 +341,7 @@ def menu(player):
                 else:
                     print()                       
             elif action == 4:
-                saveLoad('save',gameState)
+                gameState.saveLoad('save')
                 print('Game saved!')
                 input()
             else:
