@@ -98,6 +98,8 @@ class pokemon:
             self.HP = self.HP
         else:
             self.HP -= damage
+            if self.HP<0:
+                self.HP = 0
 
 
     def statChange(self, stat, boost): #reduces the appropriate stat when stat damage is taken
@@ -319,6 +321,8 @@ class pokedex: #fills the global pokedex
                               [1.7,1.12,0.7,0.5,0.7,1.44],{}, 20, 1.3, {12:'raticate'})
         self.raticate = pokemon('Raticate',19, 'This pokemon digs deep burrows which can sometimes cause damage to buildings',1,['normal','normal'],\
                                 [2.2,1.62,1.2,1,1.4,1.94],{},25,1.3,{0:0})
+        self.pikachu = pokemon('Pikachu',25,'This pokemon stores electricity in it\'s cheeks',1,['electric','electric'],\
+                               [1.8,1.1,0.8,1.0,1.0,1.8],{},25,1.3,{0:0})
 pokedex = pokedex() #actually creates the pokedex
 evos = []
 for value in pokedex.__dict__.items():
@@ -344,4 +348,5 @@ moveTree = {'Bulbasaur':{6:leechSeed},\
             'Pidgeot':{},\
             'Ratata':{6:quickAttack},
             'Raticate':{},\
+            'Pikachu':{7:thundershock},\
             }

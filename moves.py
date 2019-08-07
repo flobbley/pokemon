@@ -176,9 +176,10 @@ def emberAttack(attacker, defender):
     damageType = 'fire'
     power = 40
     if hit(95) == True:
-        if randint(1,10) == 5:
-            defender.status.append('burn')
-            print(defender.name,'was burned!')
+        if 'burn' not in defender.status:
+            if randint(1,10) == 5:
+                defender.status.append('burn')
+                print(defender.name,'was burned!')
         damageMod = typeMod(damageType, attacker.typ, defender.typ)
         damageDone = damage(attacker, defender, power, 'sp.attack','sp.defense')
         damageDone *= damageMod
@@ -191,8 +192,11 @@ def leechSeedAttack(attacker, defender, computer):
     if 'grass' in defender.typ:
         print(defender.name,'was not affected')
     else:
-        print(defender.name,'was seeded')
-        defender.status.append('leech')
+        if 'leech' not in defender.status:
+            print(defender.name,'was seeded')
+            defender.status.append('leech')
+        else:
+            print('There was no effect')
 
 def quickAttackAttack(attacker, defender, computer):
     damageType = 'normal'
@@ -209,12 +213,14 @@ def poisonStingAttack(attacker, defender, computer):
     damageType = 'poison'
     power = 40
     if hit(95) == True:
-        if randint(1,10) == 5:
-            defender.status.append('poison')
-            print(defender.name,'was poisoned!')
         damageMod = typeMod(damageType, attacker.typ, defender.typ)
-        damageDone = damage(attacker, defender, power, 'attack', 'defense')
-        defender.damageTaken(round(damageDone))
+        if damageMod != 0 and 'poison' not in defender.status:
+            if randint(1,10) == 5:
+                defender.status.append('poison')
+                print(defender.name,'was poisoned!')
+            damageDone = damage(attacker, defender, power, 'attack', 'defense')
+            damageDone *= damageMod
+            defender.damageTaken(round(damageDone))
     else:
         print('but it missed!')
 
@@ -238,17 +244,21 @@ def twinNeedleAttack(attacker, defender, computer):
         else:
             battleDisplay(attacker,defender)
         if hit(95) == True:
-            if i == 0:
-                print('first strike hit!')
-                input()
-            if i == 1:
-                print('second strike hit!')
-            if randint(1,5) == 5:
-                defender.status.append('poison')
-                print(defender.name,'was poisoned!')
             damageMod = typeMod(damageType, attacker.typ, defender.typ)
-            damageDone = damage(attacker, defender, power, 'attack', 'defense')
-            defender.damageTaken(round(damageDone))
+            if damageMod != 0:
+                if i == 0:
+                    print('first strike hit!')
+                    input()
+                if i == 1:
+                    print('second strike hit!')
+                if 'poison' not in defender.status:
+                    if randint(1,5) == 5:
+                        defender.status.append('poison')
+                        print(defender.name,'was poisoned!')
+                damageMod = typeMod(damageType, attacker.typ, defender.typ)
+                damageDone = damage(attacker, defender, power, 'attack', 'defense')
+                damageDone*=damageMod
+                defender.damageTaken(round(damageDone))
             
         else:
             if i == 0:
@@ -261,12 +271,30 @@ def confusionAttack(attacker, defender, computer):
     damageType = 'psychic'
     power = 50
     if hit(95) == True:
-        if randint(1,10) == 5:
-            defender.status.append('confusion')
-            print(defender.name,'became confused!')
+        if 'confusion' not in defender.status:
+            if randint(1,10) == 5:
+                defender.status.append('confusion')
+                print(defender.name,'became confused!')
         damageMod = typeMod(damageType, attacker.typ, defender.typ)
         damageDone = damage(attacker, defender, power, 'sp.attack', 'sp.defense')
+        damageDone*=damageMod
         defender.damageTaken(round(damageDone))
+    else:
+        print('but it missed!')
+
+def thundershockAttack(attacker, defender, computer):
+    damageType = 'electric'
+    power = 40
+    if hit(95) == True:
+        damageMod = typeMod(damageType, attacker.typ, defender.typ)
+        if damageMod != 0:
+            if 'paralyzed' not in defender.status:
+                if randint(5,5) == 5:
+                    defender.status.append('paralyzed')
+                    print(defender.name,'became paralyzed!')
+            damageDone = damage(attacker, defender, power, 'sp.attack', 'sp.defense')
+            damageDone*=damageMod
+            defender.damageTaken(round(damageDone))
     else:
         print('but it missed!')
     
@@ -297,3 +325,4 @@ stringShot = move('string shot',0,0,stringShotAttack)
 harden = move('harden',0,0,hardenAttack)
 twinNeedle = move('twin needle',0,0,twinNeedleAttack)
 confusion = move('confusion',0,0,confusionAttack)
+thundershock = move('thunder shock',0,0,thundershockAttack)

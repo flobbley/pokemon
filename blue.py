@@ -334,7 +334,8 @@ def viridianWild(player, patches):
     weedle2 = pokemonGenerator(pokedex.weedle,2,[poisonSting, stringShot])
     weedle3 = pokemonGenerator(pokedex.weedle,4,[poisonSting, stringShot])
     kakuna1 = pokemonGenerator(pokedex.kakuna,5,[tackle, harden])
-    encounters = [caterpie1, caterpie2, caterpie3, caterpie4, weedle1, weedle2, weedle3, kakuna1]
+    pikachu1 = pokemonGenerator(pokedex.pikachu,4,[tackle, tailWhip])
+    encounters = [caterpie1, caterpie2, caterpie3, caterpie4, weedle1, weedle2, weedle3, kakuna1, pikachu1]
     chance = [True, False]
     i = 1
     for patch in range(1,patches+1):
@@ -576,13 +577,14 @@ garyPidgey = pokemonGenerator(pokedex.pidgey,4,[tackle, gust])
 ashBulbasaur = pokemonGenerator(pokedex.bulbasaur,5,[tackle,leer])
 garyBulbasaur = pokemonGenerator(pokedex.bulbasaur, 5, [tackle, leer])
 ashSquirtle = pokemonGenerator(pokedex.squirtle, 5, [tackle, tailWhip])
-garyCharmander = pokemonGenerator(pokedex.charmander, 5, [scratch, tailWhip])
-garySquirtle = pokemonGenerator(pokedex.squirtle, 30, [tailWhip])
+garyCharmander = pokemonGenerator(pokedex.charmander, 30, [tailWhip])
+garySquirtle = pokemonGenerator(pokedex.squirtle, 5, [tailWhip])
 ashCharmander = pokemonGenerator(pokedex.charmander, 5, [scratch, tailWhip])
 ashBeedrill = pokemonGenerator(pokedex.beedrill,10,[twinNeedle,poisonSting],1.5)
+ashPikachu = pokemonGenerator(pokedex.pikachu, 7, [thundershock])
 
-ash = trainer('ash', [ashBeedrill], [['Pokeball',5],['Potion',5]], 500)
-gary = trainer('gary', [garySquirtle], [], 10)
+ash = trainer('ash', [ashPikachu, ashBulbasaur], [['Pokeball',5],['Potion',5]], 500)
+gary = trainer('gary', [garySquirtle, garyCharmander], [], 10)
 
 """
 main game area
@@ -592,5 +594,5 @@ modules = {'bedroom':bedroom, 'momsHouse':momsHouse, 'lab':lab, 'garysHouse':gar
             'route29south':route29south, 'viridianArea1':viridianArea1, 'viridianArea2north':viridianArea2north, 'viridianArea2south':viridianArea2south, 'viridianArea3':viridianArea3,\
            'viridianArea4north':viridianArea4north,'viridianArea4south':viridianArea4south, 'pewterCity':pewterCity}
 
-#print(battle(gary, ash))
+#print(battle(gary, ash, False))
 print(main(bedroom,modules)) #runs the game

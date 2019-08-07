@@ -202,30 +202,27 @@ def playerTurn(playerPoke, opponentPoke):
     """
     defines the players turn
     """
-    act = playerPoke.statusAction(opponentPoke, 'during')
-    if act:
-        while True:
-            playerPoke.getMoves()
-            move = input()
-            noMoves = len(playerPoke.moves)+1
-            if menuValid(move, noMoves):
-                move = int(move)
-                break
-        if move == noMoves:
-            return False
-        else:
-            return playerPoke.moves[move]
+    while True:
+        playerPoke.getMoves()
+        move = input()
+        noMoves = len(playerPoke.moves)+1
+        if menuValid(move, noMoves):
+            move = int(move)
+            break
+    if move == noMoves:
+        return False
+    else:
+        return playerPoke.moves[move]
         
     
 def computerTurn(playerPoke, opponentPoke, opponentName):
     """
     defines the computers turn
     """
-    act = opponentPoke.statusAction(playerPoke, 'during')
-    if act:
-        noMoves = len(opponentPoke.moves)
-        move = randint(1,noMoves)
-        return opponentPoke.moves[move]        
+    noMoves = len(opponentPoke.moves)
+    move = randint(1,noMoves)
+    return opponentPoke.moves[move]
+    
 
 def battle(player, opponent, wild= True):
     os.system(clearVar)
@@ -325,7 +322,8 @@ def battle(player, opponent, wild= True):
                 playerskip = False
                 turn = 0
                 if playerMove != False:
-                    turn = playerMove.priority - computerMove.priority
+                        turn = playerMove.priority - computerMove.priority
+                        
                 else:
                     playerskip = True
                 if turn == 0:
@@ -334,6 +332,10 @@ def battle(player, opponent, wild= True):
                     """
                     player goes first
                     """
+                    if playerskip == False:
+                        act = playerPoke.statusAction(opponentPoke, 'during')
+                        if act == False:
+                            playerskip = True
                     if playerskip == False:
                         playerMove.useMove(playerPoke, opponentPoke)
                         input()
@@ -373,7 +375,9 @@ def battle(player, opponent, wild= True):
                             playerPoke = player.choosePoke(playerPokesCopy)
                             print(str(player.name),'sent out',str(playerPoke.name))
                             input()
-
+                    act = opponentPoke.statusAction(playerPoke, 'during')
+                    if act == False:
+                        compskip = True
                     if compskip != True:    
                         computerMove.useMove(opponentPoke, playerPoke, True)
                         input()
@@ -416,10 +420,14 @@ def battle(player, opponent, wild= True):
                     """
                     computer goes first
                     """
-                    computerMove.useMove(opponentPoke, playerPoke, True)
-                    input()
-                    os.system(clearVar)
-                    battleDisplay(playerPoke, opponentPoke)
+                    act = opponentPoke.statusAction(playerPoke, 'during')
+                    if act == False:
+                        compskip = True
+                    if compskip != True:
+                        computerMove.useMove(opponentPoke, playerPoke, True)
+                        input()
+                        os.system(clearVar)
+                        battleDisplay(playerPoke, opponentPoke)
                     if playerPoke.HP<=0: #checks if a pokemon fainted
                         playerPokesCopy.remove(playerPoke)
                         playerPoke.HP = 0
@@ -453,7 +461,10 @@ def battle(player, opponent, wild= True):
                             opponentPoke = choice(opponentPokesCopy)
                             print(str(opponent.name),'sent out',str(opponentPoke.name))
                             input()
-                            
+                    if playerskip == False:
+                        act = playerPoke.statusAction(opponentPoke, 'during')
+                        if act == False:
+                            playerskip = True
                     if playerskip != True:    
                         playerMove.useMove(playerPoke, opponentPoke)
                         input()

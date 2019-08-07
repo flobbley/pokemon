@@ -1,12 +1,4 @@
-from pokemon import *
-
-def mainTest(startModule, player):
-    os.system(clearVar)
-    modules = {'myHouseNoQuiz':myHouseNoQuiz, 'quiz':quiz, 'getFirstPoke':getFirstPoke}
-    module = startModule(player)
-    while True:
-        module = modules[module]
-        module = module(player)
+from mechanics import *
 
 def myBedroomFirst(player):
     """
@@ -16,7 +8,7 @@ def myBedroomFirst(player):
         os.system(clearVar)
         print('You awake to the sound of your alarm, your Mom is shouting that you\'ll be late to school. It\'s time to get up!') #Enter descriptor info here, hashtags indicate comments, they are ignored by the code
         print('A cold realization washes over you, you didn\'t finish your homework and it\'s due today!')
-        action = menuSelect('What would you like to do?',['Get dressed, head downstairs','Check what\'s on T.V.','Hit snooze, try and catch a few more ZZZ','menu'])#enter question here, along with the list of possible answers
+        action = menuSelect('What would you like to do?',['Get dressed, head downstairs','Check what\'s on T.V.','Hit snooze, try and catch a few more ZZZ','Menu'])#enter question here, along with the list of possible answers
         if action == 1: #the number of actions will equal the number of possible answers in the last line
             return 'myHouseNoQuiz' #---- if this option leads to a new module, uncomment this line and put the name of the new module in the quotes
         elif action == 2:
@@ -38,7 +30,7 @@ def myHouseNoQuiz(player):
     while True:
         os.system(clearVar)
         print('Mom:"Good Morning! Big Day today, did you finish your homework?') #Enter descriptor info here, hashtags indicate comments, they are ignored by the code
-        action = menuSelect('What would you like to do?',['"Yeah of course, who do you think I am?"','Go back upstairs without a word','Try to run out of the house without her noticing','"Oh yeah, I forgot it upstairs!','menu'])#enter question here, along with the list of possible answers
+        action = menuSelect('What would you like to do?',['"Yeah of course, who do you think I am?"','Go back upstairs without a word','Try to run out of the house without her noticing','"Oh yeah, I forgot it upstairs!','Menu'])#enter question here, along with the list of possible answers
         if action == 1: #the number of actions will equal the number of possible answers in the last line
             print('Mom: A liar apparently, go back up there and get it done!')
             input()
@@ -67,6 +59,7 @@ def quiz(player):
     while True:
         os.system(clearVar)
         print('You go upstairs, and find your homework is still on your computer from the night before') #Enter descriptor info here, hashtags indicate comments, they are ignored by the code
+        print('It\'s a personality quiz, meant to get a feel for your aptitude toward certain pokemon!')
         action = menuSelect('What is your favorite color?',['A cool Cerulean','A fiery Vermillion','A vibrant Viridian','A fun Fuschia','A subtle Saffron'])#enter question here, along with the list of possible answers
         if action == 1: #the number of actions will equal the number of possible answers in the last line
             quizAnswers.append(a)
@@ -83,357 +76,368 @@ def quiz(player):
         else:
             quizAnswers.append(e)
             
-        print('Answer 1 recorded')
+        print('Answer 1/20 recorded')
         input()
+
+        action = menuSelect('Aw man this is gonna take forever...', ['Keep going','Answer randomly'])
+        if action == 1:
         
-        action = menuSelect('Question',['list','of','possible','answers','menu'])#enter question here, along with the list of possible answers
-        if action == 1: #the number of actions will equal the number of possible answers in the last line
-            quizAnswers.append(a)
-            #return 'newModule' ---- if this option leads to a new module, uncomment this line and put the name of the new module in the quotes
-        elif action == 2:
-            quizAnswers.append(b)
-            #return 'newModule'
-        elif action == 3:
-            quizAnswers.append(c)
-            #return 'newModule'
-        elif action == 4:
-            quizAnswers.append(d)
-            #return 'newModule'
+            action = menuSelect('Question',['list','of','possible','answers','menu'])#enter question here, along with the list of possible answers
+            if action == 1: #the number of actions will equal the number of possible answers in the last line
+                quizAnswers.append(a)
+                #return 'newModule' ---- if this option leads to a new module, uncomment this line and put the name of the new module in the quotes
+            elif action == 2:
+                quizAnswers.append(b)
+                #return 'newModule'
+            elif action == 3:
+                quizAnswers.append(c)
+                #return 'newModule'
+            elif action == 4:
+                quizAnswers.append(d)
+                #return 'newModule'
+            else:
+                quizAnswers.append(e)
+            print('Answer 2/20 recorded')
+            input()
+
+            action = menuSelect('Question',['list','of','possible','answers','menu'])#enter question here, along with the list of possible answers
+            if action == 1: #the number of actions will equal the number of possible answers in the last line
+                quizAnswers.append(a)
+                #return 'newModule' ---- if this option leads to a new module, uncomment this line and put the name of the new module in the quotes
+            elif action == 2:
+                quizAnswers.append(b)
+                #return 'newModule'
+            elif action == 3:
+                quizAnswers.append(c)
+                #return 'newModule'
+            elif action == 4:
+                quizAnswers.append(d)
+                #return 'newModule'
+            else:
+                quizAnswers.append(e)
+            print('Answer 3/20 recorded')
+            input()
+
+            action = menuSelect('Question',['list','of','possible','answers','menu'])#enter question here, along with the list of possible answers
+            if action == 1: #the number of actions will equal the number of possible answers in the last line
+                quizAnswers.append(a)
+                #return 'newModule' ---- if this option leads to a new module, uncomment this line and put the name of the new module in the quotes
+            elif action == 2:
+                quizAnswers.append(b)
+                #return 'newModule'
+            elif action == 3:
+                quizAnswers.append(c)
+                #return 'newModule'
+            elif action == 4:
+                quizAnswers.append(d)
+                #return 'newModule'
+            else:
+                quizAnswers.append(e)
+            print('Answer 4/20 recorded')
+            input()
+
+            action = menuSelect('Question',['list','of','possible','answers','menu'])#enter question here, along with the list of possible answers
+            if action == 1: #the number of actions will equal the number of possible answers in the last line
+                quizAnswers.append(a)
+                #return 'newModule' ---- if this option leads to a new module, uncomment this line and put the name of the new module in the quotes
+            elif action == 2:
+                quizAnswers.append(b)
+                #return 'newModule'
+            elif action == 3:
+                quizAnswers.append(c)
+                #return 'newModule'
+            elif action == 4:
+                quizAnswers.append(d)
+                #return 'newModule'
+            else:
+                quizAnswers.append(e)
+            print('Answer 5/20 recorded')
+            input()
+
+            action = menuSelect('Question',['list','of','possible','answers','menu'])#enter question here, along with the list of possible answers
+            if action == 1: #the number of actions will equal the number of possible answers in the last line
+                quizAnswers.append(a)
+                #return 'newModule' ---- if this option leads to a new module, uncomment this line and put the name of the new module in the quotes
+            elif action == 2:
+                quizAnswers.append(b)
+                #return 'newModule'
+            elif action == 3:
+                quizAnswers.append(c)
+                #return 'newModule'
+            elif action == 4:
+                quizAnswers.append(d)
+                #return 'newModule'
+            else:
+                quizAnswers.append(e)
+            print('Answer 6/20 recorded')
+            input()
+
+            action = menuSelect('Question',['list','of','possible','answers','menu'])#enter question here, along with the list of possible answers
+            if action == 1: #the number of actions will equal the number of possible answers in the last line
+                quizAnswers.append(a)
+                #return 'newModule' ---- if this option leads to a new module, uncomment this line and put the name of the new module in the quotes
+            elif action == 2:
+                quizAnswers.append(b)
+                #return 'newModule'
+            elif action == 3:
+                quizAnswers.append(c)
+                #return 'newModule'
+            elif action == 4:
+                quizAnswers.append(d)
+                #return 'newModule'
+            else:
+                quizAnswers.append(e)
+            print('Answer 7/20 recorded')
+            input()
+
+            action = menuSelect('Question',['list','of','possible','answers','menu'])#enter question here, along with the list of possible answers
+            if action == 1: #the number of actions will equal the number of possible answers in the last line
+                quizAnswers.append(a)
+                #return 'newModule' ---- if this option leads to a new module, uncomment this line and put the name of the new module in the quotes
+            elif action == 2:
+                quizAnswers.append(b)
+                #return 'newModule'
+            elif action == 3:
+                quizAnswers.append(c)
+                #return 'newModule'
+            elif action == 4:
+                quizAnswers.append(d)
+                #return 'newModule'
+            else:
+                quizAnswers.append(e)
+            print('Answer 8/20 recorded')
+            input()
+
+            action = menuSelect('Question',['list','of','possible','answers','menu'])#enter question here, along with the list of possible answers
+            if action == 1: #the number of actions will equal the number of possible answers in the last line
+                quizAnswers.append(a)
+                #return 'newModule' ---- if this option leads to a new module, uncomment this line and put the name of the new module in the quotes
+            elif action == 2:
+                quizAnswers.append(b)
+                #return 'newModule'
+            elif action == 3:
+                quizAnswers.append(c)
+                #return 'newModule'
+            elif action == 4:
+                quizAnswers.append(d)
+                #return 'newModule'
+            else:
+                quizAnswers.append(e)
+            print('Answer 9/20 recorded')
+            input()
+
+            action = menuSelect('Question',['list','of','possible','answers','menu'])#enter question here, along with the list of possible answers
+            if action == 1: #the number of actions will equal the number of possible answers in the last line
+                quizAnswers.append(a)
+                #return 'newModule' ---- if this option leads to a new module, uncomment this line and put the name of the new module in the quotes
+            elif action == 2:
+                quizAnswers.append(b)
+                #return 'newModule'
+            elif action == 3:
+                quizAnswers.append(c)
+                #return 'newModule'
+            elif action == 4:
+                quizAnswers.append(d)
+                #return 'newModule'
+            else:
+                quizAnswers.append(e)
+            print('Answer 10/20 recorded')
+            input()
+
+            action = menuSelect('Question',['list','of','possible','answers','menu'])#enter question here, along with the list of possible answers
+            if action == 1: #the number of actions will equal the number of possible answers in the last line
+                quizAnswers.append(a)
+                #return 'newModule' ---- if this option leads to a new module, uncomment this line and put the name of the new module in the quotes
+            elif action == 2:
+                quizAnswers.append(b)
+                #return 'newModule'
+            elif action == 3:
+                quizAnswers.append(c)
+                #return 'newModule'
+            elif action == 4:
+                quizAnswers.append(d)
+                #return 'newModule'
+            else:
+                quizAnswers.append(e)
+            print('Answer 11/20 recorded')
+            input()
+
+            action = menuSelect('Question',['list','of','possible','answers','menu'])#enter question here, along with the list of possible answers
+            if action == 1: #the number of actions will equal the number of possible answers in the last line
+                quizAnswers.append(a)
+                #return 'newModule' ---- if this option leads to a new module, uncomment this line and put the name of the new module in the quotes
+            elif action == 2:
+                quizAnswers.append(b)
+                #return 'newModule'
+            elif action == 3:
+                quizAnswers.append(c)
+                #return 'newModule'
+            elif action == 4:
+                quizAnswers.append(d)
+                #return 'newModule'
+            else:
+                quizAnswers.append(e)
+            print('Answer 12/20 recorded')
+            input()
+
+            action = menuSelect('Question',['list','of','possible','answers','menu'])#enter question here, along with the list of possible answers
+            if action == 1: #the number of actions will equal the number of possible answers in the last line
+                quizAnswers.append(a)
+                #return 'newModule' ---- if this option leads to a new module, uncomment this line and put the name of the new module in the quotes
+            elif action == 2:
+                quizAnswers.append(b)
+                #return 'newModule'
+            elif action == 3:
+                quizAnswers.append(c)
+                #return 'newModule'
+            elif action == 4:
+                quizAnswers.append(d)
+                #return 'newModule'
+            else:
+                quizAnswers.append(e)
+            print('Answer 13/20 recorded')
+            input()
+
+            action = menuSelect('Question',['list','of','possible','answers','menu'])#enter question here, along with the list of possible answers
+            if action == 1: #the number of actions will equal the number of possible answers in the last line
+                quizAnswers.append(a)
+                #return 'newModule' ---- if this option leads to a new module, uncomment this line and put the name of the new module in the quotes
+            elif action == 2:
+                quizAnswers.append(b)
+                #return 'newModule'
+            elif action == 3:
+                quizAnswers.append(c)
+                #return 'newModule'
+            elif action == 4:
+                quizAnswers.append(d)
+                #return 'newModule'
+            else:
+                quizAnswers.append(e)
+            print('Answer 14/20 recorded')
+            input()
+
+            action = menuSelect('Question',['list','of','possible','answers','menu'])#enter question here, along with the list of possible answers
+            if action == 1: #the number of actions will equal the number of possible answers in the last line
+                quizAnswers.append(a)
+                #return 'newModule' ---- if this option leads to a new module, uncomment this line and put the name of the new module in the quotes
+            elif action == 2:
+                quizAnswers.append(b)
+                #return 'newModule'
+            elif action == 3:
+                quizAnswers.append(c)
+                #return 'newModule'
+            elif action == 4:
+                quizAnswers.append(d)
+                #return 'newModule'
+            else:
+                quizAnswers.append(e)
+            print('Answer 15/20 recorded')
+            input()
+
+            action = menuSelect('Question',['list','of','possible','answers','menu'])#enter question here, along with the list of possible answers
+            if action == 1: #the number of actions will equal the number of possible answers in the last line
+                quizAnswers.append(a)
+                #return 'newModule' ---- if this option leads to a new module, uncomment this line and put the name of the new module in the quotes
+            elif action == 2:
+                quizAnswers.append(b)
+                #return 'newModule'
+            elif action == 3:
+                quizAnswers.append(c)
+                #return 'newModule'
+            elif action == 4:
+                quizAnswers.append(d)
+                #return 'newModule'
+            else:
+                quizAnswers.append(e)
+            print('Answer 16/20 recorded')
+            input()
+
+            action = menuSelect('Question',['list','of','possible','answers','menu'])#enter question here, along with the list of possible answers
+            if action == 1: #the number of actions will equal the number of possible answers in the last line
+                quizAnswers.append(a)
+                #return 'newModule' ---- if this option leads to a new module, uncomment this line and put the name of the new module in the quotes
+            elif action == 2:
+                quizAnswers.append(b)
+                #return 'newModule'
+            elif action == 3:
+                quizAnswers.append(c)
+                #return 'newModule'
+            elif action == 4:
+                quizAnswers.append(d)
+                #return 'newModule'
+            else:
+                quizAnswers.append(e)
+            print('Answer 17/20 recorded')
+            input()
+
+            action = menuSelect('Question',['list','of','possible','answers','menu'])#enter question here, along with the list of possible answers
+            if action == 1: #the number of actions will equal the number of possible answers in the last line
+                quizAnswers.append(a)
+                #return 'newModule' ---- if this option leads to a new module, uncomment this line and put the name of the new module in the quotes
+            elif action == 2:
+                quizAnswers.append(b)
+                #return 'newModule'
+            elif action == 3:
+                quizAnswers.append(c)
+                #return 'newModule'
+            elif action == 4:
+                quizAnswers.append(d)
+                #return 'newModule'
+            else:
+                quizAnswers.append(e)
+            print('Answer 18/20 recorded')
+            input()
+
+            action = menuSelect('Question',['list','of','possible','answers','menu'])#enter question here, along with the list of possible answers
+            if action == 1: #the number of actions will equal the number of possible answers in the last line
+                quizAnswers.append(a)
+                #return 'newModule' ---- if this option leads to a new module, uncomment this line and put the name of the new module in the quotes
+            elif action == 2:
+                quizAnswers.append(b)
+                #return 'newModule'
+            elif action == 3:
+                quizAnswers.append(c)
+                #return 'newModule'
+            elif action == 4:
+                quizAnswers.append(d)
+                #return 'newModule'
+            else:
+                quizAnswers.append(e)
+            print('Answer 19/20 recorded')
+            input()
+
+            action = menuSelect('Question',['list','of','possible','answers','menu'])#enter question here, along with the list of possible answers
+            if action == 1: #the number of actions will equal the number of possible answers in the last line
+                quizAnswers.append(a)
+                #return 'newModule' ---- if this option leads to a new module, uncomment this line and put the name of the new module in the quotes
+            elif action == 2:
+                quizAnswers.append(b)
+                #return 'newModule'
+            elif action == 3:
+                quizAnswers.append(c)
+                #return 'newModule'
+            elif action == 4:
+                quizAnswers.append(d)
+                #return 'newModule'
+            else:
+                quizAnswers.append(e)
+            print('Answer 20/20 recorded')
+            input()
+
+
+            bulb = quizAnswers.count('a')
+            char = quizAnswers.count('b')
+            squirt = quizAnswers.count('c')
+            mach = quizAnswers.count('d')
+            ralts = quizAnswers.count('e')
         else:
-            quizAnswers.append(e)
-        print('Answer 2 recorded')
-        input()
-
-        action = menuSelect('Question',['list','of','possible','answers','menu'])#enter question here, along with the list of possible answers
-        if action == 1: #the number of actions will equal the number of possible answers in the last line
-            quizAnswers.append(a)
-            #return 'newModule' ---- if this option leads to a new module, uncomment this line and put the name of the new module in the quotes
-        elif action == 2:
-            quizAnswers.append(b)
-            #return 'newModule'
-        elif action == 3:
-            quizAnswers.append(c)
-            #return 'newModule'
-        elif action == 4:
-            quizAnswers.append(d)
-            #return 'newModule'
-        else:
-            quizAnswers.append(e)
-        print('Answer 3 recorded')
-        input()
-
-        action = menuSelect('Question',['list','of','possible','answers','menu'])#enter question here, along with the list of possible answers
-        if action == 1: #the number of actions will equal the number of possible answers in the last line
-            quizAnswers.append(a)
-            #return 'newModule' ---- if this option leads to a new module, uncomment this line and put the name of the new module in the quotes
-        elif action == 2:
-            quizAnswers.append(b)
-            #return 'newModule'
-        elif action == 3:
-            quizAnswers.append(c)
-            #return 'newModule'
-        elif action == 4:
-            quizAnswers.append(d)
-            #return 'newModule'
-        else:
-            quizAnswers.append(e)
-        print('Answer 4 recorded')
-        input()
-
-        action = menuSelect('Question',['list','of','possible','answers','menu'])#enter question here, along with the list of possible answers
-        if action == 1: #the number of actions will equal the number of possible answers in the last line
-            quizAnswers.append(a)
-            #return 'newModule' ---- if this option leads to a new module, uncomment this line and put the name of the new module in the quotes
-        elif action == 2:
-            quizAnswers.append(b)
-            #return 'newModule'
-        elif action == 3:
-            quizAnswers.append(c)
-            #return 'newModule'
-        elif action == 4:
-            quizAnswers.append(d)
-            #return 'newModule'
-        else:
-            quizAnswers.append(e)
-        print('Answer 5 recorded')
-        input()
-
-        action = menuSelect('Question',['list','of','possible','answers','menu'])#enter question here, along with the list of possible answers
-        if action == 1: #the number of actions will equal the number of possible answers in the last line
-            quizAnswers.append(a)
-            #return 'newModule' ---- if this option leads to a new module, uncomment this line and put the name of the new module in the quotes
-        elif action == 2:
-            quizAnswers.append(b)
-            #return 'newModule'
-        elif action == 3:
-            quizAnswers.append(c)
-            #return 'newModule'
-        elif action == 4:
-            quizAnswers.append(d)
-            #return 'newModule'
-        else:
-            quizAnswers.append(e)
-        print('Answer 6 recorded')
-        input()
-
-        action = menuSelect('Question',['list','of','possible','answers','menu'])#enter question here, along with the list of possible answers
-        if action == 1: #the number of actions will equal the number of possible answers in the last line
-            quizAnswers.append(a)
-            #return 'newModule' ---- if this option leads to a new module, uncomment this line and put the name of the new module in the quotes
-        elif action == 2:
-            quizAnswers.append(b)
-            #return 'newModule'
-        elif action == 3:
-            quizAnswers.append(c)
-            #return 'newModule'
-        elif action == 4:
-            quizAnswers.append(d)
-            #return 'newModule'
-        else:
-            quizAnswers.append(e)
-        print('Answer 7 recorded')
-        input()
-
-        action = menuSelect('Question',['list','of','possible','answers','menu'])#enter question here, along with the list of possible answers
-        if action == 1: #the number of actions will equal the number of possible answers in the last line
-            quizAnswers.append(a)
-            #return 'newModule' ---- if this option leads to a new module, uncomment this line and put the name of the new module in the quotes
-        elif action == 2:
-            quizAnswers.append(b)
-            #return 'newModule'
-        elif action == 3:
-            quizAnswers.append(c)
-            #return 'newModule'
-        elif action == 4:
-            quizAnswers.append(d)
-            #return 'newModule'
-        else:
-            quizAnswers.append(e)
-        print('Answer 8 recorded')
-        input()
-
-        action = menuSelect('Question',['list','of','possible','answers','menu'])#enter question here, along with the list of possible answers
-        if action == 1: #the number of actions will equal the number of possible answers in the last line
-            quizAnswers.append(a)
-            #return 'newModule' ---- if this option leads to a new module, uncomment this line and put the name of the new module in the quotes
-        elif action == 2:
-            quizAnswers.append(b)
-            #return 'newModule'
-        elif action == 3:
-            quizAnswers.append(c)
-            #return 'newModule'
-        elif action == 4:
-            quizAnswers.append(d)
-            #return 'newModule'
-        else:
-            quizAnswers.append(e)
-        print('Answer 9 recorded')
-        input()
-
-        action = menuSelect('Question',['list','of','possible','answers','menu'])#enter question here, along with the list of possible answers
-        if action == 1: #the number of actions will equal the number of possible answers in the last line
-            quizAnswers.append(a)
-            #return 'newModule' ---- if this option leads to a new module, uncomment this line and put the name of the new module in the quotes
-        elif action == 2:
-            quizAnswers.append(b)
-            #return 'newModule'
-        elif action == 3:
-            quizAnswers.append(c)
-            #return 'newModule'
-        elif action == 4:
-            quizAnswers.append(d)
-            #return 'newModule'
-        else:
-            quizAnswers.append(e)
-        print('Answer 10 recorded')
-        input()
-
-        action = menuSelect('Question',['list','of','possible','answers','menu'])#enter question here, along with the list of possible answers
-        if action == 1: #the number of actions will equal the number of possible answers in the last line
-            quizAnswers.append(a)
-            #return 'newModule' ---- if this option leads to a new module, uncomment this line and put the name of the new module in the quotes
-        elif action == 2:
-            quizAnswers.append(b)
-            #return 'newModule'
-        elif action == 3:
-            quizAnswers.append(c)
-            #return 'newModule'
-        elif action == 4:
-            quizAnswers.append(d)
-            #return 'newModule'
-        else:
-            quizAnswers.append(e)
-        print('Answer 11 recorded')
-        input()
-
-        action = menuSelect('Question',['list','of','possible','answers','menu'])#enter question here, along with the list of possible answers
-        if action == 1: #the number of actions will equal the number of possible answers in the last line
-            quizAnswers.append(a)
-            #return 'newModule' ---- if this option leads to a new module, uncomment this line and put the name of the new module in the quotes
-        elif action == 2:
-            quizAnswers.append(b)
-            #return 'newModule'
-        elif action == 3:
-            quizAnswers.append(c)
-            #return 'newModule'
-        elif action == 4:
-            quizAnswers.append(d)
-            #return 'newModule'
-        else:
-            quizAnswers.append(e)
-        print('Answer 12 recorded')
-        input()
-
-        action = menuSelect('Question',['list','of','possible','answers','menu'])#enter question here, along with the list of possible answers
-        if action == 1: #the number of actions will equal the number of possible answers in the last line
-            quizAnswers.append(a)
-            #return 'newModule' ---- if this option leads to a new module, uncomment this line and put the name of the new module in the quotes
-        elif action == 2:
-            quizAnswers.append(b)
-            #return 'newModule'
-        elif action == 3:
-            quizAnswers.append(c)
-            #return 'newModule'
-        elif action == 4:
-            quizAnswers.append(d)
-            #return 'newModule'
-        else:
-            quizAnswers.append(e)
-        print('Answer 13 recorded')
-        input()
-
-        action = menuSelect('Question',['list','of','possible','answers','menu'])#enter question here, along with the list of possible answers
-        if action == 1: #the number of actions will equal the number of possible answers in the last line
-            quizAnswers.append(a)
-            #return 'newModule' ---- if this option leads to a new module, uncomment this line and put the name of the new module in the quotes
-        elif action == 2:
-            quizAnswers.append(b)
-            #return 'newModule'
-        elif action == 3:
-            quizAnswers.append(c)
-            #return 'newModule'
-        elif action == 4:
-            quizAnswers.append(d)
-            #return 'newModule'
-        else:
-            quizAnswers.append(e)
-        print('Answer 14 recorded')
-        input()
-
-        action = menuSelect('Question',['list','of','possible','answers','menu'])#enter question here, along with the list of possible answers
-        if action == 1: #the number of actions will equal the number of possible answers in the last line
-            quizAnswers.append(a)
-            #return 'newModule' ---- if this option leads to a new module, uncomment this line and put the name of the new module in the quotes
-        elif action == 2:
-            quizAnswers.append(b)
-            #return 'newModule'
-        elif action == 3:
-            quizAnswers.append(c)
-            #return 'newModule'
-        elif action == 4:
-            quizAnswers.append(d)
-            #return 'newModule'
-        else:
-            quizAnswers.append(e)
-        print('Answer 15 recorded')
-        input()
-
-        action = menuSelect('Question',['list','of','possible','answers','menu'])#enter question here, along with the list of possible answers
-        if action == 1: #the number of actions will equal the number of possible answers in the last line
-            quizAnswers.append(a)
-            #return 'newModule' ---- if this option leads to a new module, uncomment this line and put the name of the new module in the quotes
-        elif action == 2:
-            quizAnswers.append(b)
-            #return 'newModule'
-        elif action == 3:
-            quizAnswers.append(c)
-            #return 'newModule'
-        elif action == 4:
-            quizAnswers.append(d)
-            #return 'newModule'
-        else:
-            quizAnswers.append(e)
-        print('Answer 16 recorded')
-        input()
-
-        action = menuSelect('Question',['list','of','possible','answers','menu'])#enter question here, along with the list of possible answers
-        if action == 1: #the number of actions will equal the number of possible answers in the last line
-            quizAnswers.append(a)
-            #return 'newModule' ---- if this option leads to a new module, uncomment this line and put the name of the new module in the quotes
-        elif action == 2:
-            quizAnswers.append(b)
-            #return 'newModule'
-        elif action == 3:
-            quizAnswers.append(c)
-            #return 'newModule'
-        elif action == 4:
-            quizAnswers.append(d)
-            #return 'newModule'
-        else:
-            quizAnswers.append(e)
-        print('Answer 17 recorded')
-        input()
-
-        action = menuSelect('Question',['list','of','possible','answers','menu'])#enter question here, along with the list of possible answers
-        if action == 1: #the number of actions will equal the number of possible answers in the last line
-            quizAnswers.append(a)
-            #return 'newModule' ---- if this option leads to a new module, uncomment this line and put the name of the new module in the quotes
-        elif action == 2:
-            quizAnswers.append(b)
-            #return 'newModule'
-        elif action == 3:
-            quizAnswers.append(c)
-            #return 'newModule'
-        elif action == 4:
-            quizAnswers.append(d)
-            #return 'newModule'
-        else:
-            quizAnswers.append(e)
-        print('Answer 18 recorded')
-        input()
-
-        action = menuSelect('Question',['list','of','possible','answers','menu'])#enter question here, along with the list of possible answers
-        if action == 1: #the number of actions will equal the number of possible answers in the last line
-            quizAnswers.append(a)
-            #return 'newModule' ---- if this option leads to a new module, uncomment this line and put the name of the new module in the quotes
-        elif action == 2:
-            quizAnswers.append(b)
-            #return 'newModule'
-        elif action == 3:
-            quizAnswers.append(c)
-            #return 'newModule'
-        elif action == 4:
-            quizAnswers.append(d)
-            #return 'newModule'
-        else:
-            quizAnswers.append(e)
-        print('Answer 19 recorded')
-        input()
-
-        action = menuSelect('Question',['list','of','possible','answers','menu'])#enter question here, along with the list of possible answers
-        if action == 1: #the number of actions will equal the number of possible answers in the last line
-            quizAnswers.append(a)
-            #return 'newModule' ---- if this option leads to a new module, uncomment this line and put the name of the new module in the quotes
-        elif action == 2:
-            quizAnswers.append(b)
-            #return 'newModule'
-        elif action == 3:
-            quizAnswers.append(c)
-            #return 'newModule'
-        elif action == 4:
-            quizAnswers.append(d)
-            #return 'newModule'
-        else:
-            quizAnswers.append(e)
-        print('Answer 20 recorded')
-        input()
-
-
-        bulb = quizAnswers.count('a')
-        char = quizAnswers.count('b')
-        squirt = quizAnswers.count('c')
-        mach = quizAnswers.count('d')
-        ralts = quizAnswers.count('e')
+            print('you decide that it\'s better to just answer randomly, you\'re already running late after all..')
+            input()
+            bulb = randint(1,7)
+            char = randint(1,7)
+            squirt = randint(1,7)
+            mach = randint(1,7)
+            ralts = randint(1,7)
 
         poke = {'Bulbasaur':bulb,'Charmander':char,'Squirtle':squirt,'Machop':mach, 'Ralts':ralts}
         highest = 0
@@ -458,7 +462,7 @@ def getFirstPoke(player):
         os.system(clearVar)
         print('example') #Enter descriptor info here, hashtags indicate comments, they are ignored by the code
         player.pokeList.append(potentialPokes[playerPoke])
-        action = menuSelect('Question',['list','of','possible','answers','menu'])#enter question here, along with the list of possible answers
+        action = menuSelect('Question',['list','of','possible','answers','Menu'])#enter question here, along with the list of possible answers
         if action == 1: #the number of actions will equal the number of possible answers in the last line
             print('enter dialogue here, or if pokecenter/item shop, copy pokecenter/item code')
             input()
@@ -482,7 +486,7 @@ def moduleName(player):
     while True:
         os.system(clearVar)
         print('example') #Enter descriptor info here, hashtags indicate comments, they are ignored by the code
-        action = menuSelect('Question',['list','of','possible','answers','menu'])#enter question here, along with the list of possible answers
+        action = menuSelect('Question',['list','of','possible','answers','Menu'])#enter question here, along with the list of possible answers
         if action == 1: #the number of actions will equal the number of possible answers in the last line
             print('enter dialogue here, or if pokecenter/item shop, copy pokecenter/item code')
             input()
@@ -503,18 +507,18 @@ def moduleName(player):
             menu(player) #the last option is usually menu, but doesn't have to be
 
 
-def wildEncounter(player):
+def wildEncounter(player, patches):
     wild = trainer('Wild', [], {}, 10)
-    caterpie1 = pokemonGenerator(pokedex.caterpie,3,[tackle])
-    caterpie2 = pokemonGenerator(pokedex.caterpie,3,[tackle])
-    caterpie3 = pokemonGenerator(pokedex.caterpie,4,[tackle])
-    caterpie4 = pokemonGenerator(pokedex.caterpie,2,[tackle])
-    weedle1 = pokemonGenerator(pokedex.weedle,3,[tackle, leer])
-    weedle2 = pokemonGenerator(pokedex.weedle,2,[tackle, leer])
-    weedle3 = pokemonGenerator(pokedex.weedle,4,[tackle, leer])
-    encounters = [caterpie1, caterpie2, caterpie3, caterpie4, weedle1, weedle2, weedle3]
+    caterpie1 = pokemonGenerator(pokedex.caterpie,3,[tackle, stringShot])
+    caterpie2 = pokemonGenerator(pokedex.caterpie,3,[tackle, stringShot])
+    caterpie3 = pokemonGenerator(pokedex.caterpie,4,[tackle, stringShot])
+    caterpie4 = pokemonGenerator(pokedex.caterpie,2,[tackle, stringShot])
+    weedle1 = pokemonGenerator(pokedex.weedle,3,[poisonSting, stringShot])
+    weedle2 = pokemonGenerator(pokedex.weedle,2,[poisonSting, stringShot])
+    weedle3 = pokemonGenerator(pokedex.weedle,4,[poisonSting, stringShot])
+    kakuna1 = pokemonGenerator(pokedex.kakuna,5,[tackle, harden])
+    encounters = [caterpie1, caterpie2, caterpie3, caterpie4, weedle1, weedle2, weedle3, kakuna1]
     chance = [True, False]
-    patches = 1
     i = 1
     for patch in range(1,patches+1):
         if choice(chance):
@@ -530,6 +534,9 @@ def wildEncounter(player):
             wild.pokeList.remove(wildPoke)
             encounters.remove(wildPoke)
             input()
+        else:
+            print('No pokemon this time!')
+            input()
     return True
 
 bulb = copy.deepcopy(pokedex.bulbasaur)
@@ -542,8 +549,7 @@ squirt.addLevel(5)
 #machop = copy.deepcopy(pokedex.machop)
 
 potentialPokes = {'Bulbasaur':bulb,'Charmander':char,'Squirtle':squirt} #'Ralts':ralts,'Machop':machop}
-##global lastPokecenter
-##lastPokecenter = 'moduleName'
-##pokeCenter(player)
-##
-##itemShop(player)
+
+modules = {'myHouseNoQuiz':myHouseNoQuiz, 'quiz':quiz, 'getFirstPoke':getFirstPoke}
+
+print(main(myBedroomFirst, modules))
