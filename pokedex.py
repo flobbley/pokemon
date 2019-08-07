@@ -73,7 +73,6 @@ class pokemon:
                 print(self.name, 'is trying to learn', move.name,'but',self.name,'already knows four moves')
                 print('Would you like to replace one of these moves?')
                 self.getMoves()
-                print('5. No, do not learn move')
                 action = input()                
                 if menuValid(action, 5):
                     action = int(action)
@@ -323,6 +322,14 @@ class pokedex: #fills the global pokedex
                                 [2.2,1.62,1.2,1,1.4,1.94],{},25,1.3,{0:0})
         self.pikachu = pokemon('Pikachu',25,'This pokemon stores electricity in it\'s cheeks',1,['electric','electric'],\
                                [1.8,1.1,0.8,1.0,1.0,1.8],{},25,1.3,{0:0})
+        self.diglett = pokemon('Diglett',50, 'No one has ever seen the bottom of this pokemon',1,['ground','ground'],\
+                               [1.3,1.1,0.5,0.7,0.9,1.9],{},20,1.3,{26:'dugtrio'})
+        self.sandshrew = pokemon('Sandshrew',27,'This pokemon can curl into a ball when threatened',1,['ground','ground'],\
+                                 [2.1,1.5,1.7,0.4,0.6,0.8],{},25,1.3,{22:'sandslash'})
+        self.geodude = pokemon('Geodude',50,'Hikers will often trip over this pokemon, mistaking it for a boulder',1,['rock','ground'],\
+                               [1.9,1.6,2,0.6,0.6,0.4],{},25,1.3,{25:'graveler'})
+        self.onix = pokemon('Onix',95,'People have been known to ride on the back of this pokemon through the desert',1,['rock','ground'],\
+                            [1.8, 0.9, 3.2, 0.6, 0.9, 1.4],{},30,1.3,{0:0})
 pokedex = pokedex() #actually creates the pokedex
 evos = []
 for value in pokedex.__dict__.items():

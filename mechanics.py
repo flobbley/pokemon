@@ -89,9 +89,9 @@ def menu(player):
     while True:
         os.system(clearVar)
         print('MENU')
-        print('1. Pokemon\n2. Pokedex\n3. Items\n4. Save\n5. Exit')
+        print('1. Pokemon\n2. Pokedex\n3. Items\n4.',player.name,'\n5. Save\n6. Exit')
         action = input()
-        if menuValid(action, 5):
+        if menuValid(action, 6):
             action = int(action)
             if action == 1:
                 for poke in player.pokeList:
@@ -128,8 +128,15 @@ def menu(player):
                     poke = player.choosePoke(player.pokeList)
                     potion(player, poke)
                 else:
-                    print()                       
+                    print()
+
             elif action == 4:
+                print(player.name, '$'+str(player.money))
+                print(len(player.playerDex),'Pokemon caught')
+                print(player.badges)
+                input()
+                
+            elif action == 5:
                 gameState.saveLoad('save')
                 print('Game saved!')
                 input()
@@ -530,6 +537,8 @@ def trainerEncounter(player, trainer, phrase1, phrase2):
         won = battle(player, trainer, False)
         if won == True:
             trainer.pokeList = []
+            print(trainer.name+':',phrase2)
+            input()
         return won
     else:
         print(trainer.name+':',phrase2)

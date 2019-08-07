@@ -172,7 +172,7 @@ def bubbleAttack(attacker, defender, computer):
     else:
         print('but it missed!')
         
-def emberAttack(attacker, defender):
+def emberAttack(attacker, defender, computer):
     damageType = 'fire'
     power = 40
     if hit(95) == True:
@@ -297,6 +297,16 @@ def thundershockAttack(attacker, defender, computer):
             defender.damageTaken(round(damageDone))
     else:
         print('but it missed!')
+
+def defenseCurlAttack(attacker, defender, computer):
+    attacker.statChange('defense',True)
+
+def screechAttack(attacker, defender, computer):
+    if hit(85)==True:
+        for i in range(2):
+            defender.statChange('defense', False)
+    else:
+        print('but it failed!')
     
 class move:
     def __init__(self, name, priority, duration, technique):
@@ -326,3 +336,6 @@ harden = move('harden',0,0,hardenAttack)
 twinNeedle = move('twin needle',0,0,twinNeedleAttack)
 confusion = move('confusion',0,0,confusionAttack)
 thundershock = move('thunder shock',0,0,thundershockAttack)
+defenseCurl = move('defense curl',0,0,defenseCurlAttack)
+screech = move('screech',0,0,screechAttack)
+

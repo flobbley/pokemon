@@ -1,3 +1,4 @@
+
 #to do: Add move pool
 
 from mechanics import *
@@ -289,7 +290,7 @@ def lab(player, pokeGot = True):
                 if menuValid(action, 3):
                     action = int(action)
                     if action == 1:
-                        print('Scientist: "Well hello there young man! Looking for Professor Oak? We haven\'t seen him all morning."')
+                        print('Scientist: "Well hello there',player.name+'!',' Looking for Professor Oak? We haven\'t seen him all morning."')
                         input()
                     elif action == 2:
                         return 'palletTown'
@@ -403,8 +404,6 @@ def viridianArea2north(player):
             if won == False:
                 return gameState.lastPokecenter
             else:
-                print('"Maybe not the best idea in the forest though..."')
-                input()
                 return 'viridianArea3'
         elif action == 2:
             print('you start to move through the tall grass...')
@@ -418,8 +417,6 @@ def viridianArea2north(player):
             if won == False:
                 return gameState.lastPokecenter
             else:
-                print('"Why did you do that?? How am I supposed to get out now??"')
-                input()
                 return 'viridianArea3'
                                    
         elif action == 3:
@@ -448,8 +445,6 @@ def viridianArea2south(player):
             if won == False:
                 return gameState.lastPokecenter
             else:
-                print('"Maybe not the best idea in the forest though..."')
-                input()
                 return 'viridianArea1'
         elif action == 2:
             print('you start to move through the tall grass...')
@@ -463,8 +458,6 @@ def viridianArea2south(player):
             if won == False:
                 return gameState.lastPokecenter
             else:
-                print('"Why did you do that?? How am I supposed to get out now??"')
-                input()
                 return 'viridianArea1'
                                    
         elif action == 3:
@@ -554,6 +547,10 @@ def viridianArea4south(player):
         else:
             menu(player)
 
+"""
+Pewter City
+"""
+
 def pewterCity(player):
     while True:
         os.system(clearVar)
@@ -566,9 +563,35 @@ def pewterCity(player):
         elif action == 2:
             itemShop(player)
         elif action == 3:
-            print('rock gym module')
+            return 'rockGym'
         elif action == 4:
             return 'viridianArea4south'
+        else:
+            menu(player)
+
+def rockGym(player):
+    while True:
+        os.system(clearVar)
+        print('You enter the Rock Gym, it\'s dark, you can hardly see a thing.')
+        input()
+        print('Ahead you see another trainer, they could be looking for a fight, but you could probably sneak past')
+        print('past them you can see Brock, he seems to be just waiting for a challenger')
+        action = menuSelect('What would you like to do?',['Fight the trainer','Sneak past and go to brock','Leave','Menu'])
+        if action == 1:
+            won = trainerEncounter(player, gameState.trainers.pewterTrainers.juniorTrainerRodney,\
+                                   '"Did you come to challenge Brock? don\'t bother! I\'ll make short work of you"',\
+                                   '"Still, you\'re no match for brock"')
+            if won == False:
+                return gameState.lastPokecenter
+        elif action == 2:
+            won = trainerEncounter(player, gameState.trainers.pewterTrainers.brock,\
+                                   '"So you want to learn about rock type pokemon eh? Our superior defense will grind you down!"',\
+                                   '"Well done! it\'s not often that I\'m beaten. Now I present you with the Boulder Badge!"')
+            if won == False:
+                return gameState.lastPokecenter
+            player.badges.append('Boulder Badge')
+        elif action == 3:
+            return 'pewterCity'
         else:
             menu(player)
 
@@ -592,7 +615,7 @@ main game area
 
 modules = {'bedroom':bedroom, 'momsHouse':momsHouse, 'lab':lab, 'garysHouse':garysHouse, 'route29north':route29north, 'palletTown':palletTown, 'viridianCity':viridianCity,\
             'route29south':route29south, 'viridianArea1':viridianArea1, 'viridianArea2north':viridianArea2north, 'viridianArea2south':viridianArea2south, 'viridianArea3':viridianArea3,\
-           'viridianArea4north':viridianArea4north,'viridianArea4south':viridianArea4south, 'pewterCity':pewterCity}
+           'viridianArea4north':viridianArea4north,'viridianArea4south':viridianArea4south, 'pewterCity':pewterCity, 'rockGym':rockGym}
 
 #print(battle(gary, ash, False))
 print(main(bedroom,modules)) #runs the game

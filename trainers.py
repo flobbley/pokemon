@@ -231,15 +231,15 @@ kakuna1 = pokemonGenerator(pokedex.kakuna,5,[harden],1.5)
 metapod1 = pokemonGenerator(pokedex.metapod,5,[harden],1.5)
 metapod2 = pokemonGenerator(pokedex.metapod,5,[harden],1.5)
 metapod3 = pokemonGenerator(pokedex.metapod,7,[harden, tackle],1.5)
-ratata1 = pokemonGenerator(pokedex.ratata,5,[quickAttack, tackle, tailWhip],1.5)
-ratata2 = pokemonGenerator(pokedex.ratata,3,[tackle, tailWhip],1.5)
+ratata1 = pokemonGenerator(pokedex.ratata,6,[quickAttack, tackle, tailWhip],1.5)
+ratata2 = pokemonGenerator(pokedex.ratata,4,[tackle, tailWhip],1.5)
 weedle2 = pokemonGenerator(pokedex.weedle,5,[poisonSting, stringShot],1.5)
 weedle3 = pokemonGenerator(pokedex.weedle,6,[poisonSting, stringShot],1.5)
 weedle4 = pokemonGenerator(pokedex.weedle,8,[poisonSting, stringShot, harden],1.5)
 caterpie2 = pokemonGenerator(pokedex.caterpie,3,[tackle, stringShot],1.5)
-pidgey1 = pokemonGenerator(pokedex.pidgey,3,[tackle, gust],1.5)
-weedle5 = pokemonGenerator(pokedex.weedle,3,[poisonSting, stringShot],1.5)
-ratata3 = pokemonGenerator(pokedex.ratata,4,[quickAttack, tailWhip],1.5)
+pidgey1 = pokemonGenerator(pokedex.pidgey,5,[tackle, gust],1.5)
+weedle5 = pokemonGenerator(pokedex.weedle,5,[poisonSting, stringShot],1.5)
+ratata3 = pokemonGenerator(pokedex.ratata,5,[quickAttack, tailWhip],1.5)
 
 
 
@@ -253,6 +253,23 @@ class viridianTrainersClass:
         self.youngsterLiz = trainer('Youngster Liz', [caterpie2, pidgey1, weedle5, ratata3],[],400)
 
 viridianTrainers = viridianTrainersClass()
+
+
+"""
+Pewter City
+"""
+
+diglett1 = pokemonGenerator(pokedex.diglett,11,[scratch, leer],1.5)
+sandshrew1 = pokemonGenerator(pokedex.sandshrew, 11, [scratch, tackle, defenseCurl],1.5)
+geodude1 = pokemonGenerator(pokedex.geodude, 12, [tackle, defenseCurl], 1.5)
+onix1 = pokemonGenerator(pokedex.onix, 14, [tackle, screech, defenseCurl], 1.5)
+
+class pewterTrainersClass:
+    def __init__(self):
+        self.juniorTrainerRodney = trainer('Junior Trainer Rodney',[diglett1, sandshrew1],[],400)
+        self.brock = trainer('Gym Leader Brock',[geodude1, onix1],[],1000)
+
+pewterTrainers = pewterTrainersClass()
 
 class trainers:
     def __init__(self):
