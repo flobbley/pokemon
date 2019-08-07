@@ -597,16 +597,16 @@ def rockGym(player):
 
 ashPidgey = pokemonGenerator(pokedex.pidgey, 4, [tackle, gust])
 garyPidgey = pokemonGenerator(pokedex.pidgey,4,[tackle, gust])
-ashBulbasaur = pokemonGenerator(pokedex.bulbasaur,5,[tackle,leer])
+ashBulbasaur = pokemonGenerator(pokedex.bulbasaur,15,[tackle,leer,leechSeed])
 garyBulbasaur = pokemonGenerator(pokedex.bulbasaur, 5, [tackle, leer])
-ashSquirtle = pokemonGenerator(pokedex.squirtle, 5, [tackle, tailWhip])
+ashSquirtle = pokemonGenerator(pokedex.squirtle, 15, [tackle, tailWhip, bubble])
 garyCharmander = pokemonGenerator(pokedex.charmander, 30, [tailWhip])
 garySquirtle = pokemonGenerator(pokedex.squirtle, 5, [tailWhip])
 ashCharmander = pokemonGenerator(pokedex.charmander, 5, [scratch, tailWhip])
-ashBeedrill = pokemonGenerator(pokedex.beedrill,10,[twinNeedle,poisonSting],1.5)
+ashBeedrill = pokemonGenerator(pokedex.beedrill,15,[twinNeedle,poisonSting],1.5)
 ashPikachu = pokemonGenerator(pokedex.pikachu, 7, [thundershock])
 
-ash = trainer('ash', [ashPikachu, ashBulbasaur], [['Pokeball',5],['Potion',5]], 500)
+ash = trainer('ash', [ashBeedrill, ashBulbasaur, ashSquirtle], [['Pokeball',5],['Potion',5]], 500)
 gary = trainer('gary', [garySquirtle, garyCharmander], [], 10)
 
 """

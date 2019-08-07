@@ -274,5 +274,6 @@ pewterTrainers = pewterTrainersClass()
 class trainers:
     def __init__(self):
         self.viridianTrainers = viridianTrainers
+        self.pewterTrainers = pewterTrainers
 
 allTrainers = trainers()
