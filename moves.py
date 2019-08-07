@@ -289,7 +289,7 @@ def thundershockAttack(attacker, defender, computer):
         damageMod = typeMod(damageType, attacker.typ, defender.typ)
         if damageMod != 0:
             if 'paralyzed' not in defender.status:
-                if randint(5,5) == 5:
+                if randint(1,10) == 5:
                     defender.status.append('paralyzed')
                     print(defender.name,'became paralyzed!')
             damageDone = damage(attacker, defender, power, 'sp.attack', 'sp.defense')
