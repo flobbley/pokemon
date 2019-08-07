@@ -206,6 +206,24 @@ class pokemon:
                 opponent.heal(damage)
                 print(opponent.name,'absorbed health from',self.name)
                 input()
+
+        if 'confusion' in self.status:
+            if position == 'before':
+                print(self.name,'is confused!')
+            if position == 'during':
+                chance = [True, False, False, False]
+                hurt = [True,False]
+                clear = choice(chance)
+                if clear:
+                    print(self.name,'broke out of it\'s confusion!')
+                    self.status.remove('confusion')
+                    act.append(True)
+                else:
+                    if hurt:
+                        print(self.name,'hurt itself in it\'s confusion!')
+                        selfDamage = damage(self, self, 40, 'attack','defense')
+                        act.append(False)
+                
         if 'burn' in self.status:
             if position == 'before':
                 self.tempStats['attack'] = self.stats['attack']/2
@@ -236,6 +254,7 @@ class pokemon:
                 sleep = choice(chance)
                 if sleep == True:
                     print(self.name,'woke up!')
+                    self.status.remove('sleep')
                     act.append(True)
                 else:
                     print(self.name,'is fast asleep')
@@ -319,13 +338,13 @@ moveTree = {'Bulbasaur':{6:leechSeed},\
             'Blastoise':{},\
             'Caterpie':{7:harden},\
             'Metapod':{7:harden},\
-            'Butterfree':{},\
+            'Butterfree':{10:confusion},\
             'Weedle':{5:tackle, 7:harden},\
             'Kakuna':{7:harden},\
-            'Beedrill':{},\
+            'Beedrill':{10:twinNeedle},\
             'Pidgey':{},\
             'Pidgeotto':{},\
             'Pidgeot':{},\
-            'Ratata':{},
+            'Ratata':{6:quickAttack},
             'Raticate':{},\
             }

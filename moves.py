@@ -218,7 +218,42 @@ def stringShotAttack(attacker, defender):
 
 def hardenAttack(attacker, defender):
     attacker.statChange('defense',True)
-        
+
+def twinNeedleAttack(attacker, defender):
+    damageType = 'bug'
+    power = 25
+    for i in range(2):
+        if hit(95) == True:
+            if i == 0:
+                print('first strike hit!')
+                input()
+            if i == 1:
+                print('second strike hit!')
+            if randint(1,5) == 5:
+                defender.status.append('poison')
+                print(defender.name,'was poisoned!')
+            damageMod = typeMod(damageType, attacker.typ, defender.typ)
+            damageDone = damage(attacker, defender, power, 'attack', 'defense')
+            defender.damageTaken(round(damageDone))
+        else:
+            if i == 0:
+                print('first strike missed!')
+                input()
+            if i == 1:
+                print('second strike missed!')
+
+def confusionAttack(attacker, defender):
+    damageType = 'psychic'
+    power = 50
+    if hit(95) == True:
+        if randint(1,10) == 5:
+            defender.status.append('confusion')
+            print(defender.name,'became confused!')
+        damageMod = typeMod(damageType, attacker.typ, defender.typ)
+        damageDone = damage(attacker, defender, power, 'sp.attack', 'sp.defense')
+        defender.damageTaken(round(damageDone))
+    else:
+        print('but it missed!')
     
 class move:
     def __init__(self, name, priority, duration, technique):
@@ -245,3 +280,5 @@ quickAttack = move('quick attack',1,0,quickAttackAttack)
 poisonSting = move('poison sting',0,0,poisonStingAttack)
 stringShot = move('string shot',0,0,stringShotAttack)
 harden = move('harden',0,0,hardenAttack)
+twinNeedle = move('twin needle',0,0,twinNeedleAttack)
+confusion = move('confusion',0,0,confusionAttack)

@@ -229,6 +229,7 @@ def computerTurn(playerPoke, opponentPoke, opponentName):
         return opponentPoke.moves[move]        
 
 def battle(player, opponent, wild= True):
+    os.system(clearVar)
     """
     Main pokemon battle loop
     """

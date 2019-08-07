@@ -402,6 +402,8 @@ def viridianArea2north(player):
             if won == False:
                 return gameState.lastPokecenter
             else:
+                print('"Maybe not the best idea in the forest though..."')
+                input()
                 return 'viridianArea3'
         elif action == 2:
             print('you start to move through the tall grass...')
@@ -409,12 +411,14 @@ def viridianArea2north(player):
             passed = viridianWild(player, 1)
             if passed == False:
                 return gameState.lastPokecenter
-            won = trainerEncounter(player, gamestate.trainers.viridianTrainers.bugCatcherLouis,\
+            won = trainerEncounter(player, gameState.trainers.viridianTrainers.bugCatcherLouis,\
                                    '"Help! I got lost and can\'t find my way out!"',\
                                    '"Why did you do that?? How am I supposed to get out now??"')
             if won == False:
                 return gameState.lastPokecenter
             else:
+                print('"Why did you do that?? How am I supposed to get out now??"')
+                input()
                 return 'viridianArea3'
                                    
         elif action == 3:
@@ -443,6 +447,8 @@ def viridianArea2south(player):
             if won == False:
                 return gameState.lastPokecenter
             else:
+                print('"Maybe not the best idea in the forest though..."')
+                input()
                 return 'viridianArea1'
         elif action == 2:
             print('you start to move through the tall grass...')
@@ -450,12 +456,14 @@ def viridianArea2south(player):
             passed = viridianWild(player, 1)
             if passed == False:
                 return gameState.lastPokecenter
-            won = trainerEncounter(player, gamestate.trainers.viridianTrainers.bugCatcherLouis,\
+            won = trainerEncounter(player, gameState.trainers.viridianTrainers.bugCatcherLouis,\
                                    '"Help! I got lost and can\'t find my way out!"',\
                                    '"Why did you do that?? How am I supposed to get out now??"')
             if won == False:
                 return gameState.lastPokecenter
             else:
+                print('"Why did you do that?? How am I supposed to get out now??"')
+                input()
                 return 'viridianArea1'
                                    
         elif action == 3:
@@ -487,7 +495,7 @@ def viridianArea3(player):
             return 'viridianArea3'
                                    
         elif action == 3:
-            return 'viridianArea2'
+            return 'viridianArea2south'
         elif action == 4:
             return 'viridianArea4north'
         else:
@@ -552,7 +560,7 @@ def pewterCity(player):
         print('To the south there is a road that leads in to the Viridian Forest.')
         action = menuSelect('Where would your like to go?',['Pokecenter','Pokemart','Pokemon Gym','Into the Viridian Forest','Menu'])
         if action == 1:
-            gameState.lastPokecenter = 'viridianCity'
+            gameState.lastPokecenter = 'pewterCity'
             pokeCenter(player)
         elif action == 2:
             itemShop(player)
