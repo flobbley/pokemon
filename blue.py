@@ -577,12 +577,12 @@ ashBulbasaur = pokemonGenerator(pokedex.bulbasaur,5,[tackle,leer])
 garyBulbasaur = pokemonGenerator(pokedex.bulbasaur, 5, [tackle, leer])
 ashSquirtle = pokemonGenerator(pokedex.squirtle, 5, [tackle, tailWhip])
 garyCharmander = pokemonGenerator(pokedex.charmander, 5, [scratch, tailWhip])
-garySquirtle = pokemonGenerator(pokedex.squirtle, 5, [tackle, tailWhip])
+garySquirtle = pokemonGenerator(pokedex.squirtle, 30, [tailWhip])
 ashCharmander = pokemonGenerator(pokedex.charmander, 5, [scratch, tailWhip])
-ashRatata = pokemonGenerator(pokedex.ratata,2,[tackle,quickAttack],1.5)
+ashBeedrill = pokemonGenerator(pokedex.beedrill,10,[twinNeedle,poisonSting],1.5)
 
-ash = trainer('ash', [ashRatata, ashPidgey, ashBulbasaur], [['Pokeball',5],['Potion',5]], 500)
-gary = trainer('gary', [garyBulbasaur, garySquirtle, garyCharmander], [], 10)
+ash = trainer('ash', [ashBeedrill], [['Pokeball',5],['Potion',5]], 500)
+gary = trainer('gary', [garySquirtle], [], 10)
 
 """
 main game area
@@ -592,4 +592,5 @@ modules = {'bedroom':bedroom, 'momsHouse':momsHouse, 'lab':lab, 'garysHouse':gar
             'route29south':route29south, 'viridianArea1':viridianArea1, 'viridianArea2north':viridianArea2north, 'viridianArea2south':viridianArea2south, 'viridianArea3':viridianArea3,\
            'viridianArea4north':viridianArea4north,'viridianArea4south':viridianArea4south, 'pewterCity':pewterCity}
 
+#print(battle(gary, ash))
 print(main(bedroom,modules)) #runs the game

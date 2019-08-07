@@ -1,7 +1,6 @@
 #to do: Add move pool
 
 from random import *
-import os
 import copy
 import pickle
 from moves import *
@@ -376,7 +375,7 @@ def battle(player, opponent, wild= True):
                             input()
 
                     if compskip != True:    
-                        computerMove.useMove(opponentPoke, playerPoke)
+                        computerMove.useMove(opponentPoke, playerPoke, True)
                         input()
                         os.system(clearVar)
                         battleDisplay(playerPoke, opponentPoke)
@@ -417,7 +416,7 @@ def battle(player, opponent, wild= True):
                     """
                     computer goes first
                     """
-                    computerMove.useMove(opponentPoke, playerPoke)
+                    computerMove.useMove(opponentPoke, playerPoke, True)
                     input()
                     os.system(clearVar)
                     battleDisplay(playerPoke, opponentPoke)

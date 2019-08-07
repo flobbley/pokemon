@@ -1,4 +1,12 @@
 from random import *
+import os
+
+global clearVar
+syst = os.name
+if syst == 'nt':
+    clearVar = "cls"
+else:
+    clearVar = "clear"
 
 def typeChart(defendType, attackType):
     base = 1
@@ -73,8 +81,8 @@ def battleDisplay(playerPoke, opponentPoke):
     """
     Will display sprites and HP bars
     """
-    print(str(opponentPoke.name), 'HP:'+opponentPoke.HPBar(),str(opponentPoke.HP)+'/'+str(opponentPoke.maxHP))
-    print(str(playerPoke.name),'HP:'+playerPoke.HPBar(),str(playerPoke.HP)+'/'+str(playerPoke.maxHP))
+    print(str(opponentPoke.name),str(opponentPoke.level), 'HP:'+opponentPoke.HPBar(),str(opponentPoke.HP)+'/'+str(opponentPoke.maxHP))
+    print(str(playerPoke.name),str(playerPoke.level), 'HP:'+playerPoke.HPBar(),str(playerPoke.HP)+'/'+str(playerPoke.maxHP))
 
 def hit(percent):
     didHit = randint(1,100)
@@ -89,7 +97,7 @@ def damage(attacker, defender, power, attackStat, defenseStat):
     c = a*b/50+2
     return c
     
-def scratchAttack(attacker, defender):
+def scratchAttack(attacker, defender, computer):
     """
     Main damage attack, right now all the other physical attacks are clones of this
     """
@@ -103,7 +111,7 @@ def scratchAttack(attacker, defender):
     else:
         print('but it missed!')
 
-def tailWhipAttack(attacker, defender):
+def tailWhipAttack(attacker, defender, computer):
     """
     main defense damaging attack, right now all the other stat damage attacks are clones of this
     """
@@ -112,7 +120,7 @@ def tailWhipAttack(attacker, defender):
     else:
         print('but it missed!')
 
-def tackleAttack(attacker, defender):
+def tackleAttack(attacker, defender, computer):
     damageType = 'normal'
     power = 40
     if hit(95) == True: #95% hit rate
@@ -123,13 +131,13 @@ def tackleAttack(attacker, defender):
     else:
         print('but it missed!')
 
-def leerAttack(attacker, defender):
+def leerAttack(attacker, defender, computer):
     if hit(95)==True:
         defender.statChange('defense', False)
     else:
         print('but it failed!')
 
-def wingAttackAttack(attacker, defender):
+def wingAttackAttack(attacker, defender, computer):
     damageType = 'normal'
     power = 40
     if hit(95) == True: #95% hit rate
@@ -140,7 +148,7 @@ def wingAttackAttack(attacker, defender):
     else:
         print('but it missed!')
 
-def gustAttack(attacker, defender):
+def gustAttack(attacker, defender, computer):
     power = 40
     damageType = 'flying'
     if hit(95)==True: #95% hit rate
@@ -151,7 +159,7 @@ def gustAttack(attacker, defender):
     else:
         print('but it missed!')
 
-def bubbleAttack(attacker, defender):
+def bubbleAttack(attacker, defender, computer):
     damageType = 'water'
     power = 40
     if hit(95) == True:
@@ -178,7 +186,7 @@ def emberAttack(attacker, defender):
     else:
         print('but it missed!')
 
-def leechSeedAttack(attacker, defender):
+def leechSeedAttack(attacker, defender, computer):
     damageType = 'grass'
     if 'grass' in defender.typ:
         print(defender.name,'was not affected')
@@ -186,7 +194,7 @@ def leechSeedAttack(attacker, defender):
         print(defender.name,'was seeded')
         defender.status.append('leech')
 
-def quickAttackAttack(attacker, defender):
+def quickAttackAttack(attacker, defender, computer):
     damageType = 'normal'
     power = 40
     if hit(95) == True:
@@ -197,7 +205,7 @@ def quickAttackAttack(attacker, defender):
     else:
         print('but it missed!')
 
-def poisonStingAttack(attacker, defender):
+def poisonStingAttack(attacker, defender, computer):
     damageType = 'poison'
     power = 40
     if hit(95) == True:
@@ -210,19 +218,25 @@ def poisonStingAttack(attacker, defender):
     else:
         print('but it missed!')
 
-def stringShotAttack(attacker, defender):
+def stringShotAttack(attacker, defender, computer):
     if hit(95)==True:
         defender.statChange('speed', False)
     else:
         print('but it missed!')
 
-def hardenAttack(attacker, defender):
+def hardenAttack(attacker, defender, computer):
     attacker.statChange('defense',True)
 
-def twinNeedleAttack(attacker, defender):
+def twinNeedleAttack(attacker, defender, computer):
     damageType = 'bug'
     power = 25
+    input()
     for i in range(2):
+        os.system(clearVar)
+        if computer == True:
+            battleDisplay(defender,attacker)
+        else:
+            battleDisplay(attacker,defender)
         if hit(95) == True:
             if i == 0:
                 print('first strike hit!')
@@ -235,6 +249,7 @@ def twinNeedleAttack(attacker, defender):
             damageMod = typeMod(damageType, attacker.typ, defender.typ)
             damageDone = damage(attacker, defender, power, 'attack', 'defense')
             defender.damageTaken(round(damageDone))
+            
         else:
             if i == 0:
                 print('first strike missed!')
@@ -242,7 +257,7 @@ def twinNeedleAttack(attacker, defender):
             if i == 1:
                 print('second strike missed!')
 
-def confusionAttack(attacker, defender):
+def confusionAttack(attacker, defender, computer):
     damageType = 'psychic'
     power = 50
     if hit(95) == True:
@@ -262,9 +277,9 @@ class move:
         self.technique = technique
         self.duration = duration
         
-    def useMove(self, attacker, defender):
+    def useMove(self, attacker, defender, computer = False):
         print(attacker.name,'used',self.name+'!')
-        return self.technique(attacker, defender)
+        return self.technique(attacker, defender, computer)
 
 
 scratch = move('scratch',0,0,scratchAttack)

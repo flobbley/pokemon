@@ -99,9 +99,6 @@ class pokemon:
         else:
             self.HP -= damage
 
-    def useMove(self, index, opponent): #uses the indicated move
-        x = self.moves[index][0]
-        x(self, opponent)
 
     def statChange(self, stat, boost): #reduces the appropriate stat when stat damage is taken
         minstat = .131
@@ -211,7 +208,7 @@ class pokemon:
             if position == 'before':
                 print(self.name,'is confused!')
             if position == 'during':
-                chance = [True, False, False, False]
+                chance = [True, False, False]
                 hurt = [True,False]
                 clear = choice(chance)
                 if clear:

@@ -1,13 +1,6 @@
 from pokedex import *
 from moves import *
-import os
 
-global clearVar
-syst = os.name
-if syst == 'nt':
-    clearVar = "cls"
-else:
-    clearVar = "clear"
 
 def menuSelect(ask, options):
     while True:
