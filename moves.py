@@ -307,7 +307,238 @@ def screechAttack(attacker, defender, computer):
             defender.statChange('defense', False)
     else:
         print('but it failed!')
-    
+
+def peckAttack(attacker, defender, computer):
+    power = 35
+    damageType = 'flying'
+    if hit(95)==True: #95% hit rate
+        damageMod = typeMod(damageType, attacker.typ, defender.typ)
+        damageDone = damage(attacker, defender, power,'attack','defense')
+        damageDone *= damageMod
+        defender.damageTaken(round(damageDone))
+    else:
+        print('but it missed!')
+
+def doubleKickAttack(attacker, defender, computer):
+    damageType = 'fighting'
+    power = 25
+    input()
+    for i in range(2):
+        os.system(clearVar)
+        if computer == True:
+            battleDisplay(defender,attacker)
+        else:
+            battleDisplay(attacker,defender)
+        if hit(95) == True:
+            damageMod = typeMod(damageType, attacker.typ, defender.typ)
+            if damageMod != 0:
+                if i == 0:
+                    print('first strike hit!')
+                    input()
+                if i == 1:
+                    print('second strike hit!')
+                damageMod = typeMod(damageType, attacker.typ, defender.typ)
+                damageDone = damage(attacker, defender, power, 'attack', 'defense')
+                damageDone*=damageMod
+                defender.damageTaken(round(damageDone))
+            
+        else:
+            if i == 0:
+                print('first strike missed!')
+                input()
+            if i == 1:
+                print('second strike missed!')
+
+def hornAttackAttack(attacker, defender, computer):
+    """
+    Main damage attack, right now all the other physical attacks are clones of this
+    """
+    damageType = 'normal'
+    power = 65
+    if hit(95) == True: #95% hit rate
+        damageMod = typeMod(damageType, attacker.typ, defender.typ)
+        damageDone = damage(attacker, defender, power, 'attack', 'defense')
+        damageDone *= damageMod
+        defender.damageTaken(round(damageDone))
+    else:
+        print('but it missed!')
+
+def swiftAttack(attacker, defender, computer):
+    """
+    Main damage attack, right now all the other physical attacks are clones of this
+    """
+    damageType = 'normal'
+    power = 65
+    damageMod = typeMod(damageType, attacker.typ, defender.typ)
+    damageDone = damage(attacker, defender, power, 'attack', 'defense')
+    damageDone *= damageMod
+    defender.damageTaken(round(damageDone))
+
+def furySwipesAttack(attacker, defender, computer):
+    damageType = 'normal'
+    power = 18
+    hits = [2,2,2,3,3,3,4,5]
+    noHits = choice(hits)
+    input()
+    if hit(85) == True:
+        damageMod = typeMod(damageType, attacker.typ, defender.typ)
+        for i in range(noHits):
+            print(i,'hits!')
+            os.system(clearVar)
+            if computer == True:
+                battleDisplay(defender,attacker)
+            else:
+                battleDisplay(attacker,defender)
+            damageMod = typeMod(damageType, attacker.typ, defender.typ)
+            damageDone = damage(attacker, defender, power, 'attack', 'defense')
+            damageDone*=damageMod
+            defender.damageTaken(round(damageDone))
+            
+    else:
+        print('but it missed!')
+
+def growlAttack(attacker, defender, computer):
+    defender.statChange('attack',False)
+
+def agilityAttack(attacker, defender, computer):
+    for i in range(2):
+        attacker.statChange('speed', True)
+
+def rockThrowAttack(attacker, defender, computer):
+    """
+    Main damage attack, right now all the other physical attacks are clones of this
+    """
+    damageType = 'rock'
+    power = 50
+    if hit(90) == True: #95% hit rate
+        damageMod = typeMod(damageType, attacker.typ, defender.typ)
+        damageDone = damage(attacker, defender, power, 'attack', 'defense')
+        damageDone *= damageMod
+        defender.damageTaken(round(damageDone))
+    else:
+        print('but it missed!')
+
+def takeDownAttack(attacker, defender, computer):
+    """
+    Main damage attack, right now all the other physical attacks are clones of this
+    """
+    damageType = 'normal'
+    power = 90
+    if hit(85) == True: #95% hit rate
+        damageMod = typeMod(damageType, attacker.typ, defender.typ)
+        damageDone = damage(attacker, defender, power, 'attack', 'defense')
+        damageDone *= damageMod
+        defender.damageTaken(round(damageDone))
+        attacker.damageTaken(round(damageDone/4))
+        print(attacker.name,'was hit with the recoil!')
+    else:
+        print('but it missed!')
+
+def furyAttackAttack(attacker, defender, computer):
+    damageType = 'normal'
+    power = 15
+    hits = [2,2,2,3,3,3,4,5]
+    noHits = choice(hits)
+    input()
+    if hit(85) == True:
+        damageMod = typeMod(damageType, attacker.typ, defender.typ)
+        for i in range(noHits):
+            print(i,'hits!')
+            os.system(clearVar)
+            if computer == True:
+                battleDisplay(defender,attacker)
+            else:
+                battleDisplay(attacker,defender)
+            damageMod = typeMod(damageType, attacker.typ, defender.typ)
+            damageDone = damage(attacker, defender, power, 'attack', 'defense')
+            damageDone*=damageMod
+            defender.damageTaken(round(damageDone))
+            
+    else:
+        print('but it missed!')
+
+def acidAttack(attacker, defender, computer):
+    damageType = 'poison'
+    power = 40
+    damageMod = typeMod(damageType, attacker.typ, defender.typ)
+    if damageMod != 0:
+        if hit(95) == True:
+            if randint(1,10) == 5:
+                defender.statChange('sp.defense', False)
+            damageMod = typeMod(damageType, attacker.typ, defender.typ)
+            damageDone = damage(attacker, defender, power,'sp.attack','sp.defense')
+            damageDone *= damageMod
+            defender.damageTaken(round(damageDone))
+        else:
+            print('but it missed!')
+
+def biteAttack(attacker, defender, computer):
+    """
+    Main damage attack, right now all the other physical attacks are clones of this
+    """
+    damageType = 'normal'
+    power = 60
+    if hit(95) == True: #95% hit rate
+        damageMod = typeMod(damageType, attacker.typ, defender.typ)
+        damageDone = damage(attacker, defender, power, 'attack', 'defense')
+        damageDone *= damageMod
+        defender.damageTaken(round(damageDone))
+    else:
+        print('but it missed!')
+
+def vineWhipAttack(attacker, defender, computer):
+    """
+    Main damage attack, right now all the other physical attacks are clones of this
+    """
+    damageType = 'grass'
+    power = 45
+    if hit(95) == True: #95% hit rate
+        damageMod = typeMod(damageType, attacker.typ, defender.typ)
+        damageDone = damage(attacker, defender, power, 'attack', 'defense')
+        damageDone *= damageMod
+        defender.damageTaken(round(damageDone))
+    else:
+        print('but it missed!')
+
+def thunderWaveAttack(attacker, defender, computer):
+    damageType = 'electric'
+    damageMod = typeMod(damageType, attacker.typ, defender.typ)
+    if damageMod != 0:
+        print(defender.name,'was paralyzed!')
+        defender.status.append('paralyzed')
+    else:
+        print('There was no effect')
+
+def slashAttack(attacker, defender, computer):
+    """
+    Main damage attack, right now all the other physical attacks are clones of this
+    """
+    damageType = 'normal'
+    power = 70
+    if hit(95) == True: #95% hit rate
+        damageMod = typeMod(damageType, attacker.typ, defender.typ)
+        damageDone = damage(attacker, defender, power, 'attack', 'defense')
+        damageDone *= damageMod
+        defender.damageTaken(round(damageDone))
+    else:
+        print('but it missed!')
+
+def bodySlamAttack(attacker, defender, computer):
+    """
+    Main damage attack, right now all the other physical attacks are clones of this
+    """
+    damageType = 'normal'
+    power = 85
+    if hit(95) == True: #95% hit rate
+        if randint(1,3) == 3:
+            defender.status.append('paralyzed')
+        damageMod = typeMod(damageType, attacker.typ, defender.typ)
+        damageDone = damage(attacker, defender, power, 'attack', 'defense')
+        damageDone *= damageMod
+        defender.damageTaken(round(damageDone))
+    else:
+        print('but it missed!')
+        
 class move:
     def __init__(self, name, priority, duration, technique):
         self.name = name
@@ -318,8 +549,7 @@ class move:
     def useMove(self, attacker, defender, computer = False):
         print(attacker.name,'used',self.name+'!')
         return self.technique(attacker, defender, computer)
-
-
+              
 scratch = move('scratch',0,0,scratchAttack)
 tackle = move('tackle',0,0,tackleAttack)
 leer = move('leer',0,0,leerAttack)
@@ -338,4 +568,26 @@ confusion = move('confusion',0,0,confusionAttack)
 thundershock = move('thunder shock',0,0,thundershockAttack)
 defenseCurl = move('defense curl',0,0,defenseCurlAttack)
 screech = move('screech',0,0,screechAttack)
+peck = move('peck',0,0,peckAttack)
+doubleKick = move('double kick',0,0,doubleKickAttack)
+hornAttack = move('horn attack',0,0,hornAttackAttack)
+swift = move('swift',0,0,swiftAttack)
+furySwipes = move('fury swipes',0,0,furySwipesAttack)
+agility = move('agility',0,0,agilityAttack)
+furyAttack = move('fury attack',0,0,furyAttackAttack)
+rockThrow = move('rock throw',0,0,rockThrowAttack)
+takeDown = move('take down',0,0,takeDownAttack)
+acid = move('acid',0,0,acidAttack)
+bite = move('bite',0,0,biteAttack)
+vineWhip = move('vine whip',0,0,vineWhipAttack)
+thunderWave = move('thunder wave',0,0,thunderWaveAttack)
+slash = move('slash',0,0,slashAttack)
+bodySlam = move('body slam',0,0,bodySlamAttack)
+growl = move('growl',0,0,growlAttack)
+
+
+
+              
+
+
 

@@ -318,14 +318,38 @@ class pokedex: #fills the global pokedex
                                [2.76,1.6,1.5,1.4,1.4,2.02],{},35,1.3,{0:0})
         self.ratata = pokemon('Ratata',19,'This pokemon has strong teeth, it has been known to chew through metal!', 1, ['normal','normal'],\
                               [1.7,1.12,0.7,0.5,0.7,1.44],{}, 20, 1.3, {12:'raticate'})
-        self.raticate = pokemon('Raticate',19, 'This pokemon digs deep burrows which can sometimes cause damage to buildings',1,['normal','normal'],\
+        self.raticate = pokemon('Raticate',20, 'This pokemon digs deep burrows which can sometimes cause damage to buildings',1,['normal','normal'],\
                                 [2.2,1.62,1.2,1,1.4,1.94],{},25,1.3,{0:0})
+        self.spearow = pokemon('Spearow',21,'This pokemon eats bugs with it\'s powerful peck', 1,['normal','flying'],\
+                               [1.9,1.2,0.6,0.62,0.62,1.4],{},20,1.3,{20:'fearow'})
+        self.fearow = pokemon('Fearow',22,'Because of it\'s majestic wingspan, this pokemon is often confused for one of the legendary birds',1,['normal','flying'],\
+                              [2.4,1.8,1.3,1.22,1.22,2],{},30,1.3,{0:0})
+        self.ekans = pokemon('Ekans',23,'This pokemon will hide in piles of leaves to ambush it\'s prey',1,['poison','poison'],\
+                             [1.8,1.2,0.88,0.8,1.08,1.1],{},25,1.3,{22:'arbok'})
+        self.arbok = pokemon('Arbok',24,'This pokemon has been known to hypnotize those who stare into it\'s eyes for too long',1,['poison','poison'],\
+                             [2.3,1.9,1.38,1.3,1.58,1.6],{},30,1.3,{0:0})
         self.pikachu = pokemon('Pikachu',25,'This pokemon stores electricity in it\'s cheeks',1,['electric','electric'],\
                                [1.8,1.1,0.8,1.0,1.0,1.8],{},25,1.3,{0:0})
-        self.diglett = pokemon('Diglett',50, 'No one has ever seen the bottom of this pokemon',1,['ground','ground'],\
-                               [1.3,1.1,0.5,0.7,0.9,1.9],{},20,1.3,{26:'dugtrio'})
+        self.raichu = pokemon('Raichu',26,'This pokemon uses it\'s large tail as ground when releasing large amounts of electricity',1,['electric','electric'],\
+                              [2.3,1.8,1.1,1.8,1.6,2.2],{},30,1.3,{0:0})
         self.sandshrew = pokemon('Sandshrew',27,'This pokemon can curl into a ball when threatened',1,['ground','ground'],\
                                  [2.1,1.5,1.7,0.4,0.6,0.8],{},25,1.3,{22:'sandslash'})
+        self.sandslash = pokemon('Sandslash',28,'This pokemon has powerful claws that can cut through rock',1,['ground','ground'],\
+                                 [2.6, 2.0, 2.2, 0.9, 1.1, 1.3],{},30,1.3,{0:0})
+        self.nidoranF = pokemon('Nidoran F',29,'This pokemon is normally docile, but has a powerful bite if provoked',1,['poison','poison'],\
+                                [2.2,0.94,1.04,0.8,0.8,0.82],{},20,1.3,{16:'nidorina'})
+        self.nidorina = pokemon('Nidorina',30,'This pokemon has smaller horns than the male, prefering to claw and bite',1,['poison','poison'],\
+                                [2.5,1.24,1.34,1.1,1.1,1.12],{},27,1.3,{0:0})
+        self.nidoqueen = pokemon('Nidoqueen',31,'This pokemon can use powerful stomps to cause earthquakes',1,['ground','poison'],\
+                                 [2.9,1.84,1.74,1.5,1.7,1.52],{},35,1.3,{0:0})
+        self.nidoranM = pokemon('Nidoran M',32,'This pokemon uses the horn on it\'s head to fend of predators and attract mates',1,['poison','poison'],\
+                                [2.02,1.14,0.8,0.8,0.8,1],{},20,1.3,{16:'nidorino'})
+        self.nidorino = pokemon('Nidorino', 33, 'This pokemon is very aggressive, using it\'s poisonous horn to attack',1,['poison','poison'],\
+                                [2.32,1.44,1.14,1.1,1.1,1.3],{},27,1.3,{0:0})
+        self.nidoking = pokemon('Nidoking', 34, 'This powerful pokemon controls a large territory which it defends from other Nidokings',1,['ground','poison'],\
+                                [2.72,2.04,1.54,1.7,1.5,1.7],{},35,1.3,{0:0})
+        self.diglett = pokemon('Diglett',50, 'No one has ever seen the bottom of this pokemon',1,['ground','ground'],\
+                               [1.3,1.1,0.5,0.7,0.9,1.9],{},20,1.3,{26:'dugtrio'})
         self.geodude = pokemon('Geodude',50,'Hikers will often trip over this pokemon, mistaking it for a boulder',1,['rock','ground'],\
                                [1.9,1.6,2,0.6,0.6,0.4],{},25,1.3,{25:'graveler'})
         self.onix = pokemon('Onix',95,'People have been known to ride on the back of this pokemon through the desert',1,['rock','ground'],\
@@ -335,25 +359,39 @@ evos = []
 for value in pokedex.__dict__.items():
     evos.append(value)
 
-moveTree = {'Bulbasaur':{6:leechSeed},\
+moveTree = {'Bulbasaur':{6:vineWhip, 9:leechSeed},\
             'Ivysaur':{},\
             'Venusaur':{},\
-            'Charmander':{6:ember},\
+            'Charmander':{6:ember, 15:leer},\
             'Charmeleon':{},\
             'Charizard':{},\
-            'Squirtle':{6:bubble},\
-            'Wartortle':{},\
+            'Squirtle':{6:bubble, 22:bite},\
+            'Wartortle':{22:bite},\
             'Blastoise':{},\
             'Caterpie':{7:harden},\
             'Metapod':{7:harden},\
             'Butterfree':{10:confusion},\
             'Weedle':{5:tackle, 7:harden},\
             'Kakuna':{7:harden},\
-            'Beedrill':{10:twinNeedle},\
-            'Pidgey':{},\
+            'Beedrill':{12:furyAttack, 20:twinNeedle},\
+            'Pidgey':{5:gust, 11:quickAttack, 15:wingAttack},\
             'Pidgeotto':{},\
             'Pidgeot':{},\
-            'Ratata':{6:quickAttack},
+            'Ratata':{6:quickAttack, 12:bite},
             'Raticate':{},\
-            'Pikachu':{7:thundershock},\
+            'Spearow':{9:leer, 15:furyAttack},\
+            'Fearow':{},\
+            'Ekans':{10:poisonSting, 17:bite},\
+            'Arbok':{},\
+            'Pikachu':{7:thundershock, 9:thunderWave, 16:quickAttack, 26:swift},\
+            'Sandshrew':{17:slash, 24:poisonSting, 31:swift, 38:furySwipes},\
+            'Sandslash':{27:poisonSting, 36:swift, 47:furySwipes},\
+            'Nidoran F':{8:scratch, 14:poisonSting, 21:tailWhip, 29:bite, 36:furySwipes, 43:doubleKick},\
+            'Nidorina':{23:tailWhip, 32:bite, 41:furySwipes, 50:doubleKick},\
+            'Nidoqueen':{23:bodySlam},\
+            'Nidoran M':{8:hornAttack, 14:poisonSting, 29:furyAttack, 43:doubleKick},\
+            'Nidorino':{8:hornAttack, 14:poisonSting, 32:furyAttack, 50:doubleKick},\
+            'Nidoking':{},\
+            'Diglett':{15:growl, 31:slash},\
+            'Onix':{}\
             }
