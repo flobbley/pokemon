@@ -8,6 +8,20 @@ from pokedex import *
 from items import *
 from trainers import *
 
+def logo():
+    print('                                  ,\'\\')
+    print('    _.----.        ____         ,\'  _\\   ___    ___     ____')
+    print('_,-\'       `.     |    |  /`.   \\,-\'    |   \\  /   |   |    \\  |`.')
+    print('\\      __    \\    \'-.  | /   `.  ___    |    \\/    |   \'-.   \\ |  |')
+    print(' \\.    \\ \\   |  __  |  |/    ,\',\'_  `.  |          | __  |    \\|  |')
+    print('   \\    \\/   /,\' _`.|      ,\' / / / /   |          ,\' _`.|     |  |')
+    print('    \\     ,-\'/  /   \\    ,\'   | \\/ / ,`.|         /  /   \\  |     |')
+    print('     \\    \\ |   \\_/  |   `-.  \    `\'  /|  |    ||   \\_/  | |\\    |')
+    print('      \\    \\ \\      /       `-.`.___,-\' |  |\\  /| \\      /  | |   |')
+    print('       \\    \\ `.__,\'|  |`-._    `|      |__| \\/ |  `.__,\'|  | |   |')
+    print('        \_.-\'       |__|    `-._ |              \'-.|     \'-.| |   |')
+    print('                                `\'                            \'-._|')
+          
 class summary:
     """
     summary class for save/load
@@ -64,7 +78,8 @@ def main(startModule, modules):
     runs the game
     """
     os.system(clearVar)
-    action = menuSelect('Pokemon!',['New Game','Load'])
+    logo()
+    action = menuSelect('Blue/Red',['New Game','Load'])
     if action == 1: #Start new game
         gameState.trainers = allTrainers
         gameState.lastPokecenter = 'palletTown'
