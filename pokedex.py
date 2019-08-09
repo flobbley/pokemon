@@ -3,6 +3,13 @@ from random import *
 import copy
 import inspect
 
+
+def damage(attacker, defender, power, attackStat, defenseStat):
+    a = (2*attacker.level)/5+2
+    b = power*attacker.tempStats[attackStat]/defender.tempStats[defenseStat]
+    c = a*b/50+2
+    return c
+
 def menuValid(number, maxNum):
     noGood = 'invalid input'
     try:
@@ -156,6 +163,8 @@ class pokemon:
         self.stats['sp.defense'] = round(5+self.level*self.statMods[4])
         self.stats['speed'] = round(5+self.level*self.statMods[5])
         self.tempStats = self.stats
+        for i in range(self.level-1):
+            self.needXP = round(self.needXP*self.XPmod)
         
     def addLevel(self, endLevel):
         levelsAdded = endLevel - 1
@@ -199,9 +208,9 @@ class pokemon:
         #non-exclusive statuses
         if 'leech' in self.status:
             if position == 'after':
-                damage = self.maxHP//16+1
-                self.damageTaken(damage)
-                opponent.heal(damage)
+                damageVal = self.maxHP//16+1
+                self.damageTaken(damageVal)
+                opponent.heal(damageVal)
                 print(opponent.name,'absorbed health from',self.name)
                 input()
 
@@ -220,13 +229,15 @@ class pokemon:
                     if hurt:
                         print(self.name,'hurt itself in it\'s confusion!')
                         selfDamage = damage(self, self, 40, 'attack','defense')
+                        self.damageTaken(round(selfDamage))
                         act.append(False)
+                        input()
                 
         if 'burn' in self.status:
             if position == 'before':
                 self.tempStats['attack'] = self.stats['attack']/2
             elif position == 'after':
-                damage = round(self.maxHP/8)
+                damageVal = round(self.maxHP/8)
                 self.damageTaken(damage)
                 print(self.name, 'was hurt by the burn')
                 input()
@@ -261,7 +272,7 @@ class pokemon:
                     
         elif 'poison' in self.status:
             if position == 'after':
-                damage = round(self.maxHP/8)
+                damageVal = round(self.maxHP/8)
                 self.damageTaken(damage)
                 print(self.name, 'was hurt by the poison')
                 input()

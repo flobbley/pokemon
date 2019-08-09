@@ -589,7 +589,8 @@ def rockGym(player):
                                    '"Well done! it\'s not often that I\'m beaten. Now I present you with the Boulder Badge!"')
             if won == False:
                 return gameState.lastPokecenter
-            player.badges.append('Boulder Badge')
+            if 'Boulder Badge' not in player.badges:
+                player.badges.append('Boulder Badge')
         elif action == 3:
             return 'pewterCity'
         else:
@@ -597,17 +598,17 @@ def rockGym(player):
 
 ashPidgey = pokemonGenerator(pokedex.pidgey, 4, [tackle, gust])
 garyPidgey = pokemonGenerator(pokedex.pidgey,4,[tackle, gust])
-ashBulbasaur = pokemonGenerator(pokedex.bulbasaur,15,[tackle,leer,leechSeed])
+ashBulbasaur = pokemonGenerator(pokedex.bulbasaur,10,[tackle,leer,leechSeed])
 garyBulbasaur = pokemonGenerator(pokedex.bulbasaur, 5, [tackle, leer])
 ashSquirtle = pokemonGenerator(pokedex.squirtle, 15, [tackle, tailWhip, bubble])
 garyCharmander = pokemonGenerator(pokedex.charmander, 30, [tailWhip])
-garySquirtle = pokemonGenerator(pokedex.squirtle, 5, [tailWhip])
+garySquirtle = pokemonGenerator(pokedex.squirtle, 30, [tailWhip])
 ashCharmander = pokemonGenerator(pokedex.charmander, 5, [scratch, tailWhip])
 ashBeedrill = pokemonGenerator(pokedex.beedrill,15,[twinNeedle,poisonSting],1.5)
 ashPikachu = pokemonGenerator(pokedex.pikachu, 7, [thundershock])
 
-ash = trainer('ash', [ashBeedrill, ashBulbasaur, ashSquirtle], [['Pokeball',5],['Potion',5]], 500)
-gary = trainer('gary', [garySquirtle, garyCharmander], [], 10)
+ash = trainer('ash', [ashSquirtle], [['Pokeball',5],['Potion',5]], 500)
+gary = trainer('gary', [garyCharmander], [], 10)
 
 """
 main game area
