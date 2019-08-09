@@ -36,7 +36,7 @@ class pokemon:
     needXP is amount of XP needed to gain a level; integer
     XPmod is how much the gained XP is adjusted; two digit, single decimel place; 1.6 or 0.8 
     """
-    def __init__(self,name, pokeNum, entry, level,typ,statMods, moves, needXP,XPmod,evo, trainer=1):
+    def __init__(self,name, pokeNum, entry, level,typ,statMods, moves, needXP,XPmod,evo, pokedexSprite, frontSprite, backSprite, trainer=1):
         self.name = name
         self.pokeNum = pokeNum
         self.entry = entry
@@ -54,6 +54,9 @@ class pokemon:
         self.status = []
         self.evo = evo
         self.trainer = trainer
+        self.pokedexSprite = pokedexSprite
+        self.frontSprite = frontSprite
+        self.backSprite = backSprite
 
     def getName(self): #gives the name of the pokemon
         print(self.name)
@@ -273,7 +276,7 @@ class pokemon:
         elif 'poison' in self.status:
             if position == 'after':
                 damageVal = round(self.maxHP/8)
-                self.damageTaken(damage)
+                self.damageTaken(damageVal)
                 print(self.name, 'was hurt by the poison')
                 input()
               
@@ -289,82 +292,145 @@ def pokemonGenerator(pokemon, level, givenMoves, trainer = 1):
         i += 1
     return newPoke
 
+standardFrontSpriteSpacing = '                        '
+
 class pokedex: #fills the global pokedex
     def __init__(self):
         self.bulbasaur = pokemon('Bulbasaur', 1, 'This pokemon has a large plant bulb on it\'s back', 1, ['grass','poison'],\
-                                 [2,0.98,0.98,1.3,1.3,0.9],{}, 20, 1.3,{15:'ivysaur'})
+                                 [2,0.98,0.98,1.3,1.3,0.9],{}, 20, 1.3,{15:'ivysaur'},"""
+                                                _,.------....___,.' ',.-.
+                                             ,-'          _,.--"        |
+                                           ,'         _.-'              .
+                                          /   ,     ,'                   `
+                                         .   /     /                     ``.
+                                         |  |     .                       \.\\
+                               ____      |___._.  |       __               \ `.
+                             .'    `---""       ``"-.--"'`  \               .  \\
+                            .  ,            __               `              |   .
+                            `,'         ,-"'  .               \             |    L
+                           ,'          '    _.'                -._          /    |
+                          ,`-.    ,".   `--'                      >.      ,'     |
+                         . .'\'   `-'       __    ,  ,-.         /  `.__.-      ,'
+                         ||:, .           ,'  ;  /  / \ `        `.    .      .'/
+                         j|:D  \          `--'  ' ,'_  . .         `.__, \   , /
+                        / L:_  |                 .  "' :_;                `.'.'
+                        .    ""'                  ""''''                    V
+                         `.                                 .    `.   _,..  `
+                           `,_   .    .                _,-'/    .. `,'   __  `
+                            ) \`._        ___....----"'  ,'   .'  \ |   '  \  .
+                           /   `. "`-.--"'         _,' ,'     `---' |    `./  |
+                          .   _  `""'--.._____..--"   ,             '         |
+                          | ." `. `-.                /-.           /          ,
+                          | `._.'    `,_            ;  /         ,'          .
+                         .'          /| `-.        . ,'         ,           ,
+                         '-.__ __ _,','    '`-..___;-...__   ,.'\ ____.___.'
+                         `"^--'..'   '-`-^-'"--    `-^-'`.''""'''`.,^.`.--' mh'""",'','')
         self.ivysaur = pokemon('Ivysaur', 2, 'This pokemon has a small flower on it\'s back',1,['grass','poison'],\
-                               [2.3,1.24,1.26,1.6,1.6,1.2],{},30,1.3,{34:'venusaur'})
+                               [2.3,1.24,1.26,1.6,1.6,1.2],{},30,1.3,{34:'venusaur'},'','','')
         self.venusaur = pokemon('Venusaur',3, 'This pokemon has a large flower on it\'s back which it uses to photosynthesize',1,['grass','poison'],\
-                                [2.7,1.64,1.66,2.0,2.0,1.6],{},40,1.3,{0:0})
+                                [2.7,1.64,1.66,2.0,2.0,1.6],{},40,1.3,{0:0},'','','')
         self.charmander = pokemon('Charmander', 4, 'This pokemon has a firey tail!', 1, ['fire','fire'],\
-                                  [1.8,1.04,0.86,1.2,1,1.3],{}, 20, 1.3,{16:'charmeleon'})
+                                  [1.8,1.04,0.86,1.2,1,1.3],{}, 20, 1.3,{16:'charmeleon'},"""
+                                      _.--""`-..
+                                    ,'          `.
+                                  ,'          __  `.
+                                 /|          " __   \\
+                                , |           / |.   .
+                                |,'          !_.'|   |
+                              ,'             '   |   |
+                             /              |`--'|   |
+                            |                `---'   |
+                             .   ,                   |                       ,".
+                              ._     '           _'  |                    , ' \ `
+                          `.. `.`-...___,...---""    |       __,.        ,`"   L,|
+                          |, `- .`._        _,-,.'   .  __.-'-. /        .   ,    \\
+                        -:..     `. `-..--_.,.<       `"      / `.        `-/ |   .
+                          `,         "''''     `.              ,'         |   |  ',,
+                            `.      '            '            /          '    |'. |/
+                              `.   |              \       _,-'           |       ''
+                                `._'               \   '"\                .      |
+                                   |                '     \                `._  ,'
+                                   |                 '     \                 .'|
+                                   |                 .      \                | |
+                                   |                 |       L              ,' |
+                                   `                 |       |             /   '
+                                    \                |       |           ,'   /
+                                  ,' \               |  _.._ ,-..___,..-'    ,'
+                                 /     .             .      `!             ,j'
+                                /       `.          /        .           .'/
+                               .          `.       /         |        _.'.'
+                                `.          7`'---'          |------"'_.'
+                               _,.`,_     _'                ,''-----"'
+                           _,-_    '       `.     .'      ,\\
+                           -" /`.         _,'     | _  _  _.|
+                            ""--'---""''''        `' '! |! /
+                                                    `" " -' mh""",'','')
         self.charmeleon = pokemon('Charmeleon',5,'This pokemon is very aggressive!',1,['fire','fire'],\
-                                  [2.26,1.28,1.16,1.6,1.3,1.6],{},30,1.3,{36:'charizard'})
+                                  [2.26,1.28,1.16,1.6,1.3,1.6],{},30,1.3,{36:'charizard'},'','','')
         self.charizard = pokemon('Charizard',6,'This pokemon flies over forests looking for small animals to scoop up',1,['fire','flying'],\
-                                 [2.66,1.68,1.56,2.18,1.7,2.0],{},40,1.3,{0:0})
+                                 [2.66,1.68,1.56,2.18,1.7,2.0],{},40,1.3,{0:0},'','','')
         self.squirtle = pokemon('Squirtle', 7, 'This pokemon likes to squirt water at people that get too close', 1, ['water','water'],\
-                                [1.98,0.96,1.3,1,1.28,0.86],{}, 20, 1.3,{16:'wartortle'})
+                                [1.98,0.96,1.3,1,1.28,0.86],{}, 20, 1.3,{16:'wartortle'},'','','')
         self.wartortle = pokemon('Wartortle',8, 'This pokemon likes to withdraw into it\'s shell to avoid being hit',1,['water','water'],\
-                                 [2.28,1.26,1.6,1.3,1.6,1.16],{},30,1.3,{36:'blastoise'})
+                                 [2.28,1.26,1.6,1.3,1.6,1.16],{},30,1.3,{36:'blastoise'},'','','')
         self.blastoise = pokemon('Blastoise',9, 'This pokemon can blast out water from the two cannons on it\'s back',1,['water','water'],\
-                                 [2.68,1.66,2.0,1.7,2.1,1.56],{},40,1.3,{0:0})
+                                 [2.68,1.66,2.0,1.7,2.1,1.56],{},40,1.3,{0:0},'','','')
         self.caterpie = pokemon('Caterpie',10,'This pokemon eats leaves until it\'s ready to enter a cocoon',1,['bug','bug'],\
-                                [2.0,0.6,0.7,0.4,0.4,0.9],{},15,1.3,{7:'metapod'})
+                                [2.0,0.6,0.7,0.4,0.4,0.9],{},15,1.3,{7:'metapod'},'','','')
         self.metapod = pokemon('Metapod',11,'The outer shell of this pokemon is able to harden on command',1,['bug','bug'],\
-                               [2.1,0.4,1.1,0.5,0.5,0.6],{},20,1.3,{10:'butterfree'})
+                               [2.1,0.4,1.1,0.5,0.5,0.6],{},20,1.3,{10:'butterfree'},'','','')
         self.butterfree = pokemon('Butterfree',12,'This pokemon can put other pokemon to sleep with the spores from it\'s wings',1,['bug','flying'],\
-                                  [2.3,0.9,1.0,1.8,1.6,1.4],{},30,1.3,{0:0})
+                                  [2.3,0.9,1.0,1.8,1.6,1.4],{},30,1.3,{0:0},'','','')
         self.weedle = pokemon('Weedle',13,'This pokemon gives a painful sting from the stinger on it\'s head',1,['bug','poison'],\
-                              [1.9,0.7,0.6,0.4,0.4,1.0],{},15,1.3,{7:'kakuna'})
+                              [1.9,0.7,0.6,0.4,0.4,1.0],{},15,1.3,{7:'kakuna'},'','','')
         self.kakuna = pokemon('Kakuna',14, 'This pokemon it starting to form it\'s future powerful arm stingers',1,['bug','poison'],\
-                              [2.0,0.5,1.0,0.5,0.5,0.7],{},20,1.3,{10:'beedrill'})
+                              [2.0,0.5,1.0,0.5,0.5,0.7],{},20,1.3,{10:'beedrill'},'','','')
         self.beedrill = pokemon('Beedrill',15,'This pokemon hunts small insects and even some mammals with it\'s powerful sting',1,['bug','poison'],\
-                                [2.4,1.8,0.8,0.9,1.6,1.5],{},30,1.3,{0:0})
+                                [2.4,1.8,0.8,0.9,1.6,1.5],{},30,1.3,{0:0},'','','')
         self.pidgey = pokemon('Pidgey',16,'This pokemon is very common in large cities where people feed them', 1, ['normal','flying'],\
-                              [1.9,0.9,0.8,0.7,0.7,1.12], {}, 20, 1.3,{16:'pidgeotto'})
+                              [1.9,0.9,0.8,0.7,0.7,1.12], {}, 20, 1.3,{16:'pidgeotto'},'','','')
         self.pidgeotto = pokemon('Pidgeotto',17,'This pokemon can produce powerful gusts to blow away it\'s opponents',1,['normal','flying'],\
-                                 [2.36,1.2,1.1,1,1,1.42],{},27,1.3,{25:'pidgeot'})
+                                 [2.36,1.2,1.1,1,1,1.42],{},27,1.3,{25:'pidgeot'},'','','')
         self.pidgeot = pokemon('Pidgeot',18,'This pokemon has a long feather on it\'s head which it uses to attract a mate',1,['normal','flying'],\
-                               [2.76,1.6,1.5,1.4,1.4,2.02],{},35,1.3,{0:0})
+                               [2.76,1.6,1.5,1.4,1.4,2.02],{},35,1.3,{0:0},'','','')
         self.ratata = pokemon('Ratata',19,'This pokemon has strong teeth, it has been known to chew through metal!', 1, ['normal','normal'],\
-                              [1.7,1.12,0.7,0.5,0.7,1.44],{}, 20, 1.3, {12:'raticate'})
+                              [1.7,1.12,0.7,0.5,0.7,1.44],{}, 20, 1.3, {12:'raticate'},'','','')
         self.raticate = pokemon('Raticate',20, 'This pokemon digs deep burrows which can sometimes cause damage to buildings',1,['normal','normal'],\
-                                [2.2,1.62,1.2,1,1.4,1.94],{},25,1.3,{0:0})
+                                [2.2,1.62,1.2,1,1.4,1.94],{},25,1.3,{0:0},'','','')
         self.spearow = pokemon('Spearow',21,'This pokemon eats bugs with it\'s powerful peck', 1,['normal','flying'],\
-                               [1.9,1.2,0.6,0.62,0.62,1.4],{},20,1.3,{20:'fearow'})
+                               [1.9,1.2,0.6,0.62,0.62,1.4],{},20,1.3,{20:'fearow'},'','','')
         self.fearow = pokemon('Fearow',22,'Because of it\'s majestic wingspan, this pokemon is often confused for one of the legendary birds',1,['normal','flying'],\
-                              [2.4,1.8,1.3,1.22,1.22,2],{},30,1.3,{0:0})
+                              [2.4,1.8,1.3,1.22,1.22,2],{},30,1.3,{0:0},'','','')
         self.ekans = pokemon('Ekans',23,'This pokemon will hide in piles of leaves to ambush it\'s prey',1,['poison','poison'],\
-                             [1.8,1.2,0.88,0.8,1.08,1.1],{},25,1.3,{22:'arbok'})
+                             [1.8,1.2,0.88,0.8,1.08,1.1],{},25,1.3,{22:'arbok'},'','','')
         self.arbok = pokemon('Arbok',24,'This pokemon has been known to hypnotize those who stare into it\'s eyes for too long',1,['poison','poison'],\
-                             [2.3,1.9,1.38,1.3,1.58,1.6],{},30,1.3,{0:0})
+                             [2.3,1.9,1.38,1.3,1.58,1.6],{},30,1.3,{0:0},'','','')
         self.pikachu = pokemon('Pikachu',25,'This pokemon stores electricity in it\'s cheeks',1,['electric','electric'],\
-                               [1.8,1.1,0.8,1.0,1.0,1.8],{},25,1.3,{0:0})
+                               [1.8,1.1,0.8,1.0,1.0,1.8],{},25,1.3,{0:0},'','','')
         self.raichu = pokemon('Raichu',26,'This pokemon uses it\'s large tail as ground when releasing large amounts of electricity',1,['electric','electric'],\
-                              [2.3,1.8,1.1,1.8,1.6,2.2],{},30,1.3,{0:0})
+                              [2.3,1.8,1.1,1.8,1.6,2.2],{},30,1.3,{0:0},'','','')
         self.sandshrew = pokemon('Sandshrew',27,'This pokemon can curl into a ball when threatened',1,['ground','ground'],\
-                                 [2.1,1.5,1.7,0.4,0.6,0.8],{},25,1.3,{22:'sandslash'})
+                                 [2.1,1.5,1.7,0.4,0.6,0.8],{},25,1.3,{22:'sandslash'},'','','')
         self.sandslash = pokemon('Sandslash',28,'This pokemon has powerful claws that can cut through rock',1,['ground','ground'],\
-                                 [2.6, 2.0, 2.2, 0.9, 1.1, 1.3],{},30,1.3,{0:0})
+                                 [2.6, 2.0, 2.2, 0.9, 1.1, 1.3],{},30,1.3,{0:0},'','','')
         self.nidoranF = pokemon('Nidoran F',29,'This pokemon is normally docile, but has a powerful bite if provoked',1,['poison','poison'],\
-                                [2.2,0.94,1.04,0.8,0.8,0.82],{},20,1.3,{16:'nidorina'})
+                                [2.2,0.94,1.04,0.8,0.8,0.82],{},20,1.3,{16:'nidorina'},'','','')
         self.nidorina = pokemon('Nidorina',30,'This pokemon has smaller horns than the male, prefering to claw and bite',1,['poison','poison'],\
-                                [2.5,1.24,1.34,1.1,1.1,1.12],{},27,1.3,{0:0})
+                                [2.5,1.24,1.34,1.1,1.1,1.12],{},27,1.3,{0:0},'','','')
         self.nidoqueen = pokemon('Nidoqueen',31,'This pokemon can use powerful stomps to cause earthquakes',1,['ground','poison'],\
-                                 [2.9,1.84,1.74,1.5,1.7,1.52],{},35,1.3,{0:0})
+                                 [2.9,1.84,1.74,1.5,1.7,1.52],{},35,1.3,{0:0},'','','')
         self.nidoranM = pokemon('Nidoran M',32,'This pokemon uses the horn on it\'s head to fend of predators and attract mates',1,['poison','poison'],\
-                                [2.02,1.14,0.8,0.8,0.8,1],{},20,1.3,{16:'nidorino'})
+                                [2.02,1.14,0.8,0.8,0.8,1],{},20,1.3,{16:'nidorino'},'','','')
         self.nidorino = pokemon('Nidorino', 33, 'This pokemon is very aggressive, using it\'s poisonous horn to attack',1,['poison','poison'],\
-                                [2.32,1.44,1.14,1.1,1.1,1.3],{},27,1.3,{0:0})
+                                [2.32,1.44,1.14,1.1,1.1,1.3],{},27,1.3,{0:0},'','','')
         self.nidoking = pokemon('Nidoking', 34, 'This powerful pokemon controls a large territory which it defends from other Nidokings',1,['ground','poison'],\
-                                [2.72,2.04,1.54,1.7,1.5,1.7],{},35,1.3,{0:0})
+                                [2.72,2.04,1.54,1.7,1.5,1.7],{},35,1.3,{0:0},'','','')
         self.diglett = pokemon('Diglett',50, 'No one has ever seen the bottom of this pokemon',1,['ground','ground'],\
-                               [1.3,1.1,0.5,0.7,0.9,1.9],{},20,1.3,{26:'dugtrio'})
+                               [1.3,1.1,0.5,0.7,0.9,1.9],{},20,1.3,{26:'dugtrio'},'','','')
         self.geodude = pokemon('Geodude',50,'Hikers will often trip over this pokemon, mistaking it for a boulder',1,['rock','ground'],\
-                               [1.9,1.6,2,0.6,0.6,0.4],{},25,1.3,{25:'graveler'})
+                               [1.9,1.6,2,0.6,0.6,0.4],{},25,1.3,{25:'graveler'},'','','')
         self.onix = pokemon('Onix',95,'People have been known to ride on the back of this pokemon through the desert',1,['rock','ground'],\
-                            [1.8, 0.9, 3.2, 0.6, 0.9, 1.4],{},30,1.3,{0:0})
+                            [1.8, 0.9, 3.2, 0.6, 0.9, 1.4],{},30,1.3,{0:0},'','','')
 pokedex = pokedex() #actually creates the pokedex
 evos = []
 for value in pokedex.__dict__.items():

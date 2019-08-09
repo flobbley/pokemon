@@ -1,5 +1,3 @@
-#to do: Add move pool
-
 from random import *
 import copy
 import pickle
@@ -121,9 +119,11 @@ def menu(player):
                         checkPoke.append('Cancel')
                         action3  = menuSelect('Which pokemon?',checkPoke)
                         poke = player.pokeList[action3-1]
-                        print(poke.name,poke.level)
+                        print(poke.pokedexSprite)
+                        print(poke.name,poke.level, str(poke.gainedXP)+'/'+str(poke.needXP))
+                        for move in poke.moves:
+                            print(poke.moves[move].name)
                         print(poke.stats)
-                        print(str(poke.gainedXP)+'/'+str(poke.needXP))
                         input()
                         break
                     elif action2 == 2:
@@ -203,8 +203,8 @@ def battleDisplay(playerPoke, opponentPoke):
     """
     Will display sprites and HP bars
     """
-    print(str(opponentPoke.name),str(opponentPoke.level), 'HP:'+opponentPoke.HPBar(),str(opponentPoke.HP)+'/'+str(opponentPoke.maxHP))
-    print(str(playerPoke.name),str(playerPoke.level), 'HP:'+playerPoke.HPBar(),str(playerPoke.HP)+'/'+str(playerPoke.maxHP))
+    print(opponentPoke.frontSprite,'\n                          ',str(opponentPoke.name),str(opponentPoke.level), 'HP:'+opponentPoke.HPBar(),str(opponentPoke.HP)+'/'+str(opponentPoke.maxHP))
+    print(playerPoke.backSprite,'\n',str(playerPoke.name),str(playerPoke.level), 'HP:'+playerPoke.HPBar(),str(playerPoke.HP)+'/'+str(playerPoke.maxHP))
 
 def battleRestore(player):
     for poke in player.pokeList:

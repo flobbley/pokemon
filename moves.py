@@ -96,6 +96,17 @@ def damage(attacker, defender, power, attackStat, defenseStat):
     b = power*attacker.tempStats[attackStat]/defender.tempStats[defenseStat]
     c = a*b/50+2
     return c
+
+def statusCheck(target):
+    exclusiveStatus = ['paralyzed','sleep','poison','frozen','burn']
+    if len(target.status) == 0:
+        return True
+    else:
+        for oneStatus in target.status:
+            if oneStatus in exclusiveStatus:
+                return False
+        return True
+    
     
 def scratchAttack(attacker, defender, computer):
     """
@@ -176,7 +187,7 @@ def emberAttack(attacker, defender, computer):
     damageType = 'fire'
     power = 40
     if hit(95) == True:
-        if 'burn' not in defender.status:
+        if statusCheck(defender):
             if randint(1,10) == 5:
                 defender.status.append('burn')
                 print(defender.name,'was burned!')
@@ -214,7 +225,7 @@ def poisonStingAttack(attacker, defender, computer):
     power = 40
     if hit(95) == True:
         damageMod = typeMod(damageType, attacker.typ, defender.typ)
-        if damageMod != 0 and 'poison' not in defender.status:
+        if damageMod != 0 and statusCheck(defender):
             if randint(1,10) == 5:
                 defender.status.append('poison')
                 print(defender.name,'was poisoned!')
@@ -251,7 +262,7 @@ def twinNeedleAttack(attacker, defender, computer):
                     input()
                 if i == 1:
                     print('second strike hit!')
-                if 'poison' not in defender.status:
+                if statusCheck(defender):
                     if randint(1,5) == 5:
                         defender.status.append('poison')
                         print(defender.name,'was poisoned!')
@@ -288,7 +299,7 @@ def thundershockAttack(attacker, defender, computer):
     if hit(95) == True:
         damageMod = typeMod(damageType, attacker.typ, defender.typ)
         if damageMod != 0:
-            if 'paralyzed' not in defender.status:
+            if statusCheck(defender):
                 if randint(1,10) == 5:
                     defender.status.append('paralyzed')
                     print(defender.name,'became paralyzed!')
@@ -503,7 +514,7 @@ def vineWhipAttack(attacker, defender, computer):
 def thunderWaveAttack(attacker, defender, computer):
     damageType = 'electric'
     damageMod = typeMod(damageType, attacker.typ, defender.typ)
-    if damageMod != 0:
+    if damageMod != 0 and statusCheck(defender):
         print(defender.name,'was paralyzed!')
         defender.status.append('paralyzed')
     else:
@@ -530,8 +541,9 @@ def bodySlamAttack(attacker, defender, computer):
     damageType = 'normal'
     power = 85
     if hit(95) == True: #95% hit rate
-        if randint(1,3) == 3:
-            defender.status.append('paralyzed')
+        if statusCheck(defender):
+            if randint(1,3) == 3:
+                defender.status.append('paralyzed')
         damageMod = typeMod(damageType, attacker.typ, defender.typ)
         damageDone = damage(attacker, defender, power, 'attack', 'defense')
         damageDone *= damageMod

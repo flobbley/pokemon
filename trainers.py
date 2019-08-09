@@ -44,7 +44,7 @@ class trainer:
             self.boxList.append(pokemon)
         if pokemon.pokeNum not in self.playerDex:
             print(pokemon.name+'\'s information was added to your pokedex!')
-            self.playerDex[pokemon.pokeNum] = [pokemon.name, pokemon.entry]
+            self.playerDex[pokemon.pokeNum] = [pokemon.name, pokemon.entry, pokemon.pokedexSprite]
             print(pokemon.entry)
             input()
             
@@ -133,6 +133,7 @@ class trainer:
                 try:
                     poke = int(poke)
                     if poke != 0 and poke in self.playerDex:
+                        print(self.playerDex[poke][2])
                         print(self.playerDex[poke][1])
                         input()
                         break
