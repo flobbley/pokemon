@@ -3,13 +3,6 @@ from random import *
 import copy
 import inspect
 
-
-def damage(attacker, defender, power, attackStat, defenseStat):
-    a = (2*attacker.level)/5+2
-    b = power*attacker.tempStats[attackStat]/defender.tempStats[defenseStat]
-    c = a*b/50+2
-    return c
-
 def menuValid(number, maxNum):
     noGood = 'invalid input'
     try:
@@ -57,6 +50,8 @@ class pokemon:
         self.pokedexSprite = pokedexSprite
         self.frontSprite = frontSprite
         self.backSprite = backSprite
+        self.timesAttacked = 0
+        self.referenceHP = self.HP
 
     def getName(self): #gives the name of the pokemon
         print(self.name)
@@ -209,6 +204,29 @@ class pokemon:
         act = []
 
         #non-exclusive statuses
+        if 'flinched' in self.status:
+            if position == 'before':
+                self.status.remove('flinched')
+            if position == 'during':
+                print(self.name,'flinched!')
+                act.append(False)
+            
+        
+        if 'bide' in self.status:
+            if position == 'during':
+                if self.timesAttacked <2:
+                    print(self.name,'is biding their time')
+                    input()
+                    act.append(False)
+                else:
+                    damageVal = 2*(self.referenceHP - self.HP)
+                    print(self.name,'unleashed energy!')
+                    input()
+                    opponent.damageTaken(damageVal)
+                    self.status.remove('bide')
+                    act.append(False)
+                
+        
         if 'leech' in self.status:
             if position == 'after':
                 damageVal = self.maxHP//16+1
@@ -221,7 +239,9 @@ class pokemon:
             if position == 'before':
                 print(self.name,'is confused!')
             if position == 'during':
-                chance = [True, False, False]
+                chance = [True, False, False, False]
+                if self.timesAttacked == 4:
+                    chance = [True]
                 hurt = [True,False]
                 clear = choice(chance)
                 if clear:
@@ -235,18 +255,18 @@ class pokemon:
                         self.damageTaken(round(selfDamage))
                         act.append(False)
                         input()
-                
+
+
+        #exclusive statuses               
         if 'burn' in self.status:
             if position == 'before':
                 self.tempStats['attack'] = self.stats['attack']/2
             elif position == 'after':
                 damageVal = round(self.maxHP/8)
-                self.damageTaken(damage)
+                self.damageTaken(damageVal)
                 print(self.name, 'was hurt by the burn')
                 input()
 
-        
-        #exclusive statuses
         elif 'paralyzed' in self.status:
             if position == 'before':
                 print(self.name,'is paralyzed, it may not attack')
@@ -263,6 +283,8 @@ class pokemon:
                 print(self.name,'is asleep!')
             elif position == 'during':
                 chance = [True,False,False]
+                if self.timesAttacked == 4:
+                    chance = [True]
                 sleep = choice(chance)
                 if sleep == True:
                     print(self.name,'woke up!')

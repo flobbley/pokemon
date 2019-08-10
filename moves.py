@@ -285,6 +285,7 @@ def confusionAttack(attacker, defender, computer):
         if 'confusion' not in defender.status:
             if randint(1,10) == 5:
                 defender.status.append('confusion')
+                defender.timesAttacked = 0
                 print(defender.name,'became confused!')
         damageMod = typeMod(damageType, attacker.typ, defender.typ)
         damageDone = damage(attacker, defender, power, 'sp.attack', 'sp.defense')
@@ -489,7 +490,16 @@ def biteAttack(attacker, defender, computer):
     """
     damageType = 'normal'
     power = 60
+    cantFlinch = ['sleep','frozen']
+    flinch = True
     if hit(95) == True: #95% hit rate
+        for thisStatus in defender.status:
+            if thisStatus in cantFlinch:
+                flinch = False
+        if flinch:
+            chance = [True, False, False]
+            if choice(chance):
+                defender.status.append('flinched')
         damageMod = typeMod(damageType, attacker.typ, defender.typ)
         damageDone = damage(attacker, defender, power, 'attack', 'defense')
         damageDone *= damageMod
@@ -550,6 +560,13 @@ def bodySlamAttack(attacker, defender, computer):
         defender.damageTaken(round(damageDone))
     else:
         print('but it missed!')
+
+def bideAttack(attacker, defender, computer):
+    attacker.referenceHP = attacker.HP
+    damageType = 'normal'
+    attacker.status.append('bide')
+    attacker.timesAttacked = 0
+    print(attacker.name,'is biding their time')
         
 class move:
     def __init__(self, name, priority, duration, technique):
@@ -596,6 +613,7 @@ thunderWave = move('thunder wave',0,0,thunderWaveAttack)
 slash = move('slash',0,0,slashAttack)
 bodySlam = move('body slam',0,0,bodySlamAttack)
 growl = move('growl',0,0,growlAttack)
+bide = move('bide',0,0,bideAttack)
 
 
 

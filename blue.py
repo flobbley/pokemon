@@ -598,14 +598,16 @@ def rockGym(player):
 
 ashPidgey = pokemonGenerator(pokedex.pidgey, 4, [tackle, gust])
 garyPidgey = pokemonGenerator(pokedex.pidgey,4,[tackle, gust])
-ashBulbasaur = pokemonGenerator(pokedex.bulbasaur,10,[tackle,leer,thunderWave])
+ashBulbasaur = pokemonGenerator(pokedex.bulbasaur,30,[tackle,bide,thunderWave])
 garyBulbasaur = pokemonGenerator(pokedex.bulbasaur, 5, [tackle, leer])
 ashSquirtle = pokemonGenerator(pokedex.squirtle, 15, [tackle, tailWhip, bubble])
-garyCharmander = pokemonGenerator(pokedex.charmander, 30, [tailWhip])
+garyCharmander = pokemonGenerator(pokedex.charmander, 30, [tackle])
 garySquirtle = pokemonGenerator(pokedex.squirtle, 30, [tailWhip])
 ashCharmander = pokemonGenerator(pokedex.charmander, 5, [scratch, tailWhip])
 ashBeedrill = pokemonGenerator(pokedex.beedrill,15,[twinNeedle,poisonSting],1.5)
 ashPikachu = pokemonGenerator(pokedex.pikachu, 7, [thundershock])
+ashBulbasaur.status.append('sleep')
+garyCharmander.status.append('confusion')
 
 ash = trainer('ash', [ashBulbasaur], [['Pokeball',5],['Potion',5]], 500)
 gary = trainer('gary', [garyCharmander], [], 10)
@@ -618,5 +620,5 @@ modules = {'bedroom':bedroom, 'momsHouse':momsHouse, 'lab':lab, 'garysHouse':gar
             'route29south':route29south, 'viridianArea1':viridianArea1, 'viridianArea2north':viridianArea2north, 'viridianArea2south':viridianArea2south, 'viridianArea3':viridianArea3,\
            'viridianArea4north':viridianArea4north,'viridianArea4south':viridianArea4south, 'pewterCity':pewterCity, 'rockGym':rockGym}
 
-#print(battle(ash, gary, False))
+print(battle(ash, gary, False))
 #print(main(bedroom,modules)) #runs the game

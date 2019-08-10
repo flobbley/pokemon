@@ -208,6 +208,10 @@ def battleDisplay(playerPoke, opponentPoke):
 
 def battleRestore(player):
     for poke in player.pokeList:
+        permStatus = ['sleep','paralyzed','burn','frozen', 'poison']
+        for thisStatus in poke.status:
+            if thisStatus not in permStatus:
+                poke.status.remove(thisStatus)
         poke.statRestore()
 
 def battleMenu():
@@ -287,6 +291,8 @@ def battle(player, opponent, wild= True):
                     if action == 1:
                         playerMove = playerTurn(playerPoke, opponentPoke)
                         if playerMove != False:
+                            playerPoke.timesAttacked += 1
+                            print(playerPoke.name, playerPoke.timesAttacked)
                             break
                     elif action == 2:
                         print('Who do you want to send out?')
@@ -336,6 +342,7 @@ def battle(player, opponent, wild= True):
                 """
                 notUsed = opponentPoke.statusAction(playerPoke, 'before')
                 computerMove = computerTurn(playerPoke, opponentPoke, str(opponent.name))
+                opponentPoke.timesAttacked += 1
 
                 """
                 resolve turn order
