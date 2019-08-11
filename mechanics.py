@@ -292,7 +292,6 @@ def battle(player, opponent, wild= True):
                         playerMove = playerTurn(playerPoke, opponentPoke)
                         if playerMove != False:
                             playerPoke.timesAttacked += 1
-                            print(playerPoke.name, playerPoke.timesAttacked)
                             break
                     elif action == 2:
                         print('Who do you want to send out?')

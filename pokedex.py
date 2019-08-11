@@ -449,10 +449,15 @@ class pokedex: #fills the global pokedex
                                 [2.72,2.04,1.54,1.7,1.5,1.7],{},35,1.3,{0:0},'','','')
         self.diglett = pokemon('Diglett',50, 'No one has ever seen the bottom of this pokemon',1,['ground','ground'],\
                                [1.3,1.1,0.5,0.7,0.9,1.9],{},20,1.3,{26:'dugtrio'},'','','')
-        self.geodude = pokemon('Geodude',50,'Hikers will often trip over this pokemon, mistaking it for a boulder',1,['rock','ground'],\
+        self.machop = pokemon('Machop',66, 'This pokemon likes to build it\'s muscles and train in all kinds of martial arts',1,['fighting','fighting'],\
+                               [2.5,1.6,1,0.7,0.7,0.7],{},20,1.3,{28:'machoke'},'','','')
+        self.geodude = pokemon('Geodude',74,'Hikers will often trip over this pokemon, mistaking it for a boulder',1,['rock','ground'],\
                                [1.9,1.6,2,0.6,0.6,0.4],{},25,1.3,{25:'graveler'},'','','')
         self.onix = pokemon('Onix',95,'People have been known to ride on the back of this pokemon through the desert',1,['rock','ground'],\
                             [1.8, 0.9, 3.2, 0.6, 0.9, 1.4],{},30,1.3,{0:0},'','','')
+        self.solosis = pokemon('Solosis',577,'This pokemon is actually a single celled organism.',1,['psychic','psychic'],\
+                               [2, 0.6, 0.8, 2.1, 1, 0.4],{},20,1.3,{26:'duosion'},'','','')
+        
 pokedex = pokedex() #actually creates the pokedex
 evos = []
 for value in pokedex.__dict__.items():

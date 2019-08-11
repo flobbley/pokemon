@@ -59,7 +59,7 @@ def quiz(player):
     d = 'd'
     e = 'e'
     while True:
-        os.system(clearVar#Enter descriptor info here, hashtags indicate comments, they are ignored by the code
+        os.system(clearVar)#Enter descriptor info here, hashtags indicate comments, they are ignored by the code
         print('You sit at your desk and jostle the computer mouse to bring it out of sleep mode, your homework is still loaded from the night before. It\'s a personality quiz, meant to get a feel for your aptitude toward certain pokemon!')
         action = menuSelect('What is your favorite color?',['A cool Cerulean','A fiery Vermillion','A vibrant Viridian','A fun Fuschia','A subtle Saffron'])#enter question here, along with the list of possible answers
         if action == 1: #the number of actions will equal the number of possible answers in the last line
@@ -426,21 +426,21 @@ def quiz(player):
             input()
 
 
-            bulb = quizAnswers.count('a')
-            char = quizAnswers.count('b')
-            squirt = quizAnswers.count('c')
-            mach = quizAnswers.count('d')
-            ralts = quizAnswers.count('e')
+            bulbN = quizAnswers.count('a')
+            charN = quizAnswers.count('b')
+            squirtN = quizAnswers.count('c')
+            machN = quizAnswers.count('d')
+            solosisN = quizAnswers.count('e')
         else:
             print('you decide that it\'s better to just answer randomly, you\'re already running late after all..')
             input()
-            bulb = randint(1,7)
-            char = randint(1,7)
-            squirt = randint(1,7)
-            mach = randint(1,7)
-            ralts = randint(1,7)
+            bulbN = randint(1,7)
+            charN = randint(1,7)
+            squirtN = randint(1,7)
+            machN = randint(1,7)
+            solosisN = randint(1,7)
 
-        poke = {'Bulbasaur':bulb,'Charmander':char,'Squirtle':squirt,'Machop':mach, 'Ralts':ralts}
+        poke = {'Bulbasaur':bulbN,'Charmander':charN,'Squirtle':squirtN,'Machop':machN, 'Solosis':solosisN}
         highest = 0
         newPokeList = []
         for potential in poke:
@@ -454,34 +454,66 @@ def quiz(player):
             print('That\'s interesting, you fell between',len(newPokeList),'pokemon')
             action = menuSelect('Which would you prefer?',newPokeList)
             newPoke = newPokeList[action-1]
-        global playerPoke
         playerPoke = newPoke
+        player.pokeList.append(potentialPokes[playerPoke])
+
         return 'getFirstPoke'
 
 def getFirstPoke(player):
+    print('Whew, glad to be done with that! Time to go to school')
+    input()
     while True:
         os.system(clearVar)
-        print('example') #Enter descriptor info here, hashtags indicate comments, they are ignored by the code
-        player.pokeList.append(potentialPokes[playerPoke])
-        action = menuSelect('Question',['list','of','possible','answers','Menu'])#enter question here, along with the list of possible answers
+        action = menuSelect('You go downstairs and your Mom and Dad are waiting for you. "We have a surprise for you. It\'s a ' +player.pokeList[0].name +'! What do you think?"',['I love it!','Thank you so much!','Thanks...','It\'s so cute!','It looks like Grandpa!'])#enter question here, along with the list of possible answers
         if action == 1: #the number of actions will equal the number of possible answers in the last line
-            print('enter dialogue here, or if pokecenter/item shop, copy pokecenter/item code')
+            print('Dad: Hopefully they\'ll be a partner for life!\nDad\'s Quagsire: QUAG!')
             input()
-            #return 'newModule' ---- if this option leads to a new module, uncomment this line and put the name of the new module in the quotes
+            return 'walkToSchool'
+
         elif action == 2:
-            print('enter dialogue here etc')
+            print('Mom: You are very welcome.\nMom\'s Blissey: Sey, sey, Bliss!')
             input()
-            #return 'newModule'
+            return 'walkToSchool'
+
         elif action == 3:
-            print('enter dialogue here, etc')
+            print('Mom:...Well if you don\'t like it... \nDad: We worked hard to get you this, if you don\'t like it you can go out and catch something!')
             input()
-            #return 'newModule
+            return 'walkToSchool'
+
         elif action == 4:
-            print('enter dialogue here, etc')
+            print('Dad\'s Quagsire:SIRE!!!\nMom\'s Blissey: BLISS!\nMom and Dad: I think they are inclined to agree! HAHA')
             input()
-            #return 'newModule
+            return 'walkToSchool'
+
         else:
-            menu(player) #the last option is usually menu, but doesn't have to be
+            print('Mom: Gasp! Well that\;s not very nice!\nDad:HAHA but it really does!\nDad\'s Quagsire:SIRE! SIRE!')
+            input()
+            return 'walkToSchool'
+
+def walkToSchool(player):
+    while True:
+        os.system(clearVar)
+        print('You leave the house to go to school')
+        print('on the way out you run into your friend Oscar')
+        print('Oscar: "Hey! '+player.name+' did you get a pokemon? So did I! Wanna battle and see how they do?')
+        action = menuSelect('What would you like to do?',['Yeah let\'s do it!','Go into the opening','Menu'])
+        if action == 1:
+            won = trainerEncounter(player, gameState.trainers.gyroTrainers.firstEncounterOscar,\
+                                   '"Take it easy on me, I\'ve never done this before!"',\
+                                   '"Phew, that was intense! just like camping"')
+            if won == False:
+                return gameState.lastPokecenter
+        elif action == 2:
+            print('you enter into the opening')
+            input()
+            print('It\'s filled with wild pokemon! you may have to fight your way out!')
+            passed = viridianWild(player, 3)
+            if passed == False:
+                return gameState.lastPokecenter
+            return 'viridianArea3'
+
+        else:
+            menu(player)
         
 def moduleName(player):
     while True:
@@ -540,17 +572,14 @@ def wildEncounter(player, patches):
             input()
     return True
 
-bulb = copy.deepcopy(pokedex.bulbasaur)
-char = copy.deepcopy(pokedex.charmander)
-squirt = copy.deepcopy(pokedex.squirtle)
-bulb.addLevel(5)
-char.addLevel(5)
-squirt.addLevel(5)
-#ralts = copy.deepcopy(pokedex.ralts)
-#machop = copy.deepcopy(pokedex.machop)
+bulb = pokemonGenerator(pokedex.bulbasaur,5,[tackle,growl])
+char = pokemonGenerator(pokedex.charmander,5,[scratch,tailWhip])
+squirt = pokemonGenerator(pokedex.squirtle,5,[tackle,tailWhip])
+solosis = pokemonGenerator(pokedex.solosis,5,[tackle,leer])
+machop = pokemonGenerator(pokedex.machop,5,[scratch,leer])
 
-potentialPokes = {'Bulbasaur':bulb,'Charmander':char,'Squirtle':squirt} #'Ralts':ralts,'Machop':machop}
+potentialPokes = {'Bulbasaur':bulb,'Charmander':char,'Squirtle':squirt, 'Solosis':solosis,'Machop':machop}
 
-modules = {'myHouseNoQuiz':myHouseNoQuiz, 'quiz':quiz, 'getFirstPoke':getFirstPoke}
+modules = {'myHouseNoQuiz':myHouseNoQuiz, 'quiz':quiz, 'getFirstPoke':getFirstPoke, 'walkToSchool':walkToSchool}
 
 print(main(myBedroomFirst, modules))

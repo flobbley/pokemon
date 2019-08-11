@@ -272,9 +272,22 @@ class pewterTrainersClass:
 
 pewterTrainers = pewterTrainersClass()
 
+"""
+Gyro
+"""
+
+friendDiglett1 = pokemonGenerator(pokedex.diglett,5,[scratch, tailWhip],1.5)
+
+class gyroTrainersClass:
+    def __init__(self):
+        self.firstEncounterOscar = trainer('Oscar',[friendDiglett1],[],200)
+
+gyroTrainers = gyroTrainersClass()
+
 class trainers:
     def __init__(self):
         self.viridianTrainers = viridianTrainers
         self.pewterTrainers = pewterTrainers
+        self.gyroTrainers = gyroTrainers
 
 allTrainers = trainers()
