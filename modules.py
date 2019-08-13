@@ -6,24 +6,21 @@ def myBedroomFirst(player):
     """
     while True:
         os.system(clearVar)
-        print('You awake to the sound of your alarm, your Mom is shouting that you\'ll be late to school. It\'s time to get up!') #Enter descriptor info here, hashtags indicate comments, they are ignored by the code
+        print('You awake to the sound of your alarm, your Mom is shouting that you\'ll be late to school. It\'s time to get up!')
         print('As you wipe the sleep from your eyes a cold realization washes over you, you didn\'t finish your homework! And it\'s due today!!!')
-        action = menuSelect('What would you like to do?',['Get dressed, head downstairs','Check what\'s on T.V.','Hit snooze, try and catch a few more ZZZ','Run to my computer, there\'s still time to finish!','Menu'])#enter question here, along with the list of possible answers
-        if action == 1: #the number of actions will equal the number of possible answers in the last line
-            return 'myHouseNoQuiz' #---- if this option leads to a new module, uncomment this line and put the name of the new module in the quotes
+        action = menuSelect('What would you like to do?',['Get dressed, head downstairs','Check what\'s on T.V.','Hit snooze, try and catch a few more ZZZ','Run to my computer, there\'s still time to finish!','Menu'])
+        if action == 1:
+            return 'myHouseNoQuiz'
         elif action == 2:
             print('It\'s a weather report for Gyarapolis, looks like clear skies with a chance of thunderstorms in the afternoon')
             input()
-            #return 'newModule'
         elif action == 3:
             print('...Mom:"',player.name,'GET UP! YOU ARE GOING TO BE LATE!! DON\'T MAKE ME COME UP THERE!!!"')
             input()
-            #return 'newModule
-            #return 'newModule
         elif action == 4:
             return 'quiz'
         else:
-            menu(player) #the last option is usually menu, but doesn't have to be
+            menu(player) 
             
 def myHouseNoQuiz(player):
     """
@@ -31,9 +28,9 @@ def myHouseNoQuiz(player):
     """
     while True:
         os.system(clearVar)
-        print('Mom:"Good Morning! Big Day today, did you finish your homework?') #Enter descriptor info here, hashtags indicate comments, they are ignored by the code
+        print('Mom:"Good Morning! Big Day today, did you finish your homework?')
         action = menuSelect('What would you like to do?',['"Yeah of course, who do you think I am?"','Go back upstairs without a word.','Try to run out of the house without her noticing.','"Oh yeah, I forgot it upstairs!','Menu'])#enter question here, along with the list of possible answers
-        if action == 1: #the number of actions will equal the number of possible answers in the last line
+        if action == 1: 
             print('Mom: A liar apparently, go back up there and get it done!')
             input()
             return 'quiz'
@@ -49,7 +46,7 @@ def myHouseNoQuiz(player):
             input()
             return 'quiz'
         else:
-            menu(player) #the last option is usually menu, but doesn't have to be
+            menu(player)
 
 def quiz(player):
     quizAnswers =[]
@@ -59,21 +56,17 @@ def quiz(player):
     d = 'd'
     e = 'e'
     while True:
-        os.system(clearVar)#Enter descriptor info here, hashtags indicate comments, they are ignored by the code
+        os.system(clearVar)
         print('You sit at your desk and jostle the computer mouse to bring it out of sleep mode, your homework is still loaded from the night before. It\'s a personality quiz, meant to get a feel for your aptitude toward certain pokemon!')
-        action = menuSelect('What is your favorite color?',['A cool Cerulean','A fiery Vermillion','A vibrant Viridian','A fun Fuschia','A subtle Saffron'])#enter question here, along with the list of possible answers
-        if action == 1: #the number of actions will equal the number of possible answers in the last line
+        action = menuSelect('What is your favorite color?',['A cool Cerulean','A fiery Vermillion','A vibrant Viridian','A fun Fuschia','A subtle Saffron'])
+        if action == 1:
             quizAnswers.append(a)
-            #return 'newModule' ---- if this option leads to a new module, uncomment this line and put the name of the new module in the quotes
         elif action == 2:
             quizAnswers.append(b)
-            #return 'newModule'
         elif action == 3:
             quizAnswers.append(c)
-            #return 'newModule'
         elif action == 4:
             quizAnswers.append(d)
-            #return 'newModule'
         else:
             quizAnswers.append(e)
             
@@ -84,9 +77,8 @@ def quiz(player):
         if action == 1:
         
             action = menuSelect('Someone approaches you on the street and returns something dropped. How do you respond?',['Say thank you regularly','Say thank you, but play it cool','Say something self-effacing','Say thank you and offer them a reward','Say it\'s not yours'])#enter question here, along with the list of possible answers
-            if action == 1: #the number of actions will equal the number of possible answers in the last line
+            if action == 1:
                 quizAnswers.append(a)
-                #return 'newModule' ---- if this option leads to a new module, uncomment this line and put the name of the new module in the quotes
             elif action == 2:
                 quizAnswers.append(b)
                 #return 'newModule'
@@ -465,7 +457,7 @@ def getFirstPoke(player):
     while True:
         os.system(clearVar)
         action = menuSelect('You go downstairs and your Mom and Dad are waiting for you. "We have a surprise for you. It\'s a ' +player.pokeList[0].name +'! What do you think?"',['I love it!','Thank you so much!','Thanks...','It\'s so cute!','It looks like Grandpa!'])#enter question here, along with the list of possible answers
-        if action == 1: #the number of actions will equal the number of possible answers in the last line
+        if action == 1:
             print('Dad: Hopefully they\'ll be a partner for life!\nDad\'s Quagsire: QUAG!')
             input()
             return 'walkToSchool'
@@ -496,24 +488,91 @@ def walkToSchool(player):
         print('You leave the house to go to school')
         print('on the way out you run into your friend Oscar')
         print('Oscar: "Hey! '+player.name+' did you get a pokemon? So did I! Wanna battle and see how they do?')
-        action = menuSelect('What would you like to do?',['Yeah let\'s do it!','Go into the opening','Menu'])
+        action = menuSelect('What would you like to do?',['Yeah let\'s do it!','Maybe later, we\'re late!','Menu'])
         if action == 1:
+            print('Oscar: "Yeah! that\'s the spirit!"')
             won = trainerEncounter(player, gameState.trainers.gyroTrainers.firstEncounterOscar,\
                                    '"Take it easy on me, I\'ve never done this before!"',\
                                    '"Phew, that was intense! just like camping"')
-            if won == False:
-                return gameState.lastPokecenter
-        elif action == 2:
-            print('you enter into the opening')
+            player.partyHeal()
+            print('With that, you and your friend decide to continue your walk to school')
             input()
-            print('It\'s filled with wild pokemon! you may have to fight your way out!')
-            passed = viridianWild(player, 3)
-            if passed == False:
-                return gameState.lastPokecenter
-            return 'viridianArea3'
-
+            return 'firstDaySchool'
+            
+        elif action == 2:
+            print('Oscar: "Oh come on! don\'t be lame!"')
+            won = trainerEncounter(player, gameState.trainers.gyroTrainers.firstEncounterOscar,\
+                                   '"Take it easy on me, I\'ve never done this before!"',\
+                                   '"Phew, that was intense! just like camping"')
+            player.partyHeal()
+            print('With that, you and your friend decide to continue your walk to school')
+            input()
+            return 'firstDaySchool'
         else:
             menu(player)
+
+def firstDaySchool(player):
+    i=0
+    while True:
+        if i < 2:
+            os.system(clearVar)
+            print('You walk into school and find your seat in the classroom, there are a view minutes before class starts')
+            print('You see something written on the board and your rival Charles is talking to his friends next to you')
+            action = menuSelect('What would you like to do?',['Look at the board','Eves drop on Charles','Wait for class to start','Menu'])
+            i+=1
+            if action == 1:
+                if i ==1:
+                    print('it\'s a pokemon type advantage chart! the attacking types are on the y-axis, and the defending types are on the x-axis')
+                    printChart()
+                    input()
+                else:
+                    print('No time!')
+                    i+=2
+            elif action == 2:
+                if i == 1:
+                    print('Charles: "My parents got me a Porygon, top of the line, latest model!"')
+                    input()
+                else:
+                    print('Charles: "My dad is gonna pull his connections in the Mayor\'s office to get me a job after school!"')
+                    input()
+                    i+=2
+            elif action == 3:
+                print('You decide to wait it out until Ms. Ingneau arrives..')
+                input()
+                i+=2
+                
+                #return 'newModule
+            else:
+                menu(player) #the last option is usually menu, but doesn't have to be
+        else:
+            os.system(clearVar)
+            print('Ms. Ingneau walks into the classroom and starts erasing the board')
+            input()
+            print('Ms. Ingneau: "Hello Class! Welcome back, I hope everyone had an exciting break!"')
+            print('"Today we will have a quiz about pokemon type effectiveness, and I have a special prize for whoever gets the highest grade!"')
+            action = menuSelect('What would you like to do?',['Look at the board','Eves drop on Charles','Wait for class to start','Menu'])
+
+            if action == 1:
+                if i ==1:
+                    print('it\'s a pokemon type advantage chart! the attacking types are on the y-axis, and the defending types are on the x-axis')
+                    printChart()
+                    input()
+                else:
+                    print('No time! Ms. Ingneau comes into the room and starts erasing the board')
+                    input()
+                    i+=1
+            elif action == 2:
+                if i == 1:
+                    print('Charles: "My parents got me a Porygon, top of the line, latest model!"')
+                    input()
+                else:
+                    print('Charles: "My dad is gonna pull his connections in the Mayor\'s office to get me a job after school!"')
+                    input()
+            elif action == 3:
+                print('You decide to wait it out until Ms. Ingneau arrives..')
+                input()
+            else:
+                menu(player)
         
 def moduleName(player):
     while True:
@@ -580,6 +639,6 @@ machop = pokemonGenerator(pokedex.machop,5,[scratch,leer])
 
 potentialPokes = {'Bulbasaur':bulb,'Charmander':char,'Squirtle':squirt, 'Solosis':solosis,'Machop':machop}
 
-modules = {'myHouseNoQuiz':myHouseNoQuiz, 'quiz':quiz, 'getFirstPoke':getFirstPoke, 'walkToSchool':walkToSchool}
+modules = {'myHouseNoQuiz':myHouseNoQuiz, 'quiz':quiz, 'getFirstPoke':getFirstPoke, 'walkToSchool':walkToSchool, 'firstDaySchool':firstDaySchool}
 
 print(main(myBedroomFirst, modules))
