@@ -1,6 +1,7 @@
 from random import *
 import copy
 import pickle
+import sys
 from moves import *
 from pokedex import *
 from items import *
@@ -119,6 +120,7 @@ def menu(player):
                         checkPoke.append('Cancel')
                         action3  = menuSelect('Which pokemon?',checkPoke)
                         poke = player.pokeList[action3-1]
+                        os.system(clearVar)
                         print(poke.pokedexSprite)
                         print(poke.name,poke.level, str(poke.gainedXP)+'/'+str(poke.needXP))
                         for move in poke.moves:

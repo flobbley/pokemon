@@ -272,6 +272,12 @@ class pewterTrainersClass:
 
 pewterTrainers = pewterTrainersClass()
 
+class rivalClass:
+    def __init__(self):
+        self.gary = trainer('Gary',[],['victoryRoad'],0)
+
+rival = rivalClass()
+
 """
 Gyro
 """
@@ -288,6 +294,7 @@ class trainers:
     def __init__(self):
         self.viridianTrainers = viridianTrainers
         self.pewterTrainers = pewterTrainers
+        self.rival = rival
         self.gyroTrainers = gyroTrainers
 
 allTrainers = trainers()

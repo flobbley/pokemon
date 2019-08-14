@@ -149,8 +149,8 @@ def leerAttack(attacker, defender, computer):
         print('but it failed!')
 
 def wingAttackAttack(attacker, defender, computer):
-    damageType = 'normal'
-    power = 40
+    damageType = 'flying'
+    power = 60
     if hit(95) == True: #95% hit rate
         damageMod = typeMod(damageType, attacker.typ, defender.typ)
         damageDone = damage(attacker, defender, power, 'attack', 'defense')
@@ -391,11 +391,11 @@ def furySwipesAttack(attacker, defender, computer):
     power = 18
     hits = [2,2,2,3,3,3,4,5]
     noHits = choice(hits)
-    input()
     if hit(85) == True:
         damageMod = typeMod(damageType, attacker.typ, defender.typ)
         for i in range(noHits):
             print(i,'hits!')
+            input()
             os.system(clearVar)
             if computer == True:
                 battleDisplay(defender,attacker)
@@ -451,11 +451,11 @@ def furyAttackAttack(attacker, defender, computer):
     power = 15
     hits = [2,2,2,3,3,3,4,5]
     noHits = choice(hits)
-    input()
     if hit(85) == True:
         damageMod = typeMod(damageType, attacker.typ, defender.typ)
         for i in range(noHits):
             print(i,'hits!')
+            input()
             os.system(clearVar)
             if computer == True:
                 battleDisplay(defender,attacker)
@@ -524,11 +524,12 @@ def vineWhipAttack(attacker, defender, computer):
 def thunderWaveAttack(attacker, defender, computer):
     damageType = 'electric'
     damageMod = typeMod(damageType, attacker.typ, defender.typ)
-    if damageMod != 0 and statusCheck(defender):
-        print(defender.name,'was paralyzed!')
-        defender.status.append('paralyzed')
-    else:
-        print('There was no effect')
+    if hit(90):
+        if damageMod != 0 and statusCheck(defender):
+            print(defender.name,'was paralyzed!')
+            defender.status.append('paralyzed')
+        else:
+            print('There was no effect')
 
 def slashAttack(attacker, defender, computer):
     """
@@ -567,6 +568,204 @@ def bideAttack(attacker, defender, computer):
     attacker.status.append('bide')
     attacker.timesAttacked = 0
     print(attacker.name,'is biding their time')
+
+def sleepPowderAttack(attacker, defender, computer):
+    damageType = 'grass'
+    damageMod = typeMod(damageType, attacker.typ, defender.typ)
+    if hit(75):
+        if damageMod != 0 and statusCheck(defender):
+            print(defender.name,'fell asleep!')
+            defender.status.append('sleep')
+        else:
+            print('There was no effect')
+    else:
+        print('but it failed!')
+
+def singAttack(attacker, defender, computer):
+    damageType = 'normal'
+    damageMod = typeMod(damageType, attacker.typ, defender.typ)
+    if hit(55):
+        if damageMod != 0 and statusCheck(defender):
+            print(defender.name,'fell asleep!')
+            defender.status.append('sleep')
+        else:
+            print('There was no effect')
+    else:
+        print('but it failed!')
+
+def poisonPowderAttack(attacker, defender, computer):
+    damageType = 'poison'
+    damageMod = typeMod(damageType, attacker.typ, defender.typ)
+    if hit(75):
+        if damageMod != 0 and statusCheck(defender):
+            print(defender.name,'was poisoned!')
+            defender.status.append('poison')
+        else:
+            print('There was no effect')
+    else:
+        print('but it failed!')
+
+def stunSporeAttack(attacker, defender, computer):
+    damageType = 'grass'
+    damageMod = typeMod(damageType, attacker.typ, defender.typ)
+    if hit(75):
+        if damageMod != 0 and statusCheck(defender):
+            print(defender.name,'was paralyzed!')
+            defender.status.append('paralyzed')
+        else:
+            print('There was no effect')
+    else:
+        print('but it failed!')
+
+def sporeAttack(attacker, defender, computer):
+    damageType = 'grass'
+    damageMod = typeMod(damageType, attacker.typ, defender.typ)
+    if damageMod != 0 and statusCheck(defender):
+        print(defender.name,'fell asleep!')
+        defender.status.append('sleep')
+    else:
+        print('There was no effect')
+
+def doubleSlapAttack(attacker, defender, computer):
+    damageType = 'normal'
+    power = 15
+    hits = [2,2,2,3,3,3,4,5]
+    noHits = choice(hits)
+    if hit(85) == True:
+        damageMod = typeMod(damageType, attacker.typ, defender.typ)
+        for i in range(noHits):
+            print(i,'hits!')
+            input()
+            os.system(clearVar)
+            if computer == True:
+                battleDisplay(defender,attacker)
+            else:
+                battleDisplay(attacker,defender)
+            damageMod = typeMod(damageType, attacker.typ, defender.typ)
+            damageDone = damage(attacker, defender, power, 'attack', 'defense')
+            damageDone*=damageMod
+            defender.damageTaken(round(damageDone))
+
+def confuseRayAttack(attacker, defender, computer):
+    damageType = 'ghost'
+    damageMod = typeMod(damageType, attacker.typ, defender.typ)
+    if damageMod != 0 and 'confusion' not in defender.status:
+        print(defender.name,'became confused!')
+        defender.status.append('confusion')
+    else:
+        print('There was no effect')
+
+def flamethrowerAttack(attacker, defender, computer):
+    damageType = 'fire'
+    power = 90
+    if hit(95) == True:
+        if statusCheck(defender):
+            if randint(1,10) == 5:
+                defender.status.append('burn')
+                print(defender.name,'was burned!')
+        damageMod = typeMod(damageType, attacker.typ, defender.typ)
+        damageDone = damage(attacker, defender, power, 'sp.attack','sp.defense')
+        damageDone *= damageMod
+        defender.damageTaken(round(damageDone))
+    else:
+        print('but it missed!')
+
+def poundAttack(attacker, defender, computer):
+    damageType = 'normal'
+    power = 40
+    if hit(95) == True: #95% hit rate
+        damageMod = typeMod(damageType, attacker.typ, defender.typ)
+        damageDone = damage(attacker, defender, power, 'attack', 'defense')
+        damageDone *= damageMod
+        defender.damageTaken(round(damageDone))
+    else:
+        print('but it missed!')
+
+def restAttack(attacker,defender,computer):
+    attacker.HP = attacker.maxHP
+    attacker.status = []
+    attacker.status.append('sleep')
+    print(attacker.name,'fell asleep!')
+
+def leechLifeAttack(attacker, defender, computer):
+    damageType = 'bug'
+    power = 20
+    if hit(95) == True: #95% hit rate
+        damageMod = typeMod(damageType, attacker.typ, defender.typ)
+        damageDone = damage(attacker, defender, power, 'attack', 'defense')
+        damageDone *= damageMod
+        defender.damageTaken(round(damageDone))
+        attacker.heal(round(damageDone*.5))
+        if computer == True:
+            battleDisplay(defender, attacker)
+        else:
+            battleDisplay(attacker, defender)
+        print(attacker.name,'absorbed health from',defender.name)
+    else:
+        print('but it missed!')
+
+def supersonicAttack(attacker, defender, computer):
+    damageType = 'ghost'
+    damageMod = typeMod(damageType, attacker.typ, defender.typ)
+    if hit(55):
+        if damageMod != 0 and 'confusion' not in defender.status:
+            print(defender.name,'became confused!')
+            defender.status.append('confusion')
+        else:
+            print('There was no effect')
+    else:
+        print('but it failed!')
+
+def absorbAttack(attacker, defender, computer):
+    damageType = 'grass'
+    power = 20
+    if hit(95) == True: #95% hit rate
+        damageMod = typeMod(damageType, attacker.typ, defender.typ)
+        damageDone = damage(attacker, defender, power, 'sp.attack', 'sp.defense')
+        damageDone *= damageMod
+        defender.damageTaken(round(damageDone))
+        attacker.heal(round(damageDone*.65))
+        if computer == True:
+            battleDisplay(defender, attacker)
+        else:
+            battleDisplay(attacker, defender)
+        print(attacker.name,'absorbed health from',defender.name)
+    else:
+        print('but it missed!')
+
+def growthAttack(attacker, defender, computer):
+    attacker.statChange('attack', True)
+    attacker.statChange('sp.attack', True)
+
+def psybeamAttack(attacker, defender, computer):
+    damageType = 'psychic'
+    power = 65
+    if hit(95) == True:
+        if 'confusion' not in defender.status:
+            if randint(1,10) == 5:
+                defender.status.append('confusion')
+                print(defender.name,'became confused!')
+        damageMod = typeMod(damageType, attacker.typ, defender.typ)
+        damageDone = damage(attacker, defender, power, 'sp.attack','sp.defense')
+        damageDone *= damageMod
+        defender.damageTaken(round(damageDone))
+    else:
+        print('but it missed!')
+
+def psychicAttack(attacker, defender, computer):
+    damageType = 'psychic'
+    power = 90
+    if hit(95) == True:
+        if randint(1,3) == 3:
+            defender.statChange('sp.attack', False)
+            defender.statChange('sp.defense', False)
+        damageMod = typeMod(damageType, attacker.typ, defender.typ)
+        damageDone = damage(attacker, defender, power, 'sp.attack','sp.defense')
+        damageDone *= damageMod
+        defender.damageTaken(round(damageDone))
+    else:
+        print('but it missed!')
+        
         
 class move:
     def __init__(self, name, priority, duration, technique):
@@ -614,6 +813,27 @@ slash = move('slash',0,0,slashAttack)
 bodySlam = move('body slam',0,0,bodySlamAttack)
 growl = move('growl',0,0,growlAttack)
 bide = move('bide',0,0,bideAttack)
+sleepPowder = move('sleep powder',0,0,sleepPowderAttack)
+sing = move('sing',0,0,singAttack)
+poisonPowder = move('poison powder',0,0,poisonPowderAttack)
+stunSpore = move('stun spore',0,0,stunSporeAttack)
+spore = move('spore',0,0,sporeAttack)
+doubleSlap = move('double slap',0,0,doubleSlapAttack)
+confuseRay = move('confuse ray',0,0,confuseRayAttack)
+flamethrower = move('flamethrower',0,0,flamethrowerAttack)
+pound = move('pound', 0,0,poundAttack)
+rest = move('rest', 0,0, restAttack)
+leechLife = move('leech life',0,0,leechLifeAttack)
+supersonic = move('supersonic',0,0,supersonicAttack)
+absorb = move('absorb',0,0,absorbAttack)
+growth = move('growth',0,0,growthAttack)
+psybeam = move('psybeam',0,0,psybeamAttack)
+psychic = move('psychic',0,0,psychicAttack)
+
+
+
+
+
 
 
 

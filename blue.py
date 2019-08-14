@@ -154,26 +154,137 @@ def route29south(player):
 def viridianCity(player):
     while True:
         os.system(clearVar)
-        print('you find yourself in Viridian City. There is a Pokecenter here, as well as a Pokemart.')
-        print('To the north there is a road that leads in to the Viridian Forest. Then off to the side of town you see the local Pokemon Gym!')#LEFT OFF HERE
-        action = menuSelect('Where would your like to go?',['Pokecenter','Pokemart','Into the Viridian Forest','Pokemon Gym','Head back on Route 29 toward Pallet Town','Menu'])
+        print('you find yourself in Viridian City. There is a Pokecenter here, as well as a Pokemart. Off to the side of town you see the local Pokemon Gym!')
+        print('To the north there is a road that leads in to the Viridian Forest. There is also a path that heads of to the west.')
+        action = menuSelect('Where would your like to go?',['Pokecenter','Pokemart','Pokemon Gym','Into the Viridian Forest','Path to the west','Head back on Route 29 toward Pallet Town','Menu'])
         if action == 1:
             gameState.lastPokecenter = 'viridianCity'
             pokeCenter(player)
         elif action == 2:
             itemShop(player)
-        elif action == 4:
+        elif action == 3:
             print('As you approach the gym you notice that something feels off, the building looks like it hasn\'t been maintained in quite sometime')
             input()
             print('Old Man: "Looking at the old Pokemon Gym eh? Nobody has been there in quite some time,')
             print("the old gym leader left years ago, just an abandoned old building now")
             input()
-        elif action == 3:
+        elif action == 4:
             return 'viridianArea1'
         elif action == 5:
+            return 'victoryRoadApproachWest'
+        elif action == 6:
             return 'route29south'
         else:
             menu(player)
+
+def victoryRoadApproachWest(player): #LEFT OFF HERE
+    while True:
+        os.system(clearVar)
+        print('You start to head down the path, before long you come across a patch of tall grass.')
+        print('It seems like you might encounter a few wild pokemon if you try to pass through')
+        action = menuSelect('Where would your like to go?',['Continue through the grass','Go back','Menu'])
+        if action == 1:
+            passed = approachWild(player, 3)
+            if passed == False:
+                return gameState.lastPokecenter
+            else:
+                print('Phew, you made it through')
+                action1 = menuSelect('What would you like to do?',['Continue on the path','Head back to Viridian City (go back through the grass)','Menu'])
+                if action1 == 1:
+                    return 'victoryRoadApproach'
+                elif action1 == 2:
+                    passed = approachWild(player, 3)
+                    if passed == False:
+                        return gameState.lastPokecenter
+                    else:
+                        return 'viridianCity'
+                else:
+                    menu(player)
+        elif action == 2:
+            return 'viridianCity'
+        else:
+            menu(player)
+
+def victoryRoadApproach(player): #LEFT OFF HERE
+    while True:
+        os.system(clearVar)
+        if 'victoryRoad' in gameState.trainers.rival.gary.itemList:
+            print('Ahead you see someone approaching you...')
+            input()
+            print('it\'s Gary!')
+            input()
+            print('Gary: "Trying to go to the Pokemon League, eh? Don\'t bother, the guard won\'t let you through,')
+            print('"you probably don\'t even have any badges yet. Hey! let\'s see how much your pokemon have grown!"')
+            garyPidgey = pokemonGenerator(pokedex.pidgey, 9, [gust, tackle, tailWhip])
+            garyStarter = gameState.trainers.rival.gary.pokeList[0]
+            garyStarter.addLevel(4)
+            gameState.trainers.rival.gary.partyHeal()
+            gameState.trainers.rival.gary.pokeList.append(garyPidgey)
+            won = trainerEncounter(player, gameState.trainers.rival.gary, 'I bet you haven\'t even caught any new pokemon!','What?! I need to find better pokemon')
+            gameState.trainers.rival.gary.itemList.remove('victoryRoad')
+            if won == False:
+                print('"I knew it, you don\'t have what it takes. Whatever, smell ya later',player.name+'!"')
+                input()
+            else:
+                print('"Well at least you\'ve been training, but it\'s gonna take a lot more than that if you ever want to challenge the pokemon league!"')
+                print('"Smell ya later',player.name+'!')
+                input()
+            player.partyHeal()
+
+        print('When you get to the gate you encounter a guard..')
+        input()
+        print('Guard: "Halt! I can only let you pass if you have all 8 pokemon badges from this region')
+        action = menuSelect('What do you do?',['Show him you badges','Go back','Menu'])
+        if action == 1:
+            if 'Earth Badge' in player.badges:
+                print('Guard: "Very well, you may pass')
+                input()
+                return 'victoryRoadArea1'
+            else:
+                print('Guard: Sorry, without all the badges I can\'t let you pass')
+                input()
+        elif action == 2:
+            print('You decide to head to Viridian City, you\'ll need to pass through to tall grass to get there...')
+            input()
+            passed = approachWild(player, 3)
+            if passed == False:
+                return gameState.lastPokecenter
+            else:
+                return 'viridianCity'
+        else:
+            menu(player)
+
+def approachWild(player, patches):
+    wild = trainer('Wild', [], {}, 10)
+    nidoranF1 = pokemonGenerator(pokedex.nidoranF,3,[tackle, leer])
+    nidoranF2 = pokemonGenerator(pokedex.nidoranF,3,[tackle, leer])
+    nidoranF3 = pokemonGenerator(pokedex.nidoranF,4,[scratch, leer])
+    ratata1 = pokemonGenerator(pokedex.ratata,3,[tackle, tailWhip])
+    ratata2 = pokemonGenerator(pokedex.ratata,3,[tackle, tailWhip])
+    ratata3 = pokemonGenerator(pokedex.ratata,3,[tackle, tailWhip])
+    nidoranM1 = pokemonGenerator(pokedex.nidoranM,4,[scratch, leer])
+    pidgey1 = pokemonGenerator(pokedex.pidgey,3,[tackle, gust])
+    encounters = [nidoranF1, nidoranF2, nidoranF3, ratata1, ratata2, ratata3, nidoranM1, pidgey1]
+    chance = [True, False]
+    i = 1
+    for patch in range(1,patches+1):
+        if choice(chance):
+            print ('You hear a rustle in patch',i,'a wild pokemon appears!')
+            i+=1
+            input()
+            wildPoke = choice(encounters)
+            wild.pokeList.append(wildPoke)
+            os.system(clearVar)
+            won = battle(player, wild)
+            if won == False:
+                return False
+            wild.pokeList.remove(wildPoke)
+            encounters.remove(wildPoke)
+            input()
+        else:
+            print('No pokemon this time!')
+            input()
+    return True
         
 def palletTown(player):
     while True:
@@ -217,7 +328,8 @@ def lab(player, pokeGot = True):
         os.system(clearVar)
         print('Professor Oak: "Now now Gary, you\'ll get your turn, now which pokemon would you like',player.name+'?"')
         
-        gary = trainer('Gary',[],{},10)
+        gary = gameState.trainers.rival.gary
+        gary.money += 500
         squirtle = pokemonGenerator(pokedex.squirtle, 5, [tackle,tailWhip], 1.5)
         charmander = pokemonGenerator(pokedex.charmander, 5, [scratch,tailWhip], 1.5)
         bulbasaur = pokemonGenerator(pokedex.bulbasaur,5,[tackle,leer], 1.5)
@@ -617,8 +729,15 @@ main game area
 """
 
 modules = {'bedroom':bedroom, 'momsHouse':momsHouse, 'lab':lab, 'garysHouse':garysHouse, 'route29north':route29north, 'palletTown':palletTown, 'viridianCity':viridianCity,\
-            'route29south':route29south, 'viridianArea1':viridianArea1, 'viridianArea2north':viridianArea2north, 'viridianArea2south':viridianArea2south, 'viridianArea3':viridianArea3,\
+            'route29south':route29south, 'victoryRoadApproachWest':victoryRoadApproachWest,'victoryRoadApproach':victoryRoadApproach, 'viridianArea1':viridianArea1, 'viridianArea2north':viridianArea2north, 'viridianArea2south':viridianArea2south, 'viridianArea3':viridianArea3,\
            'viridianArea4north':viridianArea4north,'viridianArea4south':viridianArea4south, 'pewterCity':pewterCity, 'rockGym':rockGym}
 
-print(battle(ash, gary, False))
-#print(main(bedroom,modules)) #runs the game
+#print(battle(ash, gary, False))
+try:
+    print(main(bedroom,modules)) #runs the game
+except Exception as e:
+    print()
+    print('ERROR, take a screenshot before hitting enter!')
+    print('Error on line {}'.format(sys.exc_info()[-1].tb_lineno), type(e).__name__, e)
+    for i in range(5):
+        input()
