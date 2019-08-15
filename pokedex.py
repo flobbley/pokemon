@@ -161,6 +161,9 @@ class pokemon:
         self.stats['sp.defense'] = round(5+self.level*self.statMods[4])
         self.stats['speed'] = round(5+self.level*self.statMods[5])
         self.tempStats = self.stats
+        self.pokedexSprite = newPoke.pokedexSprite
+        self.frontSprite = newPoke.frontSprite
+        self.backSprite = newPoke.backSprite
         for i in range(self.level-1):
             self.needXP = round(self.needXP*self.XPmod)
         
@@ -1486,7 +1489,7 @@ j        `""'"---'             '"'""       ._    , _.--".
 _.-'                  ."\        | |    ._   ,'         / .'
  `""'---...._        /D  |       | |      ""' .     __  `--.
        / |  ,      ,`  `-|       ` |  /`    ,'    /"  \     `.
-      .  `_/      /  `-..|         |  .'   /      `.  |       \
+      .  `_/      /  `-..|         |  .'   /      `.  |       \\
       `          '-......'         |      .         `-'        L
        \                          ,'     j                     |
         `                      _.'       |                    .-.

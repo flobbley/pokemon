@@ -119,6 +119,9 @@ def route29(player):
             wild.pokeList.remove(wildPoke)
             encounters.remove(wildPoke)
             input()
+        else:
+            print('No pokemon this time!')
+            input()
     return True
     
 def route29north(player):
@@ -206,33 +209,34 @@ def victoryRoadApproachWest(player): #LEFT OFF HERE
             menu(player)
 
 def victoryRoadApproach(player): #LEFT OFF HERE
+    os.system(clearVar)
+    if 'victoryRoad' in gameState.trainers.rival.gary.itemList:
+        print('Ahead you see someone approaching you...')
+        input()
+        print('it\'s Gary!')
+        input()
+        print('Gary: "Trying to go to the Pokemon League, eh? Don\'t bother, the guard won\'t let you through,')
+        print('"you probably don\'t even have any badges yet. Hey! let\'s see how much your pokemon have grown!"')
+        garyPidgey = pokemonGenerator(pokedex.pidgey, 9, [gust, tackle, tailWhip])
+        garyStarter = gameState.trainers.rival.gary.pokeList[0]
+        garyStarter.addLevel(4)
+        gameState.trainers.rival.gary.partyHeal()
+        gameState.trainers.rival.gary.pokeList.append(garyPidgey)
+        won = trainerEncounter(player, gameState.trainers.rival.gary, 'I bet you haven\'t even caught any new pokemon!','What?! I need to find better pokemon')
+        gameState.trainers.rival.gary.itemList.remove('victoryRoad')
+        if won == False:
+            print('"I knew it, you don\'t have what it takes. Whatever, smell ya later',player.name+'!"')
+            input()
+        else:
+            os.system(clearVar)
+            print('"Well at least you\'ve been training, but it\'s gonna take a lot more than that if you ever want to challenge the pokemon league!"')
+            print('"Smell ya later',player.name+'!')
+            input()
+        player.partyHeal()
+    print('When you get to the gate you encounter a guard..')
+    input()
     while True:
         os.system(clearVar)
-        if 'victoryRoad' in gameState.trainers.rival.gary.itemList:
-            print('Ahead you see someone approaching you...')
-            input()
-            print('it\'s Gary!')
-            input()
-            print('Gary: "Trying to go to the Pokemon League, eh? Don\'t bother, the guard won\'t let you through,')
-            print('"you probably don\'t even have any badges yet. Hey! let\'s see how much your pokemon have grown!"')
-            garyPidgey = pokemonGenerator(pokedex.pidgey, 9, [gust, tackle, tailWhip])
-            garyStarter = gameState.trainers.rival.gary.pokeList[0]
-            garyStarter.addLevel(4)
-            gameState.trainers.rival.gary.partyHeal()
-            gameState.trainers.rival.gary.pokeList.append(garyPidgey)
-            won = trainerEncounter(player, gameState.trainers.rival.gary, 'I bet you haven\'t even caught any new pokemon!','What?! I need to find better pokemon')
-            gameState.trainers.rival.gary.itemList.remove('victoryRoad')
-            if won == False:
-                print('"I knew it, you don\'t have what it takes. Whatever, smell ya later',player.name+'!"')
-                input()
-            else:
-                print('"Well at least you\'ve been training, but it\'s gonna take a lot more than that if you ever want to challenge the pokemon league!"')
-                print('"Smell ya later',player.name+'!')
-                input()
-            player.partyHeal()
-
-        print('When you get to the gate you encounter a guard..')
-        input()
         print('Guard: "Halt! I can only let you pass if you have all 8 pokemon badges from this region')
         action = menuSelect('What do you do?',['Show him you badges','Go back','Menu'])
         if action == 1:
@@ -667,8 +671,9 @@ def pewterCity(player):
     while True:
         os.system(clearVar)
         print('Pewter City! home to Brock\'s famous Rock Type Gym. If you think you\'re strong enough, maybe you can challenge him!')
-        print('To the south there is a road that leads in to the Viridian Forest.')
-        action = menuSelect('Where would your like to go?',['Pokecenter','Pokemart','Pokemon Gym','Into the Viridian Forest','Menu'])
+        print('In this town there is a Pokecenter, a Pokemart, and a Museum!')
+        print('To the south there is a road that leads in to the Viridian Forest, and to the east there is a path that leads to Mt. Moon.')
+        action = menuSelect('Where would you like to go?',['Pokecenter','Pokemart','Pokemon Gym','Museum','Toward Mt.Moon','Into the Viridian Forest','Menu'])
         if action == 1:
             gameState.lastPokecenter = 'pewterCity'
             pokeCenter(player)
@@ -677,15 +682,180 @@ def pewterCity(player):
         elif action == 3:
             return 'rockGym'
         elif action == 4:
+            return 'museumFirst'
+        elif action == 5:
+            if 'Boulder Badge' not in player.badges:
+                print('You are stopped by a trainer at the start of the path...')
+                input()
+                print('Trainer: "Hold up there, pal. I can\'t help but notice you don\'t have a Boulder Badge,')
+                print('"The path up ahead is dangerous, I can\'t let you go on unless I see you can handle yourself"')
+                input()
+                print('Trainer: "Go get the Boulder Badge from Brock and I\'ll let you through"')
+                input()
+            else:
+                return 'MTMoonEast'
+        elif action == 6:
             return 'viridianArea4south'
         else:
             menu(player)
 
-def rockGym(player):
+def museumFirst(player):
+    print('You walk into the museum. At the entrance there is a ticket booth.')
+    action1 = menuSelect('Employee: "Hello there! Would you like to enter the museum? it\'s $50 for a childs ticket"', ['Yes','Maybe Later'])
+    if action1 == 1:
+        testMoney = player.money - 50
+        if testMoney <0:
+            print('You don\'t have enough money! You\'ll have to come back another time')
+            input()
+            return 'pewterCity'
+        else:
+            player.money -= 50
+    else:
+        print('You decide to come back another time')
+        input()
+        return 'pewterCity'
     while True:
         os.system(clearVar)
-        print('You enter the Rock Gym, it\'s dark, you can hardly see a thing.')
-        input()
+        print('The museum sure is big! on this level you see exhibits of moon rocks and a spaceship.')
+        print('There is also a staircase that leads up to the second floor.')
+        action = menuSelect('What would you like to do?',['Check out the moon rocks','Check out the spaceship','Go upstairs','Leave','Menu'])
+        if action == 1:
+            print('These stones were brought back by the astronauts when they went to the moon!')
+            print('Some pokemon will evolve if you bring a moon stone close to them')
+            input()
+        elif action == 2:
+            print('it\'s a model the space shuttle Endeavor! it\'s not in service anymore..')
+            input()
+        elif action == 3:
+            while True:
+                os.system(clearVar)
+                print('upstairs you see two fossil exhibits, and a man looking into one of the cases')
+                action2 = menuSelect('What would you like to do?',['Look at the first exhibit','Look at the second exhibit','Talk to the man','Go downstairs','Menu'])
+                if action2 == 1:
+                    print('It\'s a fossil of Omanyte, an extinct pokemon!')
+                    print('There\'s an artists recreation of what they think it looked like')
+                    input()
+                    print("""                                                                                                    
+                                                                    `.:+oyhhhhhhhhhhyyso+:.                 
+                                                               .:oyhyo+/-.``         ``.:/oyy+-             
+                                                           `:oys+:.                         `:sho`          
+                                                        `/ss/.`                                `/h/         
+                                                      -ss/``..----------.....``                  `oy.       
+                                                    :yy::---.`````````.-----:://///::-`            :h.      
+                                                  -yo-`                            ```-:::.         :d.     
+                                                `os.                                     `-/-        +h     
+                                               .y/                                          ./.       y+    
+                                              :y.    `......```                               /-      .m`   
+                                              +y---:::---...-------------..`                    +.      d+   
+                                            os:``                     ````.-----..`            `s     .od   
+                                          oo`                                 ```.--..         o     /.N.  
+                                         +s`                                        ``:-.      +   `:` m-  
+                                        :y`                                            `.:.  `-+----`  d:  
+                                        .h.                                                -/--`  +`    d:  
+                                      `y/       ````````                                  `+`    :`    m-  
+                                       +s`..-::--...........--------.....`                `:`     -.    m`  
+                                      `d/.``                        `````.----...        ./       .- `./m   
+                                      ++                                      ``.-:-.   `/        ./..`/h   
+                                     `h`                                           `.:-`+`   -:-  ..   so   
+                                     /+                                               `o-   .. /  :`   d/   
+                                     h`                                               .+   .-  /  /   `m.   
+                                   -s     ```.....`````                              +`   :   /  +```+h    
+                                   o:.-----.....``....------.......``               -/   :`   / `/```d/    
+                                 `d:.`                      `````...------...`     +`   : `.:` /`  -d`    
+                           `.-:/o:++                                       ``..-:.` s    : `:. ./`  so     
+                        .:++/:-oo`d.                                             .--s   `:    `:.-:-m`     
+                      -oo:`   /s`+o                                                -s    /   .:   `ho      
+                    .oo.     .h`+o`                                                `y    --.::`   -h`      
+                  :y-       y:oo`                                                  h`    /::`.- .h-       
+                  /y.       `ds/    .-:+//::::-.`              ..-:::::/-..`        o+   :` /  `:y+        
+                 :h`        `m/   -+/o+-`.-::-..--`         `:+:-.```.-/oo-:/-`     `h.`-`  /  `ho         
+                 `h-          y   +/`/. .sdNNmN+/..+`      ./y/  .+syy+:` /o``-+-     -y.    : `yo          
+                :h           :/ `h ./ `hNNmmmNddy :s-```./::o  +mmmNNyhh` /+   :/`    -o`  -..y/           
+                +y            //`y::- .mNNNNmmmms //.-::-` o. -mNmmmNNmm-  y    `+.    .o.`:/s-            
+                :d             -+oy++``ymmmmmmmh.`o`       o` .mmNNNNmmm`  s    `-+.    `syo/              
+                  h/              .-.`/:.:+oss+:.-:`        ::  +dmmNNmh:  :-     --+     `y+               
+                 .h+`                 `---.----.`           /-` .:///-` ./:       /s.     -m`              
+                  .os-`                                      .::-````.:/:`         ++     .N`              
+                    `/o/.`                                      `.----.             :+`   oy               
+                    `.os--.`                                                        `//`+y`               
+                 `-/++/.    `-`                                     :             .`   .+h:`               
+                  :y/-....-:/.       .      .                       :.             .:     `:++-``           
+                    .-:/oy+.       .-`     .:         .        `.  ::              +//.      `:+so-`        
+                     .so:`    ``.-/.      ./         .y.        .//-              +: `:/-`       .+s+`      
+                    `:/://:/+sho-       :/        .+o-s-   ``-/o/`             `o/     .:::.`````.:d/      
+                          `yy:`       .+-      `/so. ./hooooo/-              `:h/``       `/dsooo+/-.`     
+                           .+o+++///+yo` `.-:+oo:`   h+.``                `-+o::ddysoo++++oo:.```````      
+                                    sy+++o+:-`       `+o/-`          ``-+syo-```.sy``````                  
+                                                        .:+++++++ossoo+sy:+osssso/`                        
+                                                                 `:/+++:`                                  
+        """ )
+                    input()
+                elif action2 == 2:
+                    print('it\'s a fossil of kabuto, an extinct pokemon!')
+                    print('There\'s an artists recreation of what they think it looked like')
+                    input()
+                    print("""                                                                                                    
+                                               `--:----------------.`                                        
+                                      `-------.`                  -+++::-.                                  
+                                 `-----`                         .:   -:-.:---                              
+                             .:::-                                --.`  `o   `---.                          
+                         `:/o-                                       .---`       `-:-`                      
+                    `:/:``/-                                                      `-:-`                   
+                   -o+..--:`                                                          `:-.                 
+                 :/-`...`                                                                -:.               
+                -/.                                                                         -/`             
+              ./.                                                                           .+::            
+             /:`                  :                                                          :-.:`          
+           `/-                    :`                     .:oyhdyyo/-`                         +` --         
+           `+`        -+ydh+-`      /                 `-odNMMMMMMMMMNmh+.                      `+  ./`      
+          +`      .+hNMMMMMNdo-`   `-.            .:sdNMMMMMMMMMMMMMMMMmy-                     -:  `/`      
+         /.     .sNMMMMMMMMMMMNdy+-.``.      `.:ohmMMMMMMMMMMMMMMMMMMMMMMNy.                    o   `/`     
+         s     /mMMMMMMMMMMMMMMMMMNmmdhysssyhmNMMMMMMNmNNMMMMMMMMMMMMMMMMMMm:                   ::    /`    
+         h    +.dMMMMMMMMMMMmdddmMMMMMMMMMMMMMMMMMms:..../sNMMMMMMMMMMMMMMMMNo`                  :-   `/    
+         s    + yMMMMMMMMNs-`` `./hMMMMMMMMMMMMMMy`        .hMMMMMMMMMMMMMMMMMh:`                 ./.  ./   
+         o    / +MMMMMMMM/        `yMMMMMMMMMMMMm`          .MMMMMMMMMMMMMMMMMMNdo:`                -:` o`  
+         /`   ` .NMMMMMMN          :MMMMMMMMMMMMd           `NMMMMMMMMMMMMMMMMMMMMMmh+:.             `/-.+  
+         `/`     +MMMMMMM/        `yMMMMMMMMMMMMM+         `sMMMMMMMMMMMMMMMMMMMMMMMMMMmy/.`           -/y` 
+          `:-`    sMMMMMMNs-`` `.:hMMMMMMMMMMMMMMMy:.` ``./dMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMNd+.          `:/ 
+            .:-``  sMMMMMMMMmdhdmMMMMMMMMMMMMMMMMMMMNdhddNMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMNs.          s 
+               `.:-`-yNMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMNmhsooosdMMMMMMMMMN/         o 
+                `+/- -hNMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMNs:`      `NMMMNNMMMMMo        +`
+               .+.     -smMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMy.          dd+:--yMMmyy+       o 
+              -+         ./yNMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMd            o`     +d`  .:      o 
+              s             +shNMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM+            :-      +    --    `+ 
+              o            /:.+-/ymNMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM/             +      ./    -`   +` 
+              +`           + ./    -+hmMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMd             o       -+.` :`  ::  
+              `+           `+o`   `   `yoohmNMMMMMMMMMMMMMMMMMMMMMMMMMMMNm:            o        o.-:s``-/   
+               -:         `-::---.-/.-+:`-/:/:so++ooooo++osdhhmNNNNmdhs+-+.           /-      `/`   `..     
+                ./.              `::   ....  .+--.----.----    ````    `+-          `/.      ::             
+                  -:-`         .::`         .+                :/.-------           :/      -/`              
+                     ---::.`.::/:.        `::                 `+-                ::`     -:.                
+                         .--`    `--.------                     -::.          -:-.--.----`                  
+                                                                   .---.------                                  
+        """ )
+                    input()
+                elif action2 == 3:
+                    print('Old Man: "I remember the moon landing. Bought a brand new color TV to watch it on. No one told me it would be in black and white..."')
+                    input()
+                    print('"you know, I heard you can find all kinds of fossils like these in Mt. Moon!')
+                elif action2 == 4:
+                    break
+                else:
+                    menu(player)
+
+        elif action == 4:
+            print('You\'ve seen enough for today')
+            input()
+            return 'pewterCity'
+        else:
+            menu(player)
+
+
+def rockGym(player):
+    print('You enter the Rock Gym, it\'s dark, you can hardly see a thing.')
+    input()
+    while True:
+        os.system(clearVar)
         print('Ahead you see another trainer, they could be looking for a fight, but you could probably sneak past')
         print('past them you can see Brock, he seems to be just waiting for a challenger')
         action = menuSelect('What would you like to do?',['Fight the trainer','Sneak past and go to brock','Leave','Menu'])
@@ -703,6 +873,9 @@ def rockGym(player):
                 return gameState.lastPokecenter
             if 'Boulder Badge' not in player.badges:
                 player.badges.append('Boulder Badge')
+                print('With that, you head back to Pewter City')
+                input()
+                return 'pewterCity'
         elif action == 3:
             return 'pewterCity'
         else:
@@ -730,7 +903,8 @@ main game area
 
 modules = {'bedroom':bedroom, 'momsHouse':momsHouse, 'lab':lab, 'garysHouse':garysHouse, 'route29north':route29north, 'palletTown':palletTown, 'viridianCity':viridianCity,\
             'route29south':route29south, 'victoryRoadApproachWest':victoryRoadApproachWest,'victoryRoadApproach':victoryRoadApproach, 'viridianArea1':viridianArea1, 'viridianArea2north':viridianArea2north, 'viridianArea2south':viridianArea2south, 'viridianArea3':viridianArea3,\
-           'viridianArea4north':viridianArea4north,'viridianArea4south':viridianArea4south, 'pewterCity':pewterCity, 'rockGym':rockGym}
+           'viridianArea4north':viridianArea4north,'viridianArea4south':viridianArea4south, 'pewterCity':pewterCity, 'rockGym':rockGym, 'museumFirst':museumFirst,\
+           }
 
 #print(battle(ash, gary, False))
 try:

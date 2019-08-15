@@ -263,7 +263,7 @@ Pewter City
 diglett1 = pokemonGenerator(pokedex.diglett,11,[scratch, leer],1.5)
 sandshrew1 = pokemonGenerator(pokedex.sandshrew, 11, [scratch, tackle, defenseCurl],1.5)
 geodude1 = pokemonGenerator(pokedex.geodude, 12, [tackle, defenseCurl], 1.5)
-onix1 = pokemonGenerator(pokedex.onix, 14, [tackle, screech, defenseCurl], 1.5)
+onix1 = pokemonGenerator(pokedex.onix, 14, [tackle, screech, bide], 1.5)
 
 class pewterTrainersClass:
     def __init__(self):
