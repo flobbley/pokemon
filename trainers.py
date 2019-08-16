@@ -49,7 +49,14 @@ class trainer:
             self.playerDex[pokemon.pokeNum] = [pokemon.name, pokemon.entry, pokemon.pokedexSprite]
             print(pokemon.entry)
             input()
-            
+
+    def evoCheck(self):
+        for pokemon in self.pokeList:
+            if pokemon.pokeNum not in self.playerDex:
+                print(pokemon.name+'\'s information was added to your pokedex!')
+                self.playerDex[pokemon.pokeNum] = [pokemon.name, pokemon.entry, pokemon.pokedexSprite]
+                print(pokemon.entry)
+                input()
 
     def showPoke(self, currentList): #prints all the pokemon in the roster
         if currentList == 0:
@@ -322,11 +329,11 @@ class MTMoonTrainersClass:
         self.bugCatcherMatt = trainer('Bug Catcher Matt', [weedle1, metapod1, beedrill1], [], 300,\
                                       '"My pokemon are growing fast!"','"I\'ve gotten stung a bunch raising them"')
         self.lassMyriam = trainer('Lass Myriam', [nidoranF2],[],150,\
-                                  '"Do you think it’s comfy inside a Pokeball?"','"I wonder if you could catch a person...')
+                                  '"Do you think it\'s comfy inside a Pokeball?"','"I wonder if you could catch a person...')
         self.youngsterNeil = trainer('Youngster Neil', [ratata2], [], 125,\
                                      '"What games do you like to play?"','"This one kind of sucks, huh?"')
         self.juniorTrainerJane = trainer('Junior Trainer Jane', [spearow3, nidoranM2],[],310,\
-                                         '"Hey, you’re pretty cute. Wanna battle?"','"Until next time, gorgeous"')
+                                         '"Hey, you\'re pretty cute. Wanna battle?"','"Until next time, gorgeous"')
         
 MTMoonTrainers = MTMoonTrainersClass()      
 

@@ -381,6 +381,7 @@ def battle(player, opponent, wild= True):
                         battleDisplay(playerPoke, opponentPoke)
                         print(str(opponent.name)+'\'s', opponentPoke.name, 'fainted!')
                         playerPoke.XPGain(opponentPoke)
+                        player.evoCheck()
                         input()
                         if len(opponentPokesCopy) == 0:
                             won = True
@@ -440,6 +441,7 @@ def battle(player, opponent, wild= True):
                         battleDisplay(playerPoke, opponentPoke)
                         print(str(opponent.name)+'\'s', opponentPoke.name, 'fainted!')
                         playerPoke.XPGain(opponentPoke)
+                        player.evoCheck()
                         input()
                         if len(opponentPokesCopy) == 0:
                             won = True
@@ -486,6 +488,7 @@ def battle(player, opponent, wild= True):
                         battleDisplay(playerPoke, opponentPoke)
                         print(str(opponent.name)+'\'s', opponentPoke.name, 'fainted!')
                         playerPoke.XPGain(opponentPoke)
+                        player.evoCheck()
                         input()
                         if len(opponentPokesCopy) == 0:
                             won = True
@@ -510,6 +513,7 @@ def battle(player, opponent, wild= True):
                         battleDisplay(playerPoke, opponentPoke)
                         print(str(opponent.name)+'\'s', opponentPoke.name, 'fainted!')
                         playerPoke.XPGain(opponentPoke)
+                        player.evoCheck()
                         input()
                         if len(opponentPokesCopy) == 0:
                             won = True
