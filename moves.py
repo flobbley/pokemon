@@ -81,8 +81,8 @@ def battleDisplay(playerPoke, opponentPoke):
     """
     Will display sprites and HP bars
     """
-    print(str(opponentPoke.name),str(opponentPoke.level), 'HP:'+opponentPoke.HPBar(),str(opponentPoke.HP)+'/'+str(opponentPoke.maxHP))
-    print(str(playerPoke.name),str(playerPoke.level), 'HP:'+playerPoke.HPBar(),str(playerPoke.HP)+'/'+str(playerPoke.maxHP))
+    print(opponentPoke.frontSprite,'\n                          ',str(opponentPoke.name),str(opponentPoke.level), 'HP:'+opponentPoke.HPBar(),str(opponentPoke.HP)+'/'+str(opponentPoke.maxHP))
+    print(playerPoke.backSprite,'\n',str(playerPoke.name),str(playerPoke.level), 'HP:'+playerPoke.HPBar(),str(playerPoke.HP)+'/'+str(playerPoke.maxHP))
 
 def hit(percent):
     didHit = randint(1,100)
@@ -92,9 +92,9 @@ def hit(percent):
         return False
 
 def damage(attacker, defender, power, attackStat, defenseStat):
-    a = (2*attacker.level)/5+2
+    a = ((2*attacker.level)/5)+2
     b = power*attacker.tempStats[attackStat]/defender.tempStats[defenseStat]
-    c = a*b/50+2
+    c = (a*b/50)+2
     return c
 
 def statusCheck(target):
@@ -394,7 +394,7 @@ def furySwipesAttack(attacker, defender, computer):
     if hit(85) == True:
         damageMod = typeMod(damageType, attacker.typ, defender.typ)
         for i in range(noHits):
-            print(i,'hits!')
+            print(i+1,'hits!')
             input()
             os.system(clearVar)
             if computer == True:
@@ -454,7 +454,7 @@ def furyAttackAttack(attacker, defender, computer):
     if hit(85) == True:
         damageMod = typeMod(damageType, attacker.typ, defender.typ)
         for i in range(noHits):
-            print(i,'hits!')
+            print(i+1,'hits!')
             input()
             os.system(clearVar)
             if computer == True:
@@ -634,7 +634,7 @@ def doubleSlapAttack(attacker, defender, computer):
     if hit(85) == True:
         damageMod = typeMod(damageType, attacker.typ, defender.typ)
         for i in range(noHits):
-            print(i,'hits!')
+            print(i+1,'hits!')
             input()
             os.system(clearVar)
             if computer == True:

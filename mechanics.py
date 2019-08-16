@@ -84,7 +84,7 @@ def main(startModule, modules):
         gameState.lastPokecenter = 'palletTown'
         os.system(clearVar)
         playerName = input('Welcome to the world of Pokemon! First, What is your name?\n')
-        player = trainer(playerName, [], [], 500) #creates player
+        player = trainer(playerName, [], [], 500,'','') #creates player
         gameState.playerSave = player #adds player to save/load game state
         print('Welcome', player.name+'! your pokemon adventure begins today!')
         input()
@@ -151,7 +151,10 @@ def menu(player):
                 print(player.name, '$'+str(player.money))
                 print(len(player.playerDex),'Pokemon caught')
                 print(player.badges)
-                input()
+                print()
+                newTrainers = input('Type "RESET" to reset trainer list\n')
+                if newTrainers == 'RESET':
+                    gameState.trainers = allTrainers
                 
             elif action == 5:
                 gameState.saveLoad('save')
@@ -553,16 +556,18 @@ def battle(player, opponent, wild= True):
     battleRestore(player)
     return won
 
-def trainerEncounter(player, trainer, phrase1, phrase2):
+def trainerEncounter(player, trainer):
     if len(trainer.pokeList)>0:
-        print(trainer.name+':',phrase1)
+        print(trainer.name+':',trainer.phrase1)
         input()
         won = battle(player, trainer, False)
         if won == True:
             trainer.pokeList = []
-            print(trainer.name+':',phrase2)
+            print(trainer.name+':',trainer.phrase2)
             input()
+        else:
+            trainer.partyHeal()
         return won
     else:
-        print(trainer.name+':',phrase2)
+        print(trainer.name+':',trainer.phrase2)
         input()

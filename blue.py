@@ -180,7 +180,7 @@ def viridianCity(player):
         else:
             menu(player)
 
-def victoryRoadApproachWest(player): #LEFT OFF HERE
+def victoryRoadApproachWest(player):
     while True:
         os.system(clearVar)
         print('You start to head down the path, before long you come across a patch of tall grass.')
@@ -222,7 +222,9 @@ def victoryRoadApproach(player): #LEFT OFF HERE
         garyStarter.addLevel(4)
         gameState.trainers.rival.gary.partyHeal()
         gameState.trainers.rival.gary.pokeList.append(garyPidgey)
-        won = trainerEncounter(player, gameState.trainers.rival.gary, 'I bet you haven\'t even caught any new pokemon!','What?! I need to find better pokemon')
+        gameState.trainers.rival.gary.phrase1 = '"I bet you haven\'t even caught any new pokemon!"'
+        gameState.trainers.rival.gary.phrase2 = '"What?! I need to find better pokemon"'
+        won = trainerEncounter(player, gameState.trainers.rival.gary)
         gameState.trainers.rival.gary.itemList.remove('victoryRoad')
         if won == False:
             print('"I knew it, you don\'t have what it takes. Whatever, smell ya later',player.name+'!"')
@@ -483,7 +485,7 @@ def viridianArea1(player):
         print('to the north you see the path continue into the forest')
         action = menuSelect('What do you want to do?',['Talk to man','Enter the grass','Continue into the forest (AREA 2)','Go back to Veridian City','Menu'])
         if action == 1: 
-            won = trainerEncounter(player,gameState.trainers.viridianTrainers.bugCatcherDoug, "I\'m here to catch all kinds of bugs!","But all I can find are caterpies and weedles")
+            won = trainerEncounter(player,gameState.trainers.viridianTrainers.bugCatcherDoug)
             if won == False:
                 return gameState.lastPokecenter
         elif action == 2:
@@ -514,9 +516,7 @@ def viridianArea2north(player):
             passed = viridianWild(player, 1)
             if passed == False:
                 return gameState.lastPokecenter
-            won = trainerEncounter(player, gameState.trainers.viridianTrainers.youngsterJoey,\
-                                   '"I like shorts, they\'re comfy and easy to wear!"',\
-                                   '"Maybe not the best idea in the forest though..."')
+            won = trainerEncounter(player, gameState.trainers.viridianTrainers.youngsterJoey)
             if won == False:
                 return gameState.lastPokecenter
             else:
@@ -527,9 +527,7 @@ def viridianArea2north(player):
             passed = viridianWild(player, 1)
             if passed == False:
                 return gameState.lastPokecenter
-            won = trainerEncounter(player, gameState.trainers.viridianTrainers.bugCatcherLouis,\
-                                   '"Help! I got lost and can\'t find my way out!"',\
-                                   '"Why did you do that?? How am I supposed to get out now??"')
+            won = trainerEncounter(player, gameState.trainers.viridianTrainers.bugCatcherLouis)
             if won == False:
                 return gameState.lastPokecenter
             else:
@@ -555,9 +553,7 @@ def viridianArea2south(player):
             passed = viridianWild(player, 1)
             if passed == False:
                 return gameState.lastPokecenter
-            won = trainerEncounter(player, gameState.trainers.viridianTrainers.youngsterJoey,\
-                                   '"I like shorts, they\'re comfy and easy to wear!"',\
-                                   '"Maybe not the best idea in the forest though..."')
+            won = trainerEncounter(player, gameState.trainers.viridianTrainers.youngsterJoey)
             if won == False:
                 return gameState.lastPokecenter
             else:
@@ -568,9 +564,7 @@ def viridianArea2south(player):
             passed = viridianWild(player, 1)
             if passed == False:
                 return gameState.lastPokecenter
-            won = trainerEncounter(player, gameState.trainers.viridianTrainers.bugCatcherLouis,\
-                                   '"Help! I got lost and can\'t find my way out!"',\
-                                   '"Why did you do that?? How am I supposed to get out now??"')
+            won = trainerEncounter(player, gameState.trainers.viridianTrainers.bugCatcherLouis)
             if won == False:
                 return gameState.lastPokecenter
             else:
@@ -590,9 +584,7 @@ def viridianArea3(player):
         print('to the south you see the path towards Virdian City, to the north you see the path toward Pewter City')
         action = menuSelect('What would you like to do?',['Talk to the girl','Go into the opening','Go down the south path','Go down the north path','Menu'])
         if action == 1:
-            won = trainerEncounter(player, gameState.trainers.viridianTrainers.youngsterLiz,\
-                                   '"I\'m itching for a fight! I\'ve put together a diverse team that can\'t lose!"',\
-                                   '"hmm, maybe I\'ll need something better than pidgeys and ratatas..."')
+            won = trainerEncounter(player, gameState.trainers.viridianTrainers.youngsterLiz)
             if won == False:
                 return gameState.lastPokecenter
         elif action == 2:
@@ -622,9 +614,7 @@ def viridianArea4north(player):
             passed = viridianWild(player, 1)
             if passed == False:
                 return gameState.lastPokecenter
-            won = trainerEncounter(player, gameState.trainers.viridianTrainers.bugCatcherKim,\
-                                   '"Where do you think yer going pip squeak?"',\
-                                   '"Eek! my bugs!"')
+            won = trainerEncounter(player, gameState.trainers.viridianTrainers.bugCatcherKim)
             if won == False:
                 return gameState.lastPokecenter
             passed = viridianWild(player, 2)
@@ -648,9 +638,7 @@ def viridianArea4south(player):
             passed = viridianWild(player, 1)
             if passed == False:
                 return gameState.lastPokecenter
-            won = trainerEncounter(player, gameState.trainers.viridianTrainers.bugCatcherKim,\
-                                   '"Where do you think yer going pip squeak?"',\
-                                   '"Eek! my bugs!"')
+            won = trainerEncounter(player, gameState.trainers.viridianTrainers.bugCatcherKim)
             if won == False:
                 return gameState.lastPokecenter
             passed = viridianWild(player, 2)
@@ -693,7 +681,7 @@ def pewterCity(player):
                 print('Trainer: "Go get the Boulder Badge from Brock and I\'ll let you through"')
                 input()
             else:
-                return 'MTMoonEast'
+                return 'MTMoon1east'
         elif action == 6:
             return 'viridianArea4south'
         else:
@@ -838,6 +826,7 @@ def museumFirst(player):
                     print('Old Man: "I remember the moon landing. Bought a brand new color TV to watch it on. No one told me it would be in black and white..."')
                     input()
                     print('"you know, I heard you can find all kinds of fossils like these in Mt. Moon!')
+                    input()
                 elif action2 == 4:
                     break
                 else:
@@ -860,15 +849,11 @@ def rockGym(player):
         print('past them you can see Brock, he seems to be just waiting for a challenger')
         action = menuSelect('What would you like to do?',['Fight the trainer','Sneak past and go to brock','Leave','Menu'])
         if action == 1:
-            won = trainerEncounter(player, gameState.trainers.pewterTrainers.juniorTrainerRodney,\
-                                   '"Did you come to challenge Brock? don\'t bother! I\'ll make short work of you"',\
-                                   '"Still, you\'re no match for brock"')
+            won = trainerEncounter(player, gameState.trainers.pewterTrainers.juniorTrainerRodney)
             if won == False:
                 return gameState.lastPokecenter
         elif action == 2:
-            won = trainerEncounter(player, gameState.trainers.pewterTrainers.brock,\
-                                   '"So you want to learn about rock type pokemon eh? Our superior defense will grind you down!"',\
-                                   '"Well done! it\'s not often that I\'m beaten. Now I present you with the Boulder Badge!"')
+            won = trainerEncounter(player, gameState.trainers.pewterTrainers.brock)
             if won == False:
                 return gameState.lastPokecenter
             if 'Boulder Badge' not in player.badges:
@@ -881,6 +866,54 @@ def rockGym(player):
         else:
             menu(player)
 
+"""
+Mt. Moon
+"""
+
+def MTMoon1east(player):
+    JTEleanor = gameState.trainers.MTMoonTrainers.juniorTrainerEleanor
+    JTTim = gameState.trainers.MTMoonTrainers.juniorTrainerTim
+    JTJane = gameState.trainers.MTMoonTrainers.juniorTrainerJane
+    lassBetty = gameState.trainers.MTMoonTrainers.lassBetty
+    lassMyriam = gameState.trainers.MTMoonTrainers.lassMyriam
+    youngsterJim = gameState.trainers.MTMoonTrainers.youngsterJim
+    youngsterNeil = gameState.trainers.MTMoonTrainers.youngsterNeil
+    BCMatt = gameState.trainers.MTMoonTrainers.bugCatcherMatt
+    trainers = [JTEleanor, lassBetty, youngsterJim, BCMatt]
+    while True:
+        os.system(clearVar)
+        print('You look out on the start of the path from Pewter City to Mt. Moon')
+        print('It looks like there are lots of trainers making their way towards the mountain, some are probably looking to battle')
+        print('You could try to avoid them, or you could search them out on your way to the mountain')
+        action = menuSelect('What would you like to do?',['Try to avoid them','Search them out','Go back to Pewter city','Menu'])    
+        if action == 1 or action == 2:
+            print('You start making your way out onto the path...')
+            input()
+            if action == 1:
+                avoid = [0,1,1,2,2]
+            elif action == 2:
+                avoid = [1,2,2,3,3]
+            encounters = choice(avoid)
+            for i in range(encounters):
+                os.system(clearVar)
+                opponent = choice(trainers)
+                print('But a trainer spotted you!')
+                print('It\'s', opponent.name+'!')
+                won = trainerEncounter(player, opponent)
+                if won == False:
+                    return gameState.lastPokecenter
+                trainers.remove(opponent)
+                goBack = menuSelect('Phew, would you like to keep going or turn back to Pewter city?',['Keep going','Turn back'])
+                if goBack == 2:
+                    return 'pewterCity'
+            print('You made it through the first part of the path!')
+            input()
+            return 'MTMoon2east'
+        elif action == 3:
+            return 'pewterCity'
+        else:
+            menu(player)
+    
 ashPidgey = pokemonGenerator(pokedex.pidgey, 4, [tackle, gust])
 garyPidgey = pokemonGenerator(pokedex.pidgey,4,[tackle, gust])
 ashBulbasaur = pokemonGenerator(pokedex.bulbasaur,30,[tackle,bide,thunderWave])
@@ -894,8 +927,8 @@ ashPikachu = pokemonGenerator(pokedex.pikachu, 7, [thundershock])
 ashBulbasaur.status.append('sleep')
 garyCharmander.status.append('confusion')
 
-ash = trainer('ash', [ashBulbasaur], [['Pokeball',5],['Potion',5]], 500)
-gary = trainer('gary', [garyCharmander], [], 10)
+ash = trainer('ash', [ashBulbasaur], [['Pokeball',5],['Potion',5]], 500,'','')
+gary = trainer('gary', [garyCharmander], [], 10,'','')
 
 """
 main game area
@@ -904,7 +937,7 @@ main game area
 modules = {'bedroom':bedroom, 'momsHouse':momsHouse, 'lab':lab, 'garysHouse':garysHouse, 'route29north':route29north, 'palletTown':palletTown, 'viridianCity':viridianCity,\
             'route29south':route29south, 'victoryRoadApproachWest':victoryRoadApproachWest,'victoryRoadApproach':victoryRoadApproach, 'viridianArea1':viridianArea1, 'viridianArea2north':viridianArea2north, 'viridianArea2south':viridianArea2south, 'viridianArea3':viridianArea3,\
            'viridianArea4north':viridianArea4north,'viridianArea4south':viridianArea4south, 'pewterCity':pewterCity, 'rockGym':rockGym, 'museumFirst':museumFirst,\
-           }
+           'MTMoon1east':MTMoon1east}
 
 #print(battle(ash, gary, False))
 try:

@@ -1,24 +1,11 @@
 from pokedex import *
 from moves import *
 
-
-def menuSelect(ask, options):
-    while True:
-        print(ask)
-        i = 1
-        for option in options:
-            print(str(i)+'.',option)
-            i+=1
-        action = input()
-        if menuValid(action, len(options)):
-            action = int(action)
-            return action
-
 class trainer:
     """
     creates a pokemon trainer
     """
-    def __init__(self,name,pokeList, itemList, money, phrase1, phrase2): #gives the trainer a name and a list of pokemon
+    def __init__(self,name,pokeList, itemList, money): #gives the trainer a name and a list of pokemon
         self.name = name
         self.pokeList = pokeList
         self.itemList = itemList
@@ -26,8 +13,6 @@ class trainer:
         self.playerDex = {}
         self.badges = []
         self.boxList = []
-        self.phrase1 = phrase1
-        self.phrase2 = phrase2
 
     def getName(self): #gets the name of the trainer
         print(self.name)
@@ -224,9 +209,6 @@ class trainer:
                         self.boxList.remove(self.boxList[withdraw-1])
             else:
                 break
-"""
-viridian Forest
-"""
 
 caterpie1 = pokemonGenerator(pokedex.caterpie,3,[tackle,stringShot],1.5)
 weedle1 = pokemonGenerator(pokedex.weedle,3,[poisonSting, stringShot],1.5)
@@ -249,105 +231,22 @@ ratata3 = pokemonGenerator(pokedex.ratata,5,[quickAttack, tailWhip],1.5)
 
 class viridianTrainersClass:
     def __init__(self):
-        self.bugCatcherDoug = trainer('Bug Catcher Doug',[caterpie1, weedle1, kakuna1],[],275,\
-                                      "I\'m here to catch all kinds of bugs!","But all I can find are caterpies and weedles")
-        self.bugCatcherLouis = trainer('Bug Catcher Louis',[metapod1, metapod2, metapod3],[],300,\
-                                       '"Help! I got lost and can\'t find my way out!"','"Why did you do that?? How am I supposed to get out now??"')
-        self.youngsterJoey = trainer('Youngster Joey',[ratata2, ratata1],[],150,\
-                                     '"I like shorts, they\'re comfy and easy to wear!"','"Maybe not the best idea in the forest though..."')
-        self.bugCatcherKim = trainer('Bug Trainer Kim',[weedle2, weedle3, weedle4],[],250,\
-                                     '"Where do you think yer going pip squeak?"','"Eek! my bugs!"')
-        self.youngsterLiz = trainer('Youngster Liz', [caterpie2, pidgey1, weedle5, ratata3],[],400,\
-                                    '"I\'m itching for a fight! I\'ve put together a diverse team that can\'t lose!"','"hmm, maybe I\'ll need something better than pidgeys and ratatas..."')
+        self.bugCatcherDoug = trainer('Bug Catcher Doug',[caterpie1, weedle1, kakuna1],[],275)
+        self.bugCatcherLouis = trainer('Bug Catcher Louis',[metapod1, metapod2, metapod3],[],300)
+        self.youngsterJoey = trainer('Youngster Joey',[ratata2, ratata1],[],150)
+        self.bugCatcherKim = trainer('Bug Trainer Kim',[weedle2, weedle3, weedle4],[],250)
+        self.youngsterLiz = trainer('Youngster Liz', [caterpie2, pidgey1, weedle5, ratata3],[],400)
 
 viridianTrainers = viridianTrainersClass()
 
-
-"""
-Pewter City
-"""
-
-diglett1 = pokemonGenerator(pokedex.diglett,11,[scratch, leer],1.5)
+caterpie1 = pokemonGenerator(pokedex.diglett,11,[scratch, leer],1.5)
 sandshrew1 = pokemonGenerator(pokedex.sandshrew, 11, [scratch, tackle, defenseCurl],1.5)
 geodude1 = pokemonGenerator(pokedex.geodude, 12, [tackle, defenseCurl], 1.5)
 onix1 = pokemonGenerator(pokedex.onix, 14, [tackle, screech, bide], 1.5)
 
 class pewterTrainersClass:
     def __init__(self):
-        self.juniorTrainerRodney = trainer('Junior Trainer Rodney',[diglett1, sandshrew1],[],400,\
-                                           '"Did you come to challenge Brock? don\'t bother! I\'ll make short work of you"','"Still, you\'re no match for brock"')
-        self.brock = trainer('Gym Leader Brock',[geodude1, onix1],[],1000,\
-                              '"So you want to learn about rock type pokemon eh? Our superior defense will grind you down!"','"Well done! it\'s not often that I\'m beaten. Now I present you with the Boulder Badge!"')
+        self.juniorTrainerRodney = trainer('Junior Trainer Rodney',[caterpie1],[],400)
+        self.brock = trainer('Gym Leader Brock',[geodude1, onix1],[],1000)
 
 pewterTrainers = pewterTrainersClass()
-
-class rivalClass:
-    def __init__(self):
-        self.gary = trainer('Gary',[],['victoryRoad'],0,'','')
-
-rival = rivalClass()
-
-"""
-Mt.Moon
-"""
-
-spearow1 = pokemonGenerator(pokedex.spearow, 9, [peck, wingAttack], 1.5)
-spearow2 = pokemonGenerator(pokedex.spearow, 10, [peck, wingAttack], 1.5)
-ekans1 = pokemonGenerator(pokedex.ekans, 11, [poisonSting, bite, tailWhip], 1.5)
-nidoranM1 = pokemonGenerator(pokedex.nidoranM, 10, [leer, tackle, hornAttack], 1.5)
-pidgey1 = pokemonGenerator(pokedex.pidgey, 11, [gust, tackle], 1.5)
-pidgey2 = pokemonGenerator(pokedex.pidgey, 9, [gust, tackle], 1.5)
-nidoranF1 = pokemonGenerator(pokedex.nidoranF, 12, [bite, poisonSting], 1.5)
-ekans2 = pokemonGenerator(pokedex.ekans, 11, [bite, bubble], 1.5)
-ratata1 = pokemonGenerator(pokedex.ratata, 9, [bite, quickAttack, tailWhip],1.5)
-beedrill1 = pokemonGenerator(pokedex.beedrill, 11, [poisonSting, stringShot, furyAttack], 1.5)
-metapod1 = pokemonGenerator(pokedex.metapod, 9, [harden, tackle, stringShot],1.5)
-raticate1 = pokemonGenerator(pokedex.raticate, 13, [bite, quickAttack, tailWhip], 1.5)
-weedle1 = pokemonGenerator(pokedex.weedle, 8, [poisonSting, harden, stringShot], 1.5)
-nidoranF2 = pokemonGenerator(pokedex.nidoranF, 15, [hornAttack, tackle, leer], 1.5)
-ratata2 = pokemonGenerator(pokedex.ratata, 11, [bite, quickAttack, tailWhip],1.5)
-spearow3 = pokemonGenerator(pokedex.spearow, 12, [peck, wingAttack], 1.5)
-nidoranM2 = pokemonGenerator(pokedex.nidoranM, 10, [leer, tackle, poisonSting], 1.5)
-
-class MTMoonTrainersClass:
-    def __init__(self):
-        self.juniorTrainerEleanor = trainer('Junior Trainer Eleanor', [spearow1, nidoranF1, nidoranM1], [], 345,\
-                                            '"Hey, little guy! Let\'s see what you\'re made of"','"You\'re tougher than you look..."')
-        self.lassBetty = trainer('Lass Betty', [ratata1, pidgey1], [], 175,\
-                                 '"I hope I don\'t get too dirty"','"Owie!"')
-        self.youngsterJim = trainer('Youngster Jim', [ekans1, pidgey2],[], 235,\
-                                    '"Mom thinks I\'ll be the best Pokemon trainer ever!"','"Waaaaaah! Mommy!"')
-        self.juniorTrainerTim = trainer('Junior Trainer Tim', [ekans2, spearow2, raticate1], [], 250,\
-                                        '"My Ekans likes to blow bubbles!"','"Blub Blub Blub"')
-        self.bugCatcherMatt = trainer('Bug Catcher Matt', [weedle1, metapod1, beedrill1], [], 300,\
-                                      '"My pokemon are growing fast!"','"I\'ve gotten stung a bunch raising them"')
-        self.lassMyriam = trainer('Lass Myriam', [nidoranF2],[],150,\
-                                  '"Do you think it’s comfy inside a Pokeball?"','"I wonder if you could catch a person...')
-        self.youngsterNeil = trainer('Youngster Neil', [ratata2], [], 125,\
-                                     '"What games do you like to play?"','"This one kind of sucks, huh?"')
-        self.juniorTrainerJane = trainer('Junior Trainer Jane', [spearow3, nidoranM2],[],310,\
-                                         '"Hey, you’re pretty cute. Wanna battle?"','"Until next time, gorgeous"')
-        
-MTMoonTrainers = MTMoonTrainersClass()      
-
-"""
-Gyro
-"""
-
-friendDiglett1 = pokemonGenerator(pokedex.diglett,5,[scratch, tailWhip],1.5)
-
-class gyroTrainersClass:
-    def __init__(self):
-        self.firstEncounterOscar = trainer('Oscar',[friendDiglett1],[],200,'','')
-
-gyroTrainers = gyroTrainersClass()
-
-class trainers:
-    def __init__(self):
-        self.viridianTrainers = viridianTrainers
-        self.pewterTrainers = pewterTrainers
-        self.rival = rival
-        self.MTMoonTrainers = MTMoonTrainers
-        self.gyroTrainers = gyroTrainers
-
-allTrainers = trainers()
