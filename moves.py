@@ -387,6 +387,7 @@ def swiftAttack(attacker, defender, computer):
     defender.damageTaken(round(damageDone))
 
 def furySwipesAttack(attacker, defender, computer):
+    input()
     damageType = 'normal'
     power = 18
     hits = [2,2,2,3,3,3,4,5]
@@ -394,8 +395,6 @@ def furySwipesAttack(attacker, defender, computer):
     if hit(85) == True:
         damageMod = typeMod(damageType, attacker.typ, defender.typ)
         for i in range(noHits):
-            print(i+1,'hits!')
-            input()
             os.system(clearVar)
             if computer == True:
                 battleDisplay(defender,attacker)
@@ -405,7 +404,8 @@ def furySwipesAttack(attacker, defender, computer):
             damageDone = damage(attacker, defender, power, 'attack', 'defense')
             damageDone*=damageMod
             defender.damageTaken(round(damageDone))
-            
+            print(i+1,'hits!')
+            input()
     else:
         print('but it missed!')
 
@@ -447,6 +447,7 @@ def takeDownAttack(attacker, defender, computer):
         print('but it missed!')
 
 def furyAttackAttack(attacker, defender, computer):
+    input()
     damageType = 'normal'
     power = 15
     hits = [2,2,2,3,3,3,4,5]
@@ -454,8 +455,6 @@ def furyAttackAttack(attacker, defender, computer):
     if hit(85) == True:
         damageMod = typeMod(damageType, attacker.typ, defender.typ)
         for i in range(noHits):
-            print(i+1,'hits!')
-            input()
             os.system(clearVar)
             if computer == True:
                 battleDisplay(defender,attacker)
@@ -465,7 +464,8 @@ def furyAttackAttack(attacker, defender, computer):
             damageDone = damage(attacker, defender, power, 'attack', 'defense')
             damageDone*=damageMod
             defender.damageTaken(round(damageDone))
-            
+            print(i+1,'hits!')
+            input()
     else:
         print('but it missed!')
 
@@ -627,6 +627,7 @@ def sporeAttack(attacker, defender, computer):
         print('There was no effect')
 
 def doubleSlapAttack(attacker, defender, computer):
+    input()
     damageType = 'normal'
     power = 15
     hits = [2,2,2,3,3,3,4,5]
@@ -634,8 +635,6 @@ def doubleSlapAttack(attacker, defender, computer):
     if hit(85) == True:
         damageMod = typeMod(damageType, attacker.typ, defender.typ)
         for i in range(noHits):
-            print(i+1,'hits!')
-            input()
             os.system(clearVar)
             if computer == True:
                 battleDisplay(defender,attacker)
@@ -645,6 +644,8 @@ def doubleSlapAttack(attacker, defender, computer):
             damageDone = damage(attacker, defender, power, 'attack', 'defense')
             damageDone*=damageMod
             defender.damageTaken(round(damageDone))
+            print(i+1,'hits!')
+            input()
 
 def confuseRayAttack(attacker, defender, computer):
     damageType = 'ghost'
@@ -765,7 +766,84 @@ def psychicAttack(attacker, defender, computer):
         defender.damageTaken(round(damageDone))
     else:
         print('but it missed!')
-        
+
+def sonicBoomAttack(attacker, defender, computer):
+    damageType = 'normal'
+    if hit(90) == True: #95% hit rate
+        defender.damageTaken(20)
+    else:
+        print('but it missed!')
+
+def selfdestructAttack(attacker, defender, computer):
+    damageType = 'normal'
+    power = 200
+    if hit(95) == True: #95% hit rate
+        damageMod = typeMod(damageType, attacker.typ, defender.typ)
+        damageDone = damage(attacker, defender, power, 'attack', 'defense')
+        damageDone *= damageMod
+        defender.damageTaken(round(damageDone))
+    else:
+        print('but it missed!')
+    attacker.HP = 0
+
+def explosionAttack(attacker, defender, computer):
+    damageType = 'normal'
+    power = 250
+    if hit(95) == True: #95% hit rate
+        damageMod = typeMod(damageType, attacker.typ, defender.typ)
+        damageDone = damage(attacker, defender, power, 'attack', 'defense')
+        damageDone *= damageMod
+        defender.damageTaken(round(damageDone))
+    else:
+        print('but it missed!')
+    attacker.HP = 0
+
+def smogAttack(attacker, defender, computer):
+    damageType = 'poison'
+    power = 30
+    if hit(95) == True:
+        damageMod = typeMod(damageType, attacker.typ, defender.typ)
+        if damageMod != 0 and statusCheck(defender):
+            if randint(1,2) == 2:
+                defender.status.append('poison')
+                print(defender.name,'was poisoned!')
+            damageDone = damage(attacker, defender, power, 'sp.attack', 'sp.defense')
+            damageDone *= damageMod
+            defender.damageTaken(round(damageDone))
+    else:
+        print('but it missed!')
+
+def sludgeAttack(attacker, defender, computer):
+    damageType = 'poison'
+    power = 65
+    if hit(95) == True:
+        damageMod = typeMod(damageType, attacker.typ, defender.typ)
+        if damageMod != 0 and statusCheck(defender):
+            if randint(1,3) == 2:
+                defender.status.append('poison')
+                print(defender.name,'was poisoned!')
+            damageDone = damage(attacker, defender, power, 'sp.attack', 'sp.defense')
+            damageDone *= damageMod
+            defender.damageTaken(round(damageDone))
+    else:
+        print('but it missed!')
+
+def hazeAttack(attacker, defender, computer):
+    both = [attacker, defender]
+    for p in both:
+        p.status = []
+        p.tempStats = copy.deepcopy(p.stats)
+    print('All status effects and changes have been removed!')
+
+def glareAttack(attacker, defender, computer):
+    damageType = 'normal'
+    damageMod = typeMod(damageType, attacker.typ, defender.typ)
+    if hit(95):
+        if damageMod != 0 and statusCheck(defender):
+            print(defender.name,'was paralyzed!')
+            defender.status.append('paralyzed')
+        else:
+            print('There was no effect')
         
 class move:
     def __init__(self, name, priority, duration, technique):
@@ -829,8 +907,13 @@ absorb = move('absorb',0,0,absorbAttack)
 growth = move('growth',0,0,growthAttack)
 psybeam = move('psybeam',0,0,psybeamAttack)
 psychic = move('psychic',0,0,psychicAttack)
-
-
+sonicBoom = move('sonic boom',0,0,sonicBoomAttack)
+selfdestruct = move('self-destruct',0,0,selfdestructAttack)
+explosion = move('explosion',0,0,explosionAttack)
+smog = move('smog',0,0,smogAttack)
+sludge = move('sludge',0,0,sludgeAttack)
+haze = move('haze',0,0,hazeAttack)
+glare = move('glare',0,0,glareAttack)
 
 
 

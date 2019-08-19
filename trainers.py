@@ -295,7 +295,7 @@ class rivalClass:
 rival = rivalClass()
 
 """
-Mt.Moon
+Path to Mt. Moon
 """
 
 spearow1 = pokemonGenerator(pokedex.spearow, 9, [peck, wingAttack], 1.5)
@@ -316,7 +316,7 @@ ratata2 = pokemonGenerator(pokedex.ratata, 11, [bite, quickAttack, tailWhip],1.5
 spearow3 = pokemonGenerator(pokedex.spearow, 12, [peck, wingAttack], 1.5)
 nidoranM2 = pokemonGenerator(pokedex.nidoranM, 10, [leer, tackle, poisonSting], 1.5)
 
-class MTMoonTrainersClass:
+class MTMoonTrailTrainersClass:
     def __init__(self):
         self.juniorTrainerEleanor = trainer('Junior Trainer Eleanor', [spearow1, nidoranF1, nidoranM1], [], 345,\
                                             '"Hey, little guy! Let\'s see what you\'re made of"','"You\'re tougher than you look..."')
@@ -335,7 +335,49 @@ class MTMoonTrainersClass:
         self.juniorTrainerJane = trainer('Junior Trainer Jane', [spearow3, nidoranM2],[],310,\
                                          '"Hey, you\'re pretty cute. Wanna battle?"','"Until next time, gorgeous"')
         
-MTMoonTrainers = MTMoonTrainersClass()      
+MTMoonTrailTrainers = MTMoonTrailTrainersClass()
+
+"""
+Mt. Moon
+"""
+
+geodude1 = pokemonGenerator(pokedex.geodude, 12, [tackle, defenseCurl], 1.5)
+sandshrew1 = pokemonGenerator(pokedex.sandshrew, 13, [scratch, defenseCurl], 1.5)
+clefairy1 = pokemonGenerator(pokedex.clefairy, 15, [pound, sing], 1.5)
+zubat1 = pokemonGenerator(pokedex.zubat, 13, [leechLife, supersonic], 1.5)
+magnemite1 = pokemonGenerator(pokedex.magnemite, 14, [tackle, supersonic], 1.5)
+voltorb1 = pokemonGenerator(pokedex.voltorb, 13, [tackle, screech], 1.5)
+zubat2 = pokemonGenerator(pokedex.zubat, 12, [leechLife, supersonic], 1.5)
+koffing1 = pokemonGenerator(pokedex.koffing, 11, [smog, tackle], 1.5)
+ratata1 = pokemonGenerator(pokedex.ratata, 9, [tackle, quickAttack, tailWhip], 1.5)
+ratata2 = pokemonGenerator(pokedex.ratata, 10, [tackle, quickAttack, tailWhip], 1.5)
+zubat3 = pokemonGenerator(pokedex.zubat, 9, [leechLife, supersonic], 1.5)
+clefairy2 = pokemonGenerator(pokedex.clefairy, 12, [pound, sing], 1.5)
+zubat4 = pokemonGenerator(pokedex.zubat, 10, [leechLife, supersonic], 1.5)
+ratata3 = pokemonGenerator(pokedex.ratata, 11, [tackle, quickAttack, tailWhip], 1.5)
+magnemite2 = pokemonGenerator(pokedex.magnemite, 15, [tackle, supersonic], 1.5)
+sandshrew2 = pokemonGenerator(pokedex.sandshrew, 12, [scratch, defenseCurl], 1.5)
+koffing2 = pokemonGenerator(pokedex.koffing, 14, [smog, tackle], 1.5)
+
+class MTMoonTrainersClass:
+    def __init__(self):
+        self.HikerNorton = trainer('Hiker Norton', [geodude1, sandshrew1], [], 345,\
+                                            '"I came all the way from Cerulean City!"','"Hoof! better catch my breath, wheez"')
+        self.lassDoris = trainer('Lass Doris', [clefairy1], [], 140,\
+                                            '"A Zubat flew into my hair!"','"Bats are so cute! just like my Clefairy!"')
+        self.rocketHobb = trainer('Rocket Hobb', [zubat1], [], 165,\
+                                  '"Huh?! You\'re not supposed to be down here!"','"Scram kid! Team Rocket controls this tunnel now!"')
+        self.superNerdHerbert = trainer('Super Nerd Herbet', [magnemite1, voltorb1], [], 250,\
+                                        '"Don\'t touch my specimens!"','"I only need 120 more before i\'ve got them all!"')
+        self.rocketDex = trainer('Rocket Dex', [zubat2, koffing1], [], 200,\
+                                  '"Don\'t you dare think you\'re gonna tell the police on us!"','"Tex! Get him"')
+        self.rocketTex = trainer('Rocket Tex', [ratata1, ratata2, zubat3], [], 400,\
+                                  '"I\'ve got ya!"','"Humph! Either way we\'ll be gone before you can get to the police"')
+        self.rocketLouise = trainer('Rocket Louise', [zubat4, ratata3, koffing2], [], 500,\
+                                  '"I\'m gonna send you packing, kid!"','"Ahh! gotta make an escape!"')
+        self.superNerdGarrett = trainer('Super Nerd Garrett', [magnemite2, sandshrew2], [], 210,\
+                                        '"These fossils are mine!"','"Ok fine, I\'ll share..."')
+MTMoonTrainers = MTMoonTrainersClass()
 
 """
 Gyro
@@ -354,7 +396,7 @@ class trainers:
         self.viridianTrainers = viridianTrainers
         self.pewterTrainers = pewterTrainers
         self.rival = rival
-        self.MTMoonTrainers = MTMoonTrainers
+        self.MTMoonTrailTrainers = MTMoonTrailTrainers
         self.gyroTrainers = gyroTrainers
 
 allTrainers = trainers()

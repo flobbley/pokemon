@@ -52,6 +52,7 @@ class pokemon:
         self.backSprite = backSprite
         self.timesAttacked = 0
         self.referenceHP = self.HP
+        self.opponents = []
 
     def getName(self): #gives the name of the pokemon
         print(self.name)
@@ -124,8 +125,7 @@ class pokemon:
                 self.tempStats[str(stat)]*= 0.66
             print(self.name+'\'s',stat,change)
 
-    def XPGain(self, opponent):
-        gain = round(opponent.needXP/2)*opponent.trainer
+    def XPGain(self, gain):
         self.gainedXP += gain
         print(self.name,'gained',gain,'experience!')
         if self.gainedXP >= self.needXP:
@@ -133,7 +133,7 @@ class pokemon:
 
     def levelUp(self):
         print(self.name, 'grew to level', str(self.level+1)+'!')
-        self.gainedXP = 0
+        self.gainedXP = self.gainedXP - self.needXP
         self.addLevel(2)
         print(self.stats)
         if self.level in moveTree[self.name]:
@@ -1575,7 +1575,7 @@ L   /    ."`--'       |  |              |           |||         `'
                                                      `"'"---' mh
 """,'','')
         self.clefairy = pokemon('Clefairy',35,'Some people say that this pokemon came from the moon.',1,['normal','normal'],\
-                               [2.5,0.9,0.96,1.2,1.3],{},20,1.3,{0:0},"""
+                               [2.5,0.9,0.96,1.2,1.3,0.7],{},20,1.3,{0:0},"""
                     __.._
                 ,--'     "`-._    _,.-,--------.
     ________ ,-'              `-"'   /     _.-'|
@@ -2218,6 +2218,63 @@ j               | L"`--._....___  /               |_...  `/  \  -.'
                    `-..._            _____,.'
                          `--.....,-"' mh
 """,'','')
+        self.magnemite = pokemon('Magnemite',81,'This pokemon floats in the air using magnetic waves',1,['electric','electric'],\
+                            [1.6,0.7,1.4,1.9,1.1,0.9],{},25,1.3,{30:'magneton'},"""
+                                  _,._,._
+                                 '-"._,"--,
+                                  `"..-+-'
+                                  :'==-:
+                                  :`=-":
+                                 _."-..|
+     _____                  _.-'"  `""' `-._
+    |  |  `""'----._      ,'                `.
+    |__|            `.  ,'                    '.
+    '..|""'---._     | /                        \    _.......______
+          `""'--:    |/         ,.---._          \ .'.------.....__`-...
+                |    j        ,'       `.         . '              |"--|
+.'""|"---......-'   .|       /           \        |'     ______    |   |
+|   |              / |      .      .      .       |    .'      `""`--..'
+:""'|---.....___.-'.'|      |             |       |    :
+ `"`+---....____,.'  `      `.           /       /|    '_
+                      \ _,..  `.       ,'       / `      `""'--....,._
+                      .'::__:   `-...-'        ,   `._            '   |
+                      |-..--|          ,-"-. ,'       "--.....___:   j
+                      `.::_,          |.-''-:                     `"'
+                            `"-...____' " :.'
+                                       `""' mh
+""",'','')
+        self.magneton = pokemon('Magneton',82,'This pokemon sends out pulses of electromagnetic wave which it uses to paralyze it\'s opponents',1,['electric','electric'],\
+                            [1.6,0.7,1.4,1.9,1.1,0.9],{},25,1.3,{30:'magneton'},"""
+                                 _
+                              ,"'_\\
+                         ,"\  `."  \       ,..._
+                        '.' \   \   .     ('""`.\\     _
+                         \   \  `.  |      /=.:.'  ,:`.`.
+                          \   \.';  |""'""`-./   .'   .`
+                           \   `"   '         `.'   ,' ,"`.
+                            `.___..'            `. `..:'`./
+                            /             _,.._   \    _.'
+                 _....__   /            ,"     `.  ._,'
+             ,-"'       `"+.           :         . |
++'"|""'-.  ,'               `.         |      "  | |
+\\_|__   `:                   \         \       /  |          _,-.
+      :)  |        ,.-----.    \         ._   .'   '._    _,-'`\  j
+  ...,'   |       /        \    . __ _ _,".`"'   ,'   `.,"    _.`"
+  \\ |  _,'      .          .   || |I ' -'|    _, _     `   ,"'  _.".
+  `""'':         '     "    |   |`"'^"`"| /  ,`:://\     \  `..-' \  '
+       '          \        /   ,""`--..`""-"`""':{.|      .      _,+"
+        .          `-....-'   :`:'-|            |l,'      |.__.-"
+         \,.                  '. :/                       |
+     .-.":`.`.              ,'  "'     ,"-.   _       _,._|
+     \`. \`,"`._        __,:      .    `.'/`,'.`.   .'    '
+      '.`.;     "--+--'"_  `       `     `.` "' ; ,'  .  /
+        `"         ||  :|.  :       `.     \_:.' :    _.'
+                   ||  |||__|         `._        `..."
+                   ||__||| _|            `"-....-"\\,\
+                   || _| `"                  \\  \ \\'
+                   `"'                        \`.-\
+                                               \\.' mh
+""",'','')
         self.onix = pokemon('Onix',95,'People have been known to ride on the back of this pokemon through the desert',1,['rock','ground'],\
                             [1.8, 0.9, 3.2, 0.6, 0.9, 1.4],{},30,1.3,{0:0},"""
                                                        _
@@ -2258,6 +2315,146 @@ j               | L"`--._....___  /               |_...  `/  \  -.'
                             "--+--"`..'   |.   ,^.__,'
                                      `---"  `-" mh
 """,'','')
+        self.voltorb = pokemon('Voltorb',100,'This pokemon attacks people that mistake it for a pokeball',1,['electric','electric'],\
+                            [1.9,0.6,1,1.1,1.1,2],{},25,1.3,{30:'electrode'},"""
+                         __...--------...__
+                    _.--'                  `"-..
+                _.-'                  ,.        `-._
+             _,'                    .'  \           `._
+           ,"                     ,'     .             `.
+         ,'                      /        `.             `.
+        /                       .           \              `.
+      ,'                         `.._        .               .
+     /                               `-._    /`               \\
+    /                                    `-._  \               \\
+   /    __,........----...__                 `"-'               \\
+  /.--""                    `'--.._                 ...........
+ j                                 `"-._            `. /      |  `
+ '                                      `._           `.      .   .
+.                                          `._          `.    '   |
+|                                             `.          \  /    |
+|                                               `.         `'     |
+|                                                 `.              |
+|                                                   `.            |
+'                                                     `.          |
+ .                                                      .         |
+                                                         \        '
+  '                                                       \      '
+   .                                                       \    /
+    \       ____                                            .  /
+     \    ."    `""-._                                       '/
+      `   '           `-.                                   ,'
+       `.  `.            `.                               ,'
+         `.  .             `.                           .'
+           `._`-.            \                        .'
+              `._`._          '                    _,'
+                 `._`"-._     |                 _."
+                     "-.._`--'           __,.-"'
+                          `""----------"' mh
+""",'','')
+        self.electrode = pokemon('Electrode',101,'This pokemon will self destruct if it thinks it\'s about to lose',1,['electric','electric'],\
+                            [2.3,1,1.4,1.6,1.6,3],{},30,1.3,{0:0},"""
+
+                         _,.--"'"'"''"'"''--..__
+                    _.-"'                       `-._
+                 _.'                                `-._
+              _,'                     ._                `.
+            ,'                          `._               `.
+          .'                               `._              `.
+         /                                    `.              \\
+       ,'                             .         `.    |        `.
+      /                               |           `.  |   |      .
+     /                                |             \ |   |       \\
+    /                                                `    | ,.-"'  \\
+   /                                                                \\
+  j                                                        |         .
+  |                  __...--'"''""'"'"'"'`--..__           |         '
+ j             _.--"'                           `-.._                 .
+ |         _,-'                      .""'`--..__     `"-._            |
+ |     _.-'                          |          `"-._     `._         |
+ |  _.'                              |               `-._    `._      |
+ |,'                                 |    |              `-._   `.    |
+ |                                   |    |                  `-.  `._ |
+ |                                   '    |     |               `.   `'
+ |                                    `"--'.....+................'   j
+ '                                                                   |
+  .                                                                  '
+   .                                                                /
+    `                                                              /
+     '                                                           ,'
+      `.                                                        .
+        .                                                      /
+         `.                                                  ,'
+           `.                                              .'
+             `._                                        _.'
+                `._                                 _.-'
+                   `-._                         _,-"
+                       `"--..__           __..-'
+                               `"'"''"'"'" mh
+""",'','')
+        self.koffing = pokemon('Koffing',109,'This pokemon releases toxic gases when it becomes excited',1,['poison','poison'],\
+                            [1.9,1.3,1.9,1.2,0.9,0.7],{},25,1.3,{35:'weezing'},"""
+                               ,----.
+                              '      |
+                             /       '
+                       __,..'         "-._        _
+                  _.-""                   `-.   ," `".
+         ,-._  _.'                           `"'      '
+       ,'    `"                                       |
+      .                                               .
+       `.          _.--..               ____          '
+       /         ,'    . `           ,"' .  `.         `.
+      /         .         |         /         \          \\
+     /          `------...'        ._____      .          \\
+    .                                    `'"'"'            \\
+    '                    ________                           .
+   j           `.""/'"'"`        '"'"'"'--....,-            |
+   |             `/.                      ,\ /              `.
+   |                `-._               _.'  '                 `-.
+   |                    `"-----------"'                         |
+ ."                         ____                                |
+|                      ,-""'    `".                            ,'
+|                     .   .----.   `.                        ."
+`.._                  |  '.____,'   |                        '
+    |             ,". `.           ,' _                     /
+    '            '   `._`.'._".__,' .' .                   /
+     .            `'-._ `._     _.-'  _.'                 /
+      `.               `.  `--'" _,.-'                    `
+        .               ,'     ."                          '
+         '        .-..-' _,.--._`"-..,-.                 ,'
+        /         \    ,'       `-.    |           .-'"-"
+        \          `-.'            `..'         _,'
+         `.,.-"`._                           ,-'
+                  `"-.                       |
+                      \       ,..----.     _.'
+                       `""---"        `..-" mh
+""",'','')      
+        self.weezing = pokemon('Weezing',110,'Formed when three koffings fuze together, this pokemon\'s gases are much more potent',1,['poison','poison'],\
+                            [2.4,1.8,2.4,1.7,1.4,1.2],{},30,1.3,{35:'weezing'},"""
+                  __....____,'  `-.
+         ,""-..-'"          "-    |       ..      _.._
+         |        _, .,           '._    /  `'""''    |
+        .'         _____             `.,'     ____     `.
+     _," _.'      \  |  '"--..        '       \__ `"-.   `.
+    | ,'"|/        `-.______,'      `     ' |\_  `'""'  .  \\
+    .'---'      _____             . '   `   |,'""'-._  ' \  .
+   /   __..--""|___/ "-.._/|         ,'       ___    `. \ \ '_
+  . .'...-----'""----.._.' |-.      |        | ,.`".   \ `'   |
+  | `"                  "-.'-'      `.        \`._`.\   |.  .-'
+."        _..._                 .              `._  ,   `.' |
+ `.    ,"'_....`".               |                ""       .
+  |    | |     | |             -'   `,                    /
+  `,.  `._`---'_,'  ,-.    '        ' `-.             _   |
+  ,\ `._  |___|  _,'  |  `    \        . /-.__     _.' `-"
+  \ `.._`-._ _.-'_,.--'        |        `.    |  ,'
+   `-"\ `-. ' ,'_         `-..'       .-'    /  /
+       `._.---._ `"----.        .   ,'.   _.'  /
+         `.     `'-.._/       -" ,-" `.`-'      `.
+           `.,       .-"    _    |     | .     ) |
+             '._  ,"`----""`.    |     ' `'       .
+                ""           `--'       \`      ,"'
+                                         `-._,-' mh
+""",'','')
         self.solosis = pokemon('Solosis',577,'This pokemon is actually a single celled organism.',1,['psychic','psychic'],\
                                [2, 0.6, 0.8, 2.1, 1, 0.4],{},20,1.3,{26:'duosion'},'','','')
         
@@ -2288,8 +2485,8 @@ moveTree = {'Bulbasaur':{6:vineWhip, 9:leechSeed, 20:poisonPowder, 34:growth, 41
             'Raticate':{},\
             'Spearow':{9:leer, 15:furyAttack},\
             'Fearow':{},\
-            'Ekans':{10:poisonSting, 17:bite},\
-            'Arbok':{},\
+            'Ekans':{10:poisonSting, 17:bite, 24:glare, 31:screech, 38:acid},\
+            'Arbok':{17:bite, 27:glare, 36:screech, 47:acid},\
             'Pikachu':{7:thundershock, 9:thunderWave, 16:quickAttack, 26:swift},\
             'Sandshrew':{17:slash, 24:poisonSting, 31:swift, 38:furySwipes},\
             'Sandslash':{27:poisonSting, 36:swift, 47:furySwipes},\
@@ -2316,5 +2513,11 @@ moveTree = {'Bulbasaur':{6:vineWhip, 9:leechSeed, 20:poisonPowder, 34:growth, 41
             'Venomoth':{24:poisonPowder, 27:leechLife, 30:stunSpore, 35:psybeam, 38:sleepPowder, 43:psychic},\
             'Diglett':{15:growl, 31:slash},\
             'Dugtrio':{},\
-            'Onix':{}\
+            'Magnemite':{21:sonicBoom, 25:thundershock, 29:supersonic, 35:thunderWave, 41:swift, 47:screech},\
+            'Magneton':{21:sonicBoom, 25:thundershock, 29:supersonic, 35:thunderWave, 41:swift, 47:screech},\
+            'Onix':{},\
+            'Voltorb':{17:sonicBoom, 22:selfdestruct, 36:swift, 43:explosion},\
+            'Electrode':{17:sonicBoom, 22:selfdestruct, 40:swift, 50:explosion},\
+            'Koffing':{1:smog, 32:sludge, 40:selfdestruct, 45:haze, 48:explosion},\
+            'Weezing':{1:smog, 32:sludge, 43:selfdestruct, 45:haze, 53:explosion},\
             }

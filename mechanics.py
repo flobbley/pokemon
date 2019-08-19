@@ -284,7 +284,12 @@ def battle(player, opponent, wild= True):
             start = 1
             battleDisplay(playerPoke, opponentPoke)
             input()
-            while True: #Current match up          
+            while True: #Current match up
+                for fainted in opponentPoke.opponents:
+                    if fainted.HP <= 0:
+                        opponentPoke.opponents.remove(fainted)
+                if playerPoke not in opponentPoke.opponents:
+                    opponentPoke.opponents.append(playerPoke)
                 os.system(clearVar)
                 battleDisplay(playerPoke, opponentPoke)
                 notUsed = playerPoke.statusAction(opponentPoke, 'before')
@@ -302,6 +307,10 @@ def battle(player, opponent, wild= True):
                         print('Who do you want to send out?')
                         oldPlayerPoke = playerPoke
                         playerPoke = player.choosePoke(playerPokesCopy)
+                        print(player.name,'sent out',playerPoke.name+'!')
+                        input()
+                        os.system(clearVar)
+                        battleDisplay(playerPoke, opponentPoke)
                         playerMove = False
                         if oldPlayerPoke == playerPoke:
                             print(playerPoke.name,'is already out!')
@@ -328,8 +337,8 @@ def battle(player, opponent, wild= True):
                         if wild == False:
                             print('can\'t run from a trainer battle!')
                         else:
-                            succeed = randint(0,1)
-                            if succeed == 0:
+                            succeed = playerPoke.tempStat['speed']/opponentPoke.tempStat['speed']
+                            if succeed > 0.66:
                                 print('You got away safely!')
                                 opponentPokesCopy = []
                                 won = True
@@ -380,7 +389,9 @@ def battle(player, opponent, wild= True):
                         os.system(clearVar)
                         battleDisplay(playerPoke, opponentPoke)
                         print(str(opponent.name)+'\'s', opponentPoke.name, 'fainted!')
-                        playerPoke.XPGain(opponentPoke)
+                        gain = round((opponentPoke.needXP/3)/len(opponentPoke.opponents)*opponentPoke.trainer)
+                        for XPgetter in opponentPoke.opponents:
+                            XPgetter.XPGain(gain)
                         player.evoCheck()
                         input()
                         if len(opponentPokesCopy) == 0:
@@ -440,7 +451,9 @@ def battle(player, opponent, wild= True):
                         os.system(clearVar)
                         battleDisplay(playerPoke, opponentPoke)
                         print(str(opponent.name)+'\'s', opponentPoke.name, 'fainted!')
-                        playerPoke.XPGain(opponentPoke)
+                        gain = round((opponentPoke.needXP/3)/len(opponentPoke.opponents)*opponentPoke.trainer)
+                        for XPgetter in opponentPoke.opponents:
+                            XPgetter.XPGain(gain)
                         player.evoCheck()
                         input()
                         if len(opponentPokesCopy) == 0:
@@ -487,7 +500,9 @@ def battle(player, opponent, wild= True):
                         os.system(clearVar)
                         battleDisplay(playerPoke, opponentPoke)
                         print(str(opponent.name)+'\'s', opponentPoke.name, 'fainted!')
-                        playerPoke.XPGain(opponentPoke)
+                        gain = round((opponentPoke.needXP/3)/len(opponentPoke.opponents)*opponentPoke.trainer)
+                        for XPgetter in opponentPoke.opponents:
+                            XPgetter.XPGain(gain)
                         player.evoCheck()
                         input()
                         if len(opponentPokesCopy) == 0:
@@ -512,7 +527,9 @@ def battle(player, opponent, wild= True):
                         os.system(clearVar)
                         battleDisplay(playerPoke, opponentPoke)
                         print(str(opponent.name)+'\'s', opponentPoke.name, 'fainted!')
-                        playerPoke.XPGain(opponentPoke)
+                        gain = round((opponentPoke.needXP/3)/len(opponentPoke.opponents)*opponentPoke.trainer)
+                        for XPgetter in opponentPoke.opponents:
+                            XPgetter.XPGain(gain)
                         player.evoCheck()
                         input()
                         if len(opponentPokesCopy) == 0:

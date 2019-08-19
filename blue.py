@@ -904,10 +904,10 @@ def MTMoonWild(player, patches):
     return True
 
 def MTMoon1east(player):
-    JTEleanor = gameState.trainers.MTMoonTrainers.juniorTrainerEleanor
-    lassBetty = gameState.trainers.MTMoonTrainers.lassBetty
-    youngsterJim = gameState.trainers.MTMoonTrainers.youngsterJim
-    BCMatt = gameState.trainers.MTMoonTrainers.bugCatcherMatt
+    JTEleanor = gameState.trainers.MTMoonTrailTrainers.juniorTrainerEleanor
+    lassBetty = gameState.trainers.MTMoonTrailTrainers.lassBetty
+    youngsterJim = gameState.trainers.MTMoonTrailTrainers.youngsterJim
+    BCMatt = gameState.trainers.MTMoonTrailTrainers.bugCatcherMatt
     trainers = [JTEleanor, lassBetty, youngsterJim, BCMatt]
     while True:
         os.system(clearVar)
@@ -944,10 +944,10 @@ def MTMoon1east(player):
             menu(player)
 
 def MTMoon1west(player):
-    JTEleanor = gameState.trainers.MTMoonTrainers.juniorTrainerEleanor
-    lassBetty = gameState.trainers.MTMoonTrainers.lassBetty
-    youngsterJim = gameState.trainers.MTMoonTrainers.youngsterJim
-    BCMatt = gameState.trainers.MTMoonTrainers.bugCatcherMatt
+    JTEleanor = gameState.trainers.MTMoonTrailTrainers.juniorTrainerEleanor
+    lassBetty = gameState.trainers.MTMoonTrailTrainers.lassBetty
+    youngsterJim = gameState.trainers.MTMoonTrailTrainers.youngsterJim
+    BCMatt = gameState.trainers.MTMoonTrailTrainers.bugCatcherMatt
     trainers = [JTEleanor, lassBetty, youngsterJim, BCMatt]
     while True:
         os.system(clearVar)
@@ -984,8 +984,8 @@ def MTMoon1west(player):
             menu(player)
 
 def MTMoon2east(player):
-    JTJane = gameState.trainers.MTMoonTrainers.juniorTrainerJane
-    youngsterNeil = gameState.trainers.MTMoonTrainers.youngsterNeil
+    JTJane = gameState.trainers.MTMoonTrailTrainers.juniorTrainerJane
+    youngsterNeil = gameState.trainers.MTMoonTrailTrainers.youngsterNeil
     while True:
         os.system(clearVar)
         print('You are standing at the top of a large hill, to your right you see a ledge.')
@@ -1025,7 +1025,7 @@ def MTMoon2east(player):
             menu(player)
 
 def MTMoon2west(player):
-    JTJane = gameState.trainers.MTMoonTrainers.juniorTrainerJane
+    JTJane = gameState.trainers.MTMoonTrailTrainers.juniorTrainerJane
     while True:
         os.system(clearVar)
         print('You look up at a tall hill.')
@@ -1054,8 +1054,8 @@ def MTMoon2west(player):
             menu(player)
 
 def MTMoon3east(player):
-    JTTim = gameState.trainers.MTMoonTrainers.juniorTrainerTim
-    lassMyriam = gameState.trainers.MTMoonTrainers.lassMyriam
+    JTTim = gameState.trainers.MTMoonTrailTrainers.juniorTrainerTim
+    lassMyriam = gameState.trainers.MTMoonTrailTrainers.lassMyriam
     while True:
         os.system(clearVar)
         print('Ahead you see the second trainer')
@@ -1091,7 +1091,7 @@ def MTMoon3east(player):
             menu(player)
 
 def MTMoon3west(player):
-    lassMyriam = gameState.trainers.MTMoonTrainers.lassMyriam
+    lassMyriam = gameState.trainers.MTMoonTrailTrainers.lassMyriam
     while True:
         os.system(clearVar)
         print('Ahead you see the second trainer')
@@ -1133,28 +1133,326 @@ def MTMoonEntrance(player):
             gameState.lastPokecenter = 'MTMoonEntrance'
             pokeCenter(player)
         elif action == 3:
+            print('You step into the tunnel leading through Mt. Moon...')
+            input()
             return 'MTMoonArea1'
             
         elif action == 4:
             return 'MTMoon3west'
         else:
             menu(player)
-    
-ashPidgey = pokemonGenerator(pokedex.pidgey, 4, [tackle, gust])
-garyPidgey = pokemonGenerator(pokedex.pidgey,4,[tackle, gust])
-ashBulbasaur = pokemonGenerator(pokedex.bulbasaur,30,[tackle,bide,thunderWave])
-garyBulbasaur = pokemonGenerator(pokedex.bulbasaur, 5, [tackle, leer])
-ashSquirtle = pokemonGenerator(pokedex.squirtle, 15, [tackle, tailWhip, bubble])
-garyCharmander = pokemonGenerator(pokedex.charmander, 30, [tackle])
-garySquirtle = pokemonGenerator(pokedex.squirtle, 30, [tailWhip])
-ashCharmander = pokemonGenerator(pokedex.charmander, 5, [scratch, tailWhip])
-ashBeedrill = pokemonGenerator(pokedex.beedrill,15,[twinNeedle,poisonSting],1.5)
-ashPikachu = pokemonGenerator(pokedex.pikachu, 7, [thundershock])
-ashBulbasaur.status.append('sleep')
-garyCharmander.status.append('confusion')
 
-ash = trainer('ash', [ashBulbasaur], [['Pokeball',5],['Potion',5]], 500,'','')
-gary = trainer('gary', [garyCharmander], [], 10,'','')
+def MTMoonCaveWild(player):
+    wild = trainer('Wild', [], {}, 10, '', '')
+    zubat1 = pokemonGenerator(pokedex.zubat,7,[leechLife])
+    zubat2 = pokemonGenerator(pokedex.zubat,11,[leechLife, supersonic])
+    zubat3 = pokemonGenerator(pokedex.zubat,8,[leechLife])
+    zubat4 = pokemonGenerator(pokedex.zubat,9,[leechLife])
+    zubat5 = pokemonGenerator(pokedex.zubat,6,[leechLife])
+    geodude1 = pokemonGenerator(pokedex.geodude,11,[tackle, defenseCurl])
+    geodude2 = pokemonGenerator(pokedex.geodude,13,[tackle, defenseCurl])
+    geodude3 = pokemonGenerator(pokedex.geodude,9,[tackle, defenseCurl])
+    paras1 = pokemonGenerator(pokedex.paras,10,[scratch])
+    clefairy1 = pokemonGenerator(pokedex.clefairy,8,[pound])
+    encounters = [zubat1, zubat2, zubat3, zubat4, zubat5, geodude1, geodude2, geodude3, paras1, clefairy1]
+    chance = [True, False]
+    if choice(chance):
+        print ('a wild pokemon appears!')
+        i+=1
+        input()
+        wildPoke = choice(encounters)
+        wild.pokeList.append(wildPoke)
+        os.system(clearVar)
+        won = battle(player, wild)
+        if won == False:
+            return False
+        wild.pokeList.remove(wildPoke)
+        encounters.remove(wildPoke)
+        input()
+    return True
+    
+def MTMoonArea1(player):
+    hikerNorton = gameState.trainers.MTMoonTrainers.hikerNorton
+    lassDoris = gameState.trainers.MTMoonTrainers.lassDoris
+    while True:
+        os.system(clearVar)
+        print('(Mt. Moon Area 1)')
+        print('(this cave is filled with wild pokemon, you could run into a pokemon at any time!)')
+        print()
+        print('It sure is dark in here! You can see a few other trainers stumbling around, and well as a few paths you can take')
+        print('There is a man in hiking gear to the west, behind him is a rope ladder leading through a hole in the ground')
+        print('To the east there is a girl with a flashlight, she is walking down the other path.')
+        print('Lastly, there is the tunnel exit to the road to Pewter City')
+        action = menuSelect('What would you like to do?',\
+                            ['Talk to the Hiker','Go down the rope ladder','Talk to the girl','move down the east path (Area 2)','Exit toward Pewter City','Menu'])
+        passed = MTMoonCaveWild(player)
+        if passed == False:
+            return gameState.lastPokecenter
+        
+        if action == 1:
+            passed = trainerEncounter(player, hikerNorton)
+            if passed == False:
+                return gameState.lastPokecenter
+            
+        elif action == 2:
+            return 'MTMoonLowerLevel1'
+            
+        elif action == 3:
+            passed = trainerEncounter(player, lassDoris)
+            if passed == False:
+                return gameState.lastPokecenter
+            
+        elif action == 4:
+            return 'MTMoonArea2'
+        elif action == 5:
+            return 'MTMoonEntrance'
+        else:
+            menu(player)
+
+def MTMoonLowerLevel1(player):
+    rocketHobb = gameState.trainers.MTMoonTrainers.rocketHobb
+    while True:
+        os.system(clearVar)
+        print('(Mt. Moon Lower Level 1)')
+        print('(this cave is filled with wild pokemon, you could run into a pokemon at any time!)')
+        print()
+        print('You get to the bottom of the ladder and look around...')
+        print('it\'s a small room, not much is in here. But in the corner you see a strange man dressed in black fiddling with something')
+        action = menuSelect('What would you like to do?',\
+                            ['Talk to the man','go back up the ladder','Menu'])
+        passed = MTMoonCaveWild(player)
+        if passed == False:
+            return gameState.lastPokecenter
+        
+        if action == 1:
+            passed = trainerEncounter(player, rocketHobb)
+            if passed == False:
+                return gameState.lastPokecenter        
+        elif action == 2:
+            return 'MTMoonArea1'
+        else:
+            menu(player)
+
+def MTMoonArea2(player):
+    superNerdHerbert = gameState.trainers.MTMoonTrainers.superNerdHerbert
+    while True:
+        os.system(clearVar)
+        print('(Mt. Moon Area 2)')
+        print('(this cave is filled with wild pokemon, you could run into a pokemon at any time!)')
+        print()
+        print('To the south there is a man in a lab coat, the path goes to the north, the path toward the entrance, and there is another rope ladder leader down to the east')
+        action = menuSelect('What would you like to do?',\
+                            ['Talk to the man in the lab coat','Go down the north path (Area 3)','Go down the path toward the entrance (Area 1)','Go down the rope ladder','Menu'])
+        passed = MTMoonCaveWild(player)
+        if passed == False:
+            return gameState.lastPokecenter
+        
+        if action == 1:
+            passed = trainerEncounter(player, superNerdHerbert)
+            if passed == False:
+                return gameState.lastPokecenter
+            
+        elif action == 2:
+            return 'MTMoonArea3'
+            
+        elif action == 3:
+            return 'MTMoonArea1'   
+        elif action == 4:
+            print('You climb down the rope ladder...')
+            input()
+            return 'MTMoonLowerLevel2'
+        else:
+            menu(player)
+
+def MTMoonLowerLevel2(player):
+    rocketDex = gameState.trainers.MTMoonTrainers.rocketDex
+    rocketTex = gameState.trainers.MTMoonTrainers.rocketTex
+    while True:
+        os.system(clearVar)
+        print('(Mt. Moon Lower Level 2)')
+        print('(this cave is filled with wild pokemon, you could run into a pokemon at any time!)')
+        print()
+        print('You get to the bottom of the ladder and look around...')
+        print('it\'s very dark down here but in the corner you can see two men chatting while they pack things you can\'t make out into the boxes')
+        if len(rocketDex.pokeList)>0 or len(rocketTex.pokeList)>0:
+            action = menuSelect('What would you like to do?',\
+                                ['Yell at them','sneak up on them','go back up','Menu'])
+        else:
+            action = menuSelect('What would you like to do?',\
+                                ['look in the boxes','go back up','Menu'])
+        passed = MTMoonCaveWild(player)
+        if passed == False:
+            return gameState.lastPokecenter
+        
+        if action == 1:
+            if len(rocketDex.pokeList)>0 or len(rocketTex.pokeList)>0:
+                print('You yell at them, letting them know you\'re there...')
+                input()
+                print('Man 1: "Hey Tex, looks like we\'ve got a live one!"')
+                input()
+                print('Man 2: "Yeah! let\'s grab him before he can squeal!"')
+                input()
+                passed = trainerEncounter(player, rocketDex)
+                if passed == False:
+                    return gameState.lastPokecenter
+                
+                passed = trainerEncounter(player, rocketTex)
+                if passed == False:
+                    return gameState.lastPokecenter
+            else:
+                print('They\'re full of fossils taken from this cave!')
+                input()
+                print('Rocket Tex: "Don\'t get any ideas kid, these fossils are ours!"')
+                input()
+        elif action == 2:
+            if len(rocketDex.pokeList)>0 or len(rocketTex.pokeList)>0:
+                print('As you sneak up you can overhear a bit of their conversation...')
+                print()
+                print('Man 1: "Why does the boss want these again?"')
+                input()
+                print('Man 2: "He found a place down south that can resurrect them!"')
+                input()
+                print('Man 1: "Whoah, that\'s crazy. Technology sure is amazing..."')
+                print('Man 2: "Hey, there\'s a kid here, get \'em!"')
+                passed = trainerEncounter(player, rocketDex)
+                if passed == False:
+                    return gameState.lastPokecenter
+                
+                passed = trainerEncounter(player, rocketTex)
+                if passed == False:
+                    return gameState.lastPokecenter
+            else:
+                return 'MTMoonArea2'
+        elif action == 3:
+            if len(rocketDex.pokeList)>0 or len(rocketTex.pokeList)>0:
+                return 'MTMoonArea2'
+            else:
+                menu(player)
+        else:
+            menu(player)
+
+def MTMoonArea3(player):
+    while True:
+        os.system(clearVar)
+        print('(Mt. Moon Area 3)')
+        print('(this cave is filled with wild pokemon, you could run into a pokemon at any time!)')
+        print()
+        print('This path slopes down as you go deeper. No doubt about it, at the end of the tunnel there is a stairwell leading into the depths')
+        action = menuSelect('What would you like to do?',\
+                            ['Go down the stairwell (Area 4)','Go down the path toward Pewter City (Area 2)','Menu'])
+        passed = MTMoonCaveWild(player)
+        if passed == False:
+            return gameState.lastPokecenter
+        
+        if action == 1:
+            return 'MTMoonArea4'
+            
+        elif action == 2:
+            return 'MTMoonArea2'
+            
+        else:
+            menu(player)
+
+def MTMoonArea4(player):
+    rocketTex = gameState.trainers.MTMoonTrainers.rocketLouise
+    superNerdGarrett = gameState.trainers.MTMoonTrainers.superNerdGarrett
+    while True:
+        os.system(clearVar)
+        print('(Mt. Moon Area 4)')
+        print('(this cave is filled with wild pokemon, you could run into a pokemon at any time!)')
+        print()
+        if len(rocketLouise.pokeList)>0 or len(superNerdGarrett.pokeList)>0:
+            print('The lower level of this tunnel is dark and dingy, but ahead you can see two figures...')
+            input()
+            print('Lady: "Garrett, you said you could identify it..."')
+            input()
+            print('Garrett: "I\'m trying but I don\'t have my books!"')
+            input()
+            action = menuSelect('What would you like to do?',\
+                                ['approach them','go back (Area3)','Menu'])
+            passed = MTMoonCaveWild(player)
+            if passed == False:
+                return gameState.lastPokecenter
+            
+            if action == 1:
+                print('Lady: "There\'s someone here!"')
+                input()
+                passed = trainerEncounter(player, rocketLouise)
+                if passed == False:
+                    return gameState.lastPokecenter
+                print('Garrett: "You\'re trying to take my fossils! I won\'t let you!"')
+                input()
+                passed = trainerEncounter(player, superNerdGarrett)
+                if passed == False:
+                    return gameState.lastPokecenter
+                action1 = menuSelect('Garrett: "which one do you want?"',\
+                    ['Helix Fossil','Dome Fossil'])
+                if action1 == 1:
+                    print('Got the Helix Fossil!')
+                    input()
+                    player.itemList.append('Helix Fossil')
+                    print('Garrett: "then I\'ll take this one"')
+                    print('Garrett got the Dome Fossil!')
+                    input()
+                else:
+                    print('Got the Dome Fossil!')
+                    input()
+                    player.itemList.append('Dome Fossil')
+                    print('Garrett: "then I\'ll take this one"')
+                    print('Garrett got the Helix Fossil!')
+                    input()
+            elif action == 2:
+                return 'MTMoonArea3'
+                
+            else:
+                menu(player)
+        else:
+            print('The exit of the Mt. Moon tunnel is just ahead, there is also the staircase that leads into the cave')
+            print('Garrett is standing admiring his fossil')
+            action = menuSelect('What would you like to do?',\
+                                ['Leave Mt. Moon','go deeper into the cave (Area3)','Talk to Garrett','Menu'])
+            if action == 1:
+                print('You step out of Mt. Moon..')
+                input()
+                return 'ceruleanCity'
+            elif action == 2:
+                return 'MTMoonArea3'
+            elif action == 3:
+                print('Garrett: "isn\'t it pretty? the Boss said there\'s a place on Cinnabar Island that can resurrect pokemon from a fossil!"')
+                input()
+            else:
+                menu(player)
+
+def ceruleanCity(player):
+    while True:
+        os.system(clearVar)
+        print('Cerulean City! home to Misty\'s powerful Water Type Gym. You might be able to challenge her!')
+        print('In this town there is a Pokecenter and a Pokemart!')
+        action = menuSelect('Where would you like to go?',['Pokecenter','Pokemart','Pokemon Gym','Museum','Menu'])
+        if action == 1:
+            gameState.lastPokecenter = 'ceruleanCity'
+            pokeCenter(player)
+        elif action == 2:
+            itemShop(player)
+        elif action == 3:
+            print('Man: "Hold up there friend! you\'re not ready to challenge Misty yet!"')
+        else:
+            menu(player)
+
+    
+ashPidgey = pokemonGenerator(pokedex.pidgey, 4, [tackle, gust],1.5)
+garyPidgey = pokemonGenerator(pokedex.pidgey,4,[tackle, gust],1.5)
+ashBulbasaur = pokemonGenerator(pokedex.bulbasaur,5,[tackle,bide,thunderWave],1.5)
+garyBulbasaur = pokemonGenerator(pokedex.bulbasaur, 5, [tackle, leer],1.5)
+ashSquirtle = pokemonGenerator(pokedex.squirtle, 5, [furyAttack, tailWhip, bubble],1.5)
+garyCharmander = pokemonGenerator(pokedex.charmander, 5, [tackle],1.5)
+garySquirtle = pokemonGenerator(pokedex.squirtle, 5, [tailWhip],1.5)
+ashCharmander = pokemonGenerator(pokedex.charmander, 5, [scratch, furyAttack],1.5)
+ashBeedrill = pokemonGenerator(pokedex.beedrill,5,[furyAttack,poisonSting],1.5)
+ashPikachu = pokemonGenerator(pokedex.pikachu, 5, [thundershock],1.5)
+
+ash = trainer('ash', [ashBulbasaur, ashPidgey, ashSquirtle, ashPikachu, ashBeedrill], [['Pokeball',5],['Potion',5]], 500,'','')
+gary = trainer('gary', [garyCharmander, garyPidgey, garyBulbasaur], [], 10,'','')
 
 """
 main game area
@@ -1163,7 +1461,9 @@ main game area
 modules = {'bedroom':bedroom, 'momsHouse':momsHouse, 'lab':lab, 'garysHouse':garysHouse, 'route29north':route29north, 'palletTown':palletTown, 'viridianCity':viridianCity,\
             'route29south':route29south, 'victoryRoadApproachWest':victoryRoadApproachWest,'victoryRoadApproach':victoryRoadApproach, 'viridianArea1':viridianArea1, 'viridianArea2north':viridianArea2north, 'viridianArea2south':viridianArea2south, 'viridianArea3':viridianArea3,\
            'viridianArea4north':viridianArea4north,'viridianArea4south':viridianArea4south, 'pewterCity':pewterCity, 'rockGym':rockGym, 'museumFirst':museumFirst,\
-           'MTMoon1east':MTMoon1east, 'MTMoon1west':MTMoon1west, 'MTMoon2east':MTMoon2east, 'MTMoon2west':MTMoon2west, 'MTMoon3east':MTMoon3east, 'MTMoon3west':MTMoon3west, 'MTMoonEntrance':MTMoonEntrance}
+           'MTMoon1east':MTMoon1east, 'MTMoon1west':MTMoon1west, 'MTMoon2east':MTMoon2east, 'MTMoon2west':MTMoon2west, 'MTMoon3east':MTMoon3east, 'MTMoon3west':MTMoon3west, 'MTMoonEntrance':MTMoonEntrance,\
+           'MTMoonArea1':MTMoonArea1, 'MTMoonLowerLevel1':MTMoonLowerLevel1, 'MTMoonArea2':MTMoonArea2, 'MTMoonLowerLevel2':MTMoonLowerLevel2, 'MTMoonArea3':MTMoonArea3, 'MTMoonArea4':MTMoonArea4,\
+           'ceruleanCity':ceruleanCity}
 
 #print(battle(ash, gary, False))
 try:
