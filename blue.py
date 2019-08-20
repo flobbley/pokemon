@@ -1158,7 +1158,6 @@ def MTMoonCaveWild(player):
     chance = [True, False]
     if choice(chance):
         print ('a wild pokemon appears!')
-        i+=1
         input()
         wildPoke = choice(encounters)
         wild.pokeList.append(wildPoke)
@@ -1185,9 +1184,10 @@ def MTMoonArea1(player):
         print('Lastly, there is the tunnel exit to the road to Pewter City')
         action = menuSelect('What would you like to do?',\
                             ['Talk to the Hiker','Go down the rope ladder','Talk to the girl','move down the east path (Area 2)','Exit toward Pewter City','Menu'])
-        passed = MTMoonCaveWild(player)
-        if passed == False:
-            return gameState.lastPokecenter
+        if action <= 5:
+            passed = MTMoonCaveWild(player)
+            if passed == False:
+                return gameState.lastPokecenter
         
         if action == 1:
             passed = trainerEncounter(player, hikerNorton)
@@ -1220,10 +1220,11 @@ def MTMoonLowerLevel1(player):
         print('it\'s a small room, not much is in here. But in the corner you see a strange man dressed in black fiddling with something')
         action = menuSelect('What would you like to do?',\
                             ['Talk to the man','go back up the ladder','Menu'])
-        passed = MTMoonCaveWild(player)
-        if passed == False:
-            return gameState.lastPokecenter
-        
+        if action <=2:
+            passed = MTMoonCaveWild(player)
+            if passed == False:
+                return gameState.lastPokecenter
+            
         if action == 1:
             passed = trainerEncounter(player, rocketHobb)
             if passed == False:
@@ -1243,9 +1244,10 @@ def MTMoonArea2(player):
         print('To the south there is a man in a lab coat, the path goes to the north, the path toward the entrance, and there is another rope ladder leader down to the east')
         action = menuSelect('What would you like to do?',\
                             ['Talk to the man in the lab coat','Go down the north path (Area 3)','Go down the path toward the entrance (Area 1)','Go down the rope ladder','Menu'])
-        passed = MTMoonCaveWild(player)
-        if passed == False:
-            return gameState.lastPokecenter
+        if action <=5:
+            passed = MTMoonCaveWild(player)
+            if passed == False:
+                return gameState.lastPokecenter
         
         if action == 1:
             passed = trainerEncounter(player, superNerdHerbert)
@@ -1280,9 +1282,10 @@ def MTMoonLowerLevel2(player):
         else:
             action = menuSelect('What would you like to do?',\
                                 ['look in the boxes','go back up','Menu'])
-        passed = MTMoonCaveWild(player)
-        if passed == False:
-            return gameState.lastPokecenter
+        if action <= 3:
+            passed = MTMoonCaveWild(player)
+            if passed == False:
+                return gameState.lastPokecenter
         
         if action == 1:
             if len(rocketDex.pokeList)>0 or len(rocketTex.pokeList)>0:
@@ -1340,9 +1343,10 @@ def MTMoonArea3(player):
         print('This path slopes down as you go deeper. No doubt about it, at the end of the tunnel there is a stairwell leading into the depths')
         action = menuSelect('What would you like to do?',\
                             ['Go down the stairwell (Area 4)','Go down the path toward Pewter City (Area 2)','Menu'])
-        passed = MTMoonCaveWild(player)
-        if passed == False:
-            return gameState.lastPokecenter
+        if action <= 2:
+            passed = MTMoonCaveWild(player)
+            if passed == False:
+                return gameState.lastPokecenter
         
         if action == 1:
             return 'MTMoonArea4'
@@ -1370,9 +1374,10 @@ def MTMoonArea4(player):
             input()
             action = menuSelect('What would you like to do?',\
                                 ['approach them','go back (Area3)','Menu'])
-            passed = MTMoonCaveWild(player)
-            if passed == False:
-                return gameState.lastPokecenter
+            if action <= 2:
+                passed = MTMoonCaveWild(player)
+                if passed == False:
+                    return gameState.lastPokecenter
             
             if action == 1:
                 print('Lady: "There\'s someone here!"')
@@ -1411,6 +1416,11 @@ def MTMoonArea4(player):
             print('Garrett is standing admiring his fossil')
             action = menuSelect('What would you like to do?',\
                                 ['Leave Mt. Moon','go deeper into the cave (Area3)','Talk to Garrett','Menu'])
+            if action <= 2:
+                passed = MTMoonCaveWild(player)
+                if passed == False:
+                    return gameState.lastPokecenter
+                
             if action == 1:
                 print('You step out of Mt. Moon..')
                 input()

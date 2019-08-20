@@ -70,32 +70,33 @@ class pokemon:
 
     def learnMove(self, move):
         moveNo = len(self.moves)+1
-        if moveNo<=4:
-            self.moves[moveNo] = move
-            print(self.name, 'learned', move.name+'!')
-            input()
-        else:
-            while True:
-                print(self.name, 'is trying to learn', move.name,'but',self.name,'already knows four moves')
-                print('Would you like to replace one of these moves?')
-                self.getMoves()
-                action = input()                
-                if menuValid(action, 5):
-                    action = int(action)
-                    if action == 5:
-                        print(self.name, 'did not learn', move.name)
-                        break
-                    else:
-                        print(self.moves[action].name,'will be replaced with',move.name)
-                        while True:
-                            print('Are you sure? y/n')
-                            sure = input()
-                            if sure ==  'y' or sure == 'n':
-                                break
-                        if sure == 'y':
-                            self.moves[action] = move
-                            print(self.name, 'learned', self.moves[action].name+'!')
+        if move not in self.moves:
+            if moveNo<=4:
+                self.moves[moveNo] = move
+                print(self.name, 'learned', move.name+'!')
+                input()
+            else:
+                while True:
+                    print(self.name, 'is trying to learn', move.name,'but',self.name,'already knows four moves')
+                    print('Would you like to replace one of these moves?')
+                    self.getMoves()
+                    action = input()                
+                    if menuValid(action, 5):
+                        action = int(action)
+                        if action == 5:
+                            print(self.name, 'did not learn', move.name)
                             break
+                        else:
+                            print(self.moves[action].name,'will be replaced with',move.name)
+                            while True:
+                                print('Are you sure? y/n')
+                                sure = input()
+                                if sure ==  'y' or sure == 'n':
+                                    break
+                            if sure == 'y':
+                                self.moves[action] = move
+                                print(self.name, 'learned', self.moves[action].name+'!')
+                                break
                         
 
     def damageTaken(self, damage): #reduces the HP when damage is taken

@@ -361,7 +361,7 @@ koffing2 = pokemonGenerator(pokedex.koffing, 14, [smog, tackle], 1.5)
 
 class MTMoonTrainersClass:
     def __init__(self):
-        self.HikerNorton = trainer('Hiker Norton', [geodude1, sandshrew1], [], 345,\
+        self.hikerNorton = trainer('Hiker Norton', [geodude1, sandshrew1], [], 345,\
                                             '"I came all the way from Cerulean City!"','"Hoof! better catch my breath, wheez"')
         self.lassDoris = trainer('Lass Doris', [clefairy1], [], 140,\
                                             '"A Zubat flew into my hair!"','"Bats are so cute! just like my Clefairy!"')
@@ -397,6 +397,7 @@ class trainers:
         self.pewterTrainers = pewterTrainers
         self.rival = rival
         self.MTMoonTrailTrainers = MTMoonTrailTrainers
+        self.MTMoonTrainers = MTMoonTrainers
         self.gyroTrainers = gyroTrainers
 
 allTrainers = trainers()

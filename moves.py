@@ -697,6 +697,7 @@ def leechLifeAttack(attacker, defender, computer):
         damageDone *= damageMod
         defender.damageTaken(round(damageDone))
         attacker.heal(round(damageDone*.5))
+        os.system(clearVar)
         if computer == True:
             battleDisplay(defender, attacker)
         else:
@@ -726,6 +727,7 @@ def absorbAttack(attacker, defender, computer):
         damageDone *= damageMod
         defender.damageTaken(round(damageDone))
         attacker.heal(round(damageDone*.65))
+        os.system(clearVar)
         if computer == True:
             battleDisplay(defender, attacker)
         else:

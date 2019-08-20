@@ -152,10 +152,10 @@ def menu(player):
                 print(len(player.playerDex),'Pokemon caught')
                 print(player.badges)
                 print()
-                newTrainers = input('Type "RESET" to reset trainer list\n')
+                newTrainers = input('Type "RESET" to reset trainer list\n') 
                 if newTrainers == 'RESET':
                     gameState.trainers = allTrainers
-                
+
             elif action == 5:
                 gameState.saveLoad('save')
                 print('Game saved!')
