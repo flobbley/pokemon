@@ -1183,7 +1183,7 @@ def MTMoonArea1(player):
         print('To the east there is a girl with a flashlight, she is walking down the other path.')
         print('Lastly, there is the tunnel exit to the road to Pewter City')
         action = menuSelect('What would you like to do?',\
-                            ['Talk to the Hiker','Go down the rope ladder','Talk to the girl','move down the east path (Area 2)','Exit toward Pewter City','Menu'])
+                            ['Talk to the Hiker','Go down the rope ladder','Talk to the girl','Move down the east path (Area 2)','Exit toward Pewter City','Menu'])
         if action <= 5:
             passed = MTMoonCaveWild(player)
             if passed == False:
@@ -1219,7 +1219,7 @@ def MTMoonLowerLevel1(player):
         print('You get to the bottom of the ladder and look around...')
         print('it\'s a small room, not much is in here. But in the corner you see a strange man dressed in black fiddling with something')
         action = menuSelect('What would you like to do?',\
-                            ['Talk to the man','go back up the ladder','Menu'])
+                            ['Talk to the man','Go back up the ladder','Menu'])
         if action <=2:
             passed = MTMoonCaveWild(player)
             if passed == False:
@@ -1244,7 +1244,7 @@ def MTMoonArea2(player):
         print('To the south there is a man in a lab coat, the path goes to the north, the path toward the entrance, and there is another rope ladder leader down to the east')
         action = menuSelect('What would you like to do?',\
                             ['Talk to the man in the lab coat','Go down the north path (Area 3)','Go down the path toward the entrance (Area 1)','Go down the rope ladder','Menu'])
-        if action <=5:
+        if action <=4:
             passed = MTMoonCaveWild(player)
             if passed == False:
                 return gameState.lastPokecenter
@@ -1278,10 +1278,10 @@ def MTMoonLowerLevel2(player):
         print('it\'s very dark down here but in the corner you can see two men chatting while they pack things you can\'t make out into the boxes')
         if len(rocketDex.pokeList)>0 or len(rocketTex.pokeList)>0:
             action = menuSelect('What would you like to do?',\
-                                ['Yell at them','sneak up on them','go back up','Menu'])
+                                ['Yell at them','Sneak up on them','Go back up','Menu'])
         else:
             action = menuSelect('What would you like to do?',\
-                                ['look in the boxes','go back up','Menu'])
+                                ['Look in the boxes','Go back up','Menu'])
         if action <= 3:
             passed = MTMoonCaveWild(player)
             if passed == False:
@@ -1358,7 +1358,7 @@ def MTMoonArea3(player):
             menu(player)
 
 def MTMoonArea4(player):
-    rocketTex = gameState.trainers.MTMoonTrainers.rocketLouise
+    rocketLouise = gameState.trainers.MTMoonTrainers.rocketLouise
     superNerdGarrett = gameState.trainers.MTMoonTrainers.superNerdGarrett
     while True:
         os.system(clearVar)
@@ -1438,7 +1438,7 @@ def ceruleanCity(player):
         os.system(clearVar)
         print('Cerulean City! home to Misty\'s powerful Water Type Gym. You might be able to challenge her!')
         print('In this town there is a Pokecenter and a Pokemart!')
-        action = menuSelect('Where would you like to go?',['Pokecenter','Pokemart','Pokemon Gym','Museum','Menu'])
+        action = menuSelect('Where would you like to go?',['Pokecenter','Pokemart','Pokemon Gym','Menu'])
         if action == 1:
             gameState.lastPokecenter = 'ceruleanCity'
             pokeCenter(player)
@@ -1446,20 +1446,21 @@ def ceruleanCity(player):
             itemShop(player)
         elif action == 3:
             print('Man: "Hold up there friend! you\'re not ready to challenge Misty yet!"')
+            input()
         else:
             menu(player)
 
     
-ashPidgey = pokemonGenerator(pokedex.pidgey, 4, [tackle, gust],1.5)
-garyPidgey = pokemonGenerator(pokedex.pidgey,4,[tackle, gust],1.5)
-ashBulbasaur = pokemonGenerator(pokedex.bulbasaur,5,[tackle,bide,thunderWave],1.5)
-garyBulbasaur = pokemonGenerator(pokedex.bulbasaur, 5, [tackle, leer],1.5)
+ashPidgey = pokemonGenerator(pokedex.pidgey, 5, [earthquake, withdraw, superFang, pinMissile],1.5)
+garyPidgey = pokemonGenerator(pokedex.pidgey,30,[leer],1.5)
+ashBulbasaur = pokemonGenerator(pokedex.bulbasaur,5,[sonicBoom, selfdestruct, glare, haze],1.5)
+garyBulbasaur = pokemonGenerator(pokedex.bulbasaur, 30, [leer],1.5)
 ashSquirtle = pokemonGenerator(pokedex.squirtle, 5, [furyAttack, tailWhip, bubble],1.5)
-garyCharmander = pokemonGenerator(pokedex.charmander, 5, [tackle],1.5)
+garyCharmander = pokemonGenerator(pokedex.charmander, 30, [leer],1.5)
 garySquirtle = pokemonGenerator(pokedex.squirtle, 5, [tailWhip],1.5)
 ashCharmander = pokemonGenerator(pokedex.charmander, 5, [scratch, furyAttack],1.5)
 ashBeedrill = pokemonGenerator(pokedex.beedrill,5,[furyAttack,poisonSting],1.5)
-ashPikachu = pokemonGenerator(pokedex.pikachu, 5, [thundershock],1.5)
+ashPikachu = pokemonGenerator(pokedex.pikachu, 5, [waterGun, drillPeck, hydroPump, explosion],1.5)
 
 ash = trainer('ash', [ashBulbasaur, ashPidgey, ashSquirtle, ashPikachu, ashBeedrill], [['Pokeball',5],['Potion',5]], 500,'','')
 gary = trainer('gary', [garyCharmander, garyPidgey, garyBulbasaur], [], 10,'','')

@@ -1,5 +1,6 @@
 from random import *
 import os
+import copy
 
 global clearVar
 syst = os.name
@@ -172,10 +173,32 @@ def gustAttack(attacker, defender, computer):
 
 def bubbleAttack(attacker, defender, computer):
     damageType = 'water'
-    power = 40
+    power = 20
     if hit(95) == True:
         if randint(1,10) == 5:
             defender.statChange('speed', False)
+        damageMod = typeMod(damageType, attacker.typ, defender.typ)
+        damageDone = damage(attacker, defender, power,'sp.attack','sp.defense')
+        damageDone *= damageMod
+        defender.damageTaken(round(damageDone))
+    else:
+        print('but it missed!')
+
+def waterGunAttack(attacker, defender, computer):
+    damageType = 'water'
+    power = 40
+    if hit(95) == True:
+        damageMod = typeMod(damageType, attacker.typ, defender.typ)
+        damageDone = damage(attacker, defender, power,'sp.attack','sp.defense')
+        damageDone *= damageMod
+        defender.damageTaken(round(damageDone))
+    else:
+        print('but it missed!')
+
+def hydroPumpAttack(attacker, defender, computer):
+    damageType = 'water'
+    power = 120
+    if hit(80) == True:
         damageMod = typeMod(damageType, attacker.typ, defender.typ)
         damageDone = damage(attacker, defender, power,'sp.attack','sp.defense')
         damageDone *= damageMod
@@ -330,6 +353,18 @@ def peckAttack(attacker, defender, computer):
         defender.damageTaken(round(damageDone))
     else:
         print('but it missed!')
+
+def drillPeckAttack(attacker, defender, computer):
+    power = 80
+    damageType = 'flying'
+    if hit(95)==True: #95% hit rate
+        damageMod = typeMod(damageType, attacker.typ, defender.typ)
+        damageDone = damage(attacker, defender, power,'attack','defense')
+        damageDone *= damageMod
+        defender.damageTaken(round(damageDone))
+    else:
+        print('but it missed!')
+
 
 def doubleKickAttack(attacker, defender, computer):
     damageType = 'fighting'
@@ -489,7 +524,7 @@ def biteAttack(attacker, defender, computer):
     Main damage attack, right now all the other physical attacks are clones of this
     """
     damageType = 'normal'
-    power = 60
+    power = 50
     cantFlinch = ['sleep','frozen']
     flinch = True
     if hit(95) == True: #95% hit rate
@@ -507,6 +542,28 @@ def biteAttack(attacker, defender, computer):
     else:
         print('but it missed!')
 
+def hyperFangAttack(attacker, defender, computer):
+    """
+    Main damage attack, right now all the other physical attacks are clones of this
+    """
+    damageType = 'normal'
+    power = 80
+    cantFlinch = ['sleep','frozen']
+    flinch = True
+    if hit(90) == True: #95% hit rate
+        for thisStatus in defender.status:
+            if thisStatus in cantFlinch:
+                flinch = False
+        if flinch:
+            chance = [True, False, False, False, False, False, False, False, False, False]
+            if choice(chance):
+                defender.status.append('flinched')
+        damageMod = typeMod(damageType, attacker.typ, defender.typ)
+        damageDone = damage(attacker, defender, power, 'attack', 'defense')
+        damageDone *= damageMod
+        defender.damageTaken(round(damageDone))
+    else:
+        print('but it missed!')
 def vineWhipAttack(attacker, defender, computer):
     """
     Main damage attack, right now all the other physical attacks are clones of this
@@ -527,9 +584,12 @@ def thunderWaveAttack(attacker, defender, computer):
     if hit(90):
         if damageMod != 0 and statusCheck(defender):
             print(defender.name,'was paralyzed!')
+            input()
             defender.status.append('paralyzed')
         else:
             print('There was no effect')
+    else:
+        print('There was no effect')
 
 def slashAttack(attacker, defender, computer):
     """
@@ -689,6 +749,7 @@ def restAttack(attacker,defender,computer):
     print(attacker.name,'fell asleep!')
 
 def leechLifeAttack(attacker, defender, computer):
+    input()
     damageType = 'bug'
     power = 20
     if hit(95) == True: #95% hit rate
@@ -719,6 +780,7 @@ def supersonicAttack(attacker, defender, computer):
         print('but it failed!')
 
 def absorbAttack(attacker, defender, computer):
+    input()
     damageType = 'grass'
     power = 20
     if hit(95) == True: #95% hit rate
@@ -843,9 +905,80 @@ def glareAttack(attacker, defender, computer):
     if hit(95):
         if damageMod != 0 and statusCheck(defender):
             print(defender.name,'was paralyzed!')
+            input()
             defender.status.append('paralyzed')
+        
         else:
             print('There was no effect')
+    else:
+            print('There was no effect')
+
+def earthquakeAttack(attacker, defender, computer):
+    power = 100
+    if 'dig' in defender.status:
+        power = 200
+    damageType = 'ground'
+    if hit(95)==True: #95% hit rate
+        damageMod = typeMod(damageType, attacker.typ, defender.typ)
+        damageDone = damage(attacker, defender, power,'attack','defense')
+        damageDone *= damageMod
+        defender.damageTaken(round(damageDone))
+    else:
+        print('but it missed!')
+
+def slamAttack(attacker, defender, computer):
+    """
+    Main damage attack, right now all the other physical attacks are clones of this
+    """
+    damageType = 'normal'
+    power = 80
+    if hit(75) == True: #95% hit rate
+        damageMod = typeMod(damageType, attacker.typ, defender.typ)
+        damageDone = damage(attacker, defender, power, 'attack', 'defense')
+        damageDone *= damageMod
+        defender.damageTaken(round(damageDone))
+    else:
+        print('but it missed!')
+
+def superFangAttack(attacker, defender, computer):
+    """
+    Main damage attack, right now all the other physical attacks are clones of this
+    """
+    damageType = 'normal'
+    power = 80
+    if hit(90) == True: #95% hit rate
+        defender.HP = defender.HP//2
+    else:
+        print('but it missed!')
+
+def withdrawAttack(attacker, defender, computer):
+    """
+    main defense damaging attack, right now all the other stat damage attacks are clones of this
+    """
+    attacker.statChange('defense', True)
+
+def pinMissileAttack(attacker, defender, computer):
+    input()
+    damageType = 'bug'
+    power = 25
+    hits = [2,2,2,3,3,3,4,5]
+    noHits = choice(hits)
+    if hit(85) == True:
+        damageMod = typeMod(damageType, attacker.typ, defender.typ)
+        for i in range(noHits):
+            os.system(clearVar)
+            if computer == True:
+                battleDisplay(defender,attacker)
+            else:
+                battleDisplay(attacker,defender)
+            damageMod = typeMod(damageType, attacker.typ, defender.typ)
+            damageDone = damage(attacker, defender, power, 'attack', 'defense')
+            damageDone*=damageMod
+            defender.damageTaken(round(damageDone))
+            print(i+1,'hits!')
+            input()
+    else:
+        print('but it missed!')
         
 class move:
     def __init__(self, name, priority, duration, technique):
@@ -916,8 +1049,15 @@ smog = move('smog',0,0,smogAttack)
 sludge = move('sludge',0,0,sludgeAttack)
 haze = move('haze',0,0,hazeAttack)
 glare = move('glare',0,0,glareAttack)
-
-
+earthquake = move('earthquake',0,0,earthquakeAttack)
+slam = move('slam',0,0,slamAttack)
+waterGun = move('water gun',0,0,waterGunAttack)
+withdraw = move('withdraw',0,0,withdrawAttack)
+hydroPump = move('hydro pump',0,0,hydroPumpAttack)
+pinMissile = move('pin missile',0,0,pinMissileAttack)
+hyperFang = move('hyper fang',0,0,hyperFangAttack)
+superFang = move('super fang',0,0,superFangAttack)
+drillPeck = move('drill peck',0,0,drillPeckAttack)
 
 
 

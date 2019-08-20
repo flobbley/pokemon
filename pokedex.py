@@ -2470,22 +2470,22 @@ moveTree = {'Bulbasaur':{6:vineWhip, 9:leechSeed, 20:poisonPowder, 34:growth, 41
             'Charmander':{6:ember, 15:leer, 30:slash, 38:flamethrower},\
             'Charmeleon':{33:slash, 42:flamethrower},\
             'Charizard':{36:slash, 46:flamethrower},\
-            'Squirtle':{6:bubble, 22:bite},\
-            'Wartortle':{22:bite},\
-            'Blastoise':{},\
+            'Squirtle':{6:bubble, 22:bite, 15:waterGun, 28:withdraw, 42:hydroPump},\
+            'Wartortle':{24:bite, 31:withdraw, 47:hydroPump},\
+            'Blastoise':{52:hydroPump},\
             'Caterpie':{7:harden},\
             'Metapod':{7:harden},\
             'Butterfree':{12:confusion, 15:poisonPowder, 16:stunSpore, 17:sleepPowder, 21:supersonic, 21:psybeam},\
             'Weedle':{5:tackle, 7:harden},\
             'Kakuna':{7:harden},\
-            'Beedrill':{12:furyAttack, 20:twinNeedle},\
-            'Pidgey':{5:gust, 11:quickAttack, 15:wingAttack},\
-            'Pidgeotto':{},\
-            'Pidgeot':{},\
-            'Ratata':{6:quickAttack, 12:bite},
-            'Raticate':{},\
-            'Spearow':{9:leer, 15:furyAttack},\
-            'Fearow':{},\
+            'Beedrill':{12:furyAttack, 20:twinNeedle, 35:agility, 30:pinMissile},\
+            'Pidgey':{5:gust, 11:quickAttack, 15:wingAttack, 36:agility},\
+            'Pidgeotto':{5:gust, 11:quickAttack, 15:wingAttack, 36:agility},\
+            'Pidgeot':{5:gust, 11:quickAttack, 15:wingAttack, 36:agility},\
+            'Ratata':{6:quickAttack, 12:bite, 14:hyperFang, 34:superFang},
+            'Raticate':{6:quickAttack, 12:bite, 14:hyperFang, 41:superFang},\
+            'Spearow':{9:leer, 15:furyAttack, 29:drillPeck, 36:agility},\
+            'Fearow':{9:leer, 15:furyAttack, 29:drillPeck, 36:agility},\
             'Ekans':{10:poisonSting, 17:bite, 24:glare, 31:screech, 38:acid},\
             'Arbok':{17:bite, 27:glare, 36:screech, 47:acid},\
             'Pikachu':{7:thundershock, 9:thunderWave, 16:quickAttack, 26:swift},\
@@ -2514,9 +2514,10 @@ moveTree = {'Bulbasaur':{6:vineWhip, 9:leechSeed, 20:poisonPowder, 34:growth, 41
             'Venomoth':{24:poisonPowder, 27:leechLife, 30:stunSpore, 35:psybeam, 38:sleepPowder, 43:psychic},\
             'Diglett':{15:growl, 31:slash},\
             'Dugtrio':{},\
+            'Geodude':{11:defenseCurl, 16:rockThrow, 21:selfdestruct, 26:harden, 31:earthquake, 36:explosion},\
             'Magnemite':{21:sonicBoom, 25:thundershock, 29:supersonic, 35:thunderWave, 41:swift, 47:screech},\
             'Magneton':{21:sonicBoom, 25:thundershock, 29:supersonic, 35:thunderWave, 41:swift, 47:screech},\
-            'Onix':{},\
+            'Onix':{19:rockThrow, 33:slam, 43:harden},\
             'Voltorb':{17:sonicBoom, 22:selfdestruct, 36:swift, 43:explosion},\
             'Electrode':{17:sonicBoom, 22:selfdestruct, 40:swift, 50:explosion},\
             'Koffing':{1:smog, 32:sludge, 40:selfdestruct, 45:haze, 48:explosion},\

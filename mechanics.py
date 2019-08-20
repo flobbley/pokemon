@@ -337,7 +337,7 @@ def battle(player, opponent, wild= True):
                         if wild == False:
                             print('can\'t run from a trainer battle!')
                         else:
-                            succeed = playerPoke.tempStat['speed']/opponentPoke.tempStat['speed']
+                            succeed = playerPoke.tempStats['speed']/opponentPoke.tempStats['speed']
                             if succeed > 0.66:
                                 print('You got away safely!')
                                 opponentPokesCopy = []
